@@ -7,11 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <PBWebViewController.h>
 
 @class DetailViewController;
 
-@interface MasterViewController : UITableViewController
+@interface MasterViewController : UITableViewController <UITableViewDataSource>
 
 @property (strong, nonatomic) DetailViewController *detailViewController;
+
+@property (strong, nonatomic) NSMutableArray *stories;
+
+@property (strong, nonatomic) NSMutableArray *readStories;
+
+@property (strong, nonatomic) PBWebViewController *webViewController;
 
 @end

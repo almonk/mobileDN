@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E4A7DC61872CE5600120796 /* ProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2E4A7DC31872CE5600120796 /* ProgressHUD.bundle */; };
+		2E4A7DC71872CE5600120796 /* ProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E4A7DC51872CE5600120796 /* ProgressHUD.m */; };
+		2EBA21521871D70700D8C5EC /* star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2EBA214E1871D70700D8C5EC /* star@2x.png */; };
+		2EBA21531871D70700D8C5EC /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 2EBA214F1871D70700D8C5EC /* star.png */; };
+		2EBA21541871D70700D8C5EC /* recent@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2EBA21501871D70700D8C5EC /* recent@2x.png */; };
+		2EBA21551871D70700D8C5EC /* recent.png in Resources */ = {isa = PBXBuildFile; fileRef = 2EBA21511871D70700D8C5EC /* recent.png */; };
+		2EBA215A1871FDE900D8C5EC /* libMMMarkdown-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EBA21591871FDE900D8C5EC /* libMMMarkdown-iOS.a */; };
 		2ED1AA43187069E00085209F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2ED1AA42187069E00085209F /* Foundation.framework */; };
 		2ED1AA45187069E00085209F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2ED1AA44187069E00085209F /* CoreGraphics.framework */; };
 		2ED1AA47187069E00085209F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2ED1AA46187069E00085209F /* UIKit.framework */; };
@@ -23,6 +30,7 @@
 		2ED1AA6A187069E00085209F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2ED1AA46187069E00085209F /* UIKit.framework */; };
 		2ED1AA72187069E00085209F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2ED1AA70187069E00085209F /* InfoPlist.strings */; };
 		2ED1AA74187069E00085209F /* MobileDNTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2ED1AA73187069E00085209F /* MobileDNTests.m */; };
+		A808BED665FF487B903A951C /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DB2A021C2A3344C1A8CAE063 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +44,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2E4A7DC31872CE5600120796 /* ProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ProgressHUD.bundle; sourceTree = "<group>"; };
+		2E4A7DC41872CE5600120796 /* ProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressHUD.h; sourceTree = "<group>"; };
+		2E4A7DC51872CE5600120796 /* ProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressHUD.m; sourceTree = "<group>"; };
+		2EBA214E1871D70700D8C5EC /* star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star@2x.png"; sourceTree = "<group>"; };
+		2EBA214F1871D70700D8C5EC /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
+		2EBA21501871D70700D8C5EC /* recent@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recent@2x.png"; sourceTree = "<group>"; };
+		2EBA21511871D70700D8C5EC /* recent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = recent.png; sourceTree = "<group>"; };
+		2EBA21591871FDE900D8C5EC /* libMMMarkdown-iOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libMMMarkdown-iOS.a"; sourceTree = "<group>"; };
+		2EBA215B1871FDF100D8C5EC /* MMMarkdown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMMarkdown.h; sourceTree = "<group>"; };
 		2ED1AA3F187069E00085209F /* MobileDN.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MobileDN.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2ED1AA42187069E00085209F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2ED1AA44187069E00085209F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -58,6 +75,8 @@
 		2ED1AA6F187069E00085209F /* MobileDNTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MobileDNTests-Info.plist"; sourceTree = "<group>"; };
 		2ED1AA71187069E00085209F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2ED1AA73187069E00085209F /* MobileDNTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MobileDNTests.m; sourceTree = "<group>"; };
+		CB487FBAEAF7466F9D2EF7DA /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		DB2A021C2A3344C1A8CAE063 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +87,8 @@
 				2ED1AA45187069E00085209F /* CoreGraphics.framework in Frameworks */,
 				2ED1AA47187069E00085209F /* UIKit.framework in Frameworks */,
 				2ED1AA43187069E00085209F /* Foundation.framework in Frameworks */,
+				2EBA215A1871FDE900D8C5EC /* libMMMarkdown-iOS.a in Frameworks */,
+				A808BED665FF487B903A951C /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,6 +105,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2E4A7DC21872CE5600120796 /* ProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				2E4A7DC31872CE5600120796 /* ProgressHUD.bundle */,
+				2E4A7DC41872CE5600120796 /* ProgressHUD.h */,
+				2E4A7DC51872CE5600120796 /* ProgressHUD.m */,
+			);
+			path = ProgressHUD;
+			sourceTree = "<group>";
+		};
 		2ED1AA36187069E00085209F = {
 			isa = PBXGroup;
 			children = (
@@ -91,6 +122,7 @@
 				2ED1AA6D187069E00085209F /* MobileDNTests */,
 				2ED1AA41187069E00085209F /* Frameworks */,
 				2ED1AA40187069E00085209F /* Products */,
+				CB487FBAEAF7466F9D2EF7DA /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -110,6 +142,7 @@
 				2ED1AA44187069E00085209F /* CoreGraphics.framework */,
 				2ED1AA46187069E00085209F /* UIKit.framework */,
 				2ED1AA67187069E00085209F /* XCTest.framework */,
+				DB2A021C2A3344C1A8CAE063 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -126,6 +159,7 @@
 				2ED1AA5D187069E00085209F /* DetailViewController.h */,
 				2ED1AA5E187069E00085209F /* DetailViewController.m */,
 				2ED1AA60187069E00085209F /* Images.xcassets */,
+				2E4A7DC21872CE5600120796 /* ProgressHUD */,
 				2ED1AA49187069E00085209F /* Supporting Files */,
 			);
 			path = MobileDN;
@@ -134,6 +168,12 @@
 		2ED1AA49187069E00085209F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				2EBA215B1871FDF100D8C5EC /* MMMarkdown.h */,
+				2EBA21591871FDE900D8C5EC /* libMMMarkdown-iOS.a */,
+				2EBA214E1871D70700D8C5EC /* star@2x.png */,
+				2EBA214F1871D70700D8C5EC /* star.png */,
+				2EBA21501871D70700D8C5EC /* recent@2x.png */,
+				2EBA21511871D70700D8C5EC /* recent.png */,
 				2ED1AA4A187069E00085209F /* MobileDN-Info.plist */,
 				2ED1AA4B187069E00085209F /* InfoPlist.strings */,
 				2ED1AA4E187069E00085209F /* main.m */,
@@ -167,9 +207,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2ED1AA77187069E00085209F /* Build configuration list for PBXNativeTarget "MobileDN" */;
 			buildPhases = (
+				29029D32F369408DBC1C7EBE /* Check Pods Manifest.lock */,
 				2ED1AA3B187069E00085209F /* Sources */,
 				2ED1AA3C187069E00085209F /* Frameworks */,
 				2ED1AA3D187069E00085209F /* Resources */,
+				FEAE104FD45B40928882C357 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -207,6 +249,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Alasdair Monk";
 				TargetAttributes = {
+					2ED1AA3E187069E00085209F = {
+						DevelopmentTeam = KYSECZZ36U;
+					};
 					2ED1AA65187069E00085209F = {
 						TestTargetID = 2ED1AA3E187069E00085209F;
 					};
@@ -237,9 +282,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				2ED1AA59187069E00085209F /* Main_iPad.storyboard in Resources */,
+				2EBA21541871D70700D8C5EC /* recent@2x.png in Resources */,
+				2EBA21521871D70700D8C5EC /* star@2x.png in Resources */,
 				2ED1AA61187069E00085209F /* Images.xcassets in Resources */,
 				2ED1AA56187069E00085209F /* Main_iPhone.storyboard in Resources */,
+				2E4A7DC61872CE5600120796 /* ProgressHUD.bundle in Resources */,
 				2ED1AA4D187069E00085209F /* InfoPlist.strings in Resources */,
+				2EBA21551871D70700D8C5EC /* recent.png in Resources */,
+				2EBA21531871D70700D8C5EC /* star.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,6 +303,39 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		29029D32F369408DBC1C7EBE /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		FEAE104FD45B40928882C357 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		2ED1AA3B187069E00085209F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -260,6 +343,7 @@
 			files = (
 				2ED1AA53187069E00085209F /* AppDelegate.m in Sources */,
 				2ED1AA5C187069E00085209F /* MasterViewController.m in Sources */,
+				2E4A7DC71872CE5600120796 /* ProgressHUD.m in Sources */,
 				2ED1AA4F187069E00085209F /* main.m in Sources */,
 				2ED1AA5F187069E00085209F /* DetailViewController.m in Sources */,
 			);
@@ -395,26 +479,46 @@
 		};
 		2ED1AA78187069E00085209F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CB487FBAEAF7466F9D2EF7DA /* Pods.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MobileDN/MobileDN-Prefix.pch";
 				INFOPLIST_FILE = "MobileDN/MobileDN-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/alasdairmonk/Cocoa/MobileDN/MobileDN,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
 		};
 		2ED1AA79187069E00085209F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CB487FBAEAF7466F9D2EF7DA /* Pods.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MobileDN/MobileDN-Prefix.pch";
 				INFOPLIST_FILE = "MobileDN/MobileDN-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/alasdairmonk/Cocoa/MobileDN/MobileDN,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -480,6 +584,7 @@
 				2ED1AA79187069E00085209F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2ED1AA7A187069E00085209F /* Build configuration list for PBXNativeTarget "MobileDNTests" */ = {
 			isa = XCConfigurationList;
@@ -488,6 +593,7 @@
 				2ED1AA7C187069E00085209F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

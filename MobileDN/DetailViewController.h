@@ -7,10 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <TTTAttributedLabel.h>
+#import "PBWebViewController.h"
 
-@interface DetailViewController : UIViewController <UISplitViewControllerDelegate>
+@interface DetailViewController : UITableViewController <TTTAttributedLabelDelegate,UITableViewDataSource> {
+}
 
-@property (strong, nonatomic) id detailItem;
+@property (strong, nonatomic) NSMutableArray *comments;
+@property (strong, nonatomic) NSMutableArray *flatComments;
+@property (weak, nonatomic) NSMutableArray *heights;
+@property (strong, nonatomic) PBWebViewController *webViewController;
 
-@property (weak, nonatomic) IBOutlet UILabel *detailDescriptionLabel;
 @end
