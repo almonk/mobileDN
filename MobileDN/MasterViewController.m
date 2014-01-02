@@ -37,6 +37,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     self.stories = [[NSMutableArray alloc] init];
     self.pageNumber = [[NSNumber alloc] initWithInt:1];
     

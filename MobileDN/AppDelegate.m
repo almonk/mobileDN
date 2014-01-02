@@ -29,7 +29,7 @@
         [UIFont fontWithName:@"Avenir" size:18.0f], NSFontAttributeName,
         nil] forState:UIControlStateNormal];
     
-    [[UIToolbar appearance] setTintColor:[UIColor colorWithRed:0.176 green:0.447 blue:0.851 alpha:1.0]];
+    [[UINavigationBar appearance] setShadowImage:[[UIImage alloc] init]];
     
     return YES;
 }
