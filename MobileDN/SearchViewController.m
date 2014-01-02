@@ -66,7 +66,7 @@
 }
 
 -(IBAction)loadFrontPage:(id)sender {
-    [ProgressHUD show:@"Loading..."];
+    [self.refreshControl beginRefreshing];
     NSString *queryUrl = @"";
     
     queryUrl = [NSString stringWithFormat:@"https://news.layervault.com/search?&query=%@&commit=Search&format=json", [searchBar.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
@@ -77,10 +77,12 @@
         self.stories = responseObject;
         [self.tableView reloadData];
         [(UIRefreshControl *)sender endRefreshing];
+        [self.refreshControl endRefreshing];
         [ProgressHUD dismiss];
         [self.view endEditing:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [ProgressHUD showError:@"Can't connect to DN"];
+        [self.refreshControl endRefreshing];
         NSLog(@"Error: %@", error);
     }];
 }

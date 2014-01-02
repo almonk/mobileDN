@@ -111,6 +111,8 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
+    NSString *indentLevelRaw = [_commentDepth objectAtIndex:indexPath.row];
+    
     TTTAttributedLabel *commentBody;
     commentBody = (TTTAttributedLabel *)[cell viewWithTag:1];
     commentBody.delegate = self;
@@ -132,6 +134,13 @@
     UILabel *usernameMeta;
     usernameMeta = (UILabel *)[cell viewWithTag:2];
     usernameMeta.text = [self.flatUsers objectAtIndex:indexPath.row];
+    
+    UIView *nestedLines;
+    nestedLines = (UIView *)[cell viewWithTag:5];
+    
+    if (indentLevelRaw == 0) {
+        nestedLines.hidden = YES;
+    }
     
     cell.indentationWidth = 25;
     
@@ -186,44 +195,43 @@
     
     NSString *indentLevelRaw = [_commentDepth objectAtIndex:indexPath.row];
     NSUInteger indentLevel = [indentLevelRaw integerValue];
-    float indentPoints = indentLevel * 35;
-    float indentPointsHeight = indentLevel * 20;
+    float indentPoints = indentLevel * 25;
     
     TTTAttributedLabel *commentBody;
     commentBody = (TTTAttributedLabel *)[cell viewWithTag:1];
+    commentBody.delegate = self;
     commentBody.enabledTextCheckingTypes = NSTextCheckingTypeLink;
+    //NSString *markdown = [tempDictionary valueForKey:@"body"];
     NSString *markdown = [self.flatComments objectAtIndex:indexPath.row];
-//    NSString *html = [MMMarkdown HTMLStringWithMarkdown:markdown error:nil];
-//    NSDictionary *options = @{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType};
-//    NSAttributedString *preview = [[NSAttributedString alloc] initWithData:[html dataUsingEncoding:NSUTF8StringEncoding] options:options documentAttributes:nil error:nil];
+    //    NSString *html = [MMMarkdown HTMLStringWithMarkdown:markdown error:nil];
+    //    NSDictionary *options = @{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType};
+    //    NSAttributedString *preview = [[NSAttributedString alloc] initWithData:[html dataUsingEncoding:NSUTF8StringEncoding] options:options documentAttributes:nil error:nil];
     
-    commentBody.text = markdown;
+    commentBody.text = [self.flatComments objectAtIndex:indexPath.row];;
     [commentBody setText:markdown afterInheritingLabelAttributesAndConfiguringWithBlock:^ NSMutableAttributedString *(NSMutableAttributedString *mutableAttributedString) {
-        
         return mutableAttributedString;
     }];
     commentBody.font = [UIFont fontWithName:@"Avenir" size:16.0f];
-    
-    commentBody.preferredMaxLayoutWidth = cell.contentView.frame.size.width;
-
     [commentBody sizeToFit];
-
-    UILabel *usernameMeta;
-    usernameMeta = (UILabel *)[cell viewWithTag:2];
-    usernameMeta.text = [self.flatUsers objectAtIndex:indexPath.row];
+    commentBody.preferredMaxLayoutWidth = (290 - indentPoints);
     
-    cell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), CGRectGetHeight(cell.bounds));
+    NSLog(@"Comment body width = %f", commentBody.preferredMaxLayoutWidth);
     
     [cell setNeedsLayout];
     [cell layoutIfNeeded];
     [cell setNeedsUpdateConstraints];
     [cell updateConstraintsIfNeeded];
     
-    CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+    CGFloat height = [commentBody systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
     
-    height += 1; // Round up
+    NSLog(@"Comment height = %f", height);
+    
+    return ceil(height += 80.f);
 
-    return height;
+}
+
++ (float)heightForAttributedString:(NSAttributedString *)attributedString inSize:(CGSize)size {
+    return ceilf([attributedString boundingRectWithSize:size options:NSStringDrawingUsesLineFragmentOrigin context:nil].size.height);
 }
 
 - (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url

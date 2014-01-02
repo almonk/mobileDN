@@ -45,7 +45,7 @@
     
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(loadFrontPage:) forControlEvents:UIControlEventValueChanged];
-    
+    [self.refreshControl beginRefreshing];
     [self loadFrontPage:nil];
     
     [self.tableView addInfiniteScrollingWithActionHandler:^{
@@ -72,7 +72,7 @@
 #pragma mark - DN specific
 
 -(IBAction)loadFrontPage:(id)sender {
-    [ProgressHUD show:@"Loading..."];
+//    [ProgressHUD show:@"Loading..."];
     NSString *queryUrl = @"";
     
     if ([self.navigationItem.title isEqualToString:@"Top stories"]) {
@@ -87,11 +87,12 @@
         self.stories = responseObject[@"stories"];
         [self.tableView reloadData];
         [(UIRefreshControl *)sender endRefreshing];
-        [ProgressHUD dismiss];
+        [self.refreshControl endRefreshing];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [ProgressHUD showError:@"Can't connect to DN"];
         NSLog(@"Error: %@", error);
         [(UIRefreshControl *)sender endRefreshing];
+        [self.refreshControl endRefreshing];
     }];
 }
 
@@ -147,18 +148,31 @@
     storyName = (UILabel *)[cell viewWithTag:1];
     storyName.text = [tempDictionary valueForKey:@"title"];
     
-    NSString *metaDataText = [NSString stringWithFormat:@"%@ pts & %@ comments • from %@", [tempDictionary valueForKey:@"vote_count"], [tempDictionary valueForKey:@"num_comments"], [tempDictionary valueForKey:@"submitter_display_name"]];
+    NSString *metaDataText = [NSString stringWithFormat:@"%@ points from %@", [tempDictionary valueForKey:@"vote_count"], [tempDictionary valueForKey:@"submitter_display_name"]];
     
     UILabel *metaData;
     metaData = (UILabel *)[cell viewWithTag:2];
     metaData.text = metaDataText;
+    
+    NSString* urlString = [tempDictionary valueForKey:@"url"];
+    NSURL* url = [NSURL URLWithString:urlString];
+    NSString* domain = [url host];
+    
+    UILabel *domainUrl;
+    domainUrl = (UILabel *)[cell viewWithTag:5];
+    domainUrl.text = domain;
     
     UIImage *image = [UIImage imageNamed:@"comments.png"];
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     CGRect frame = CGRectMake(0.0, 0.0, image.size.width, image.size.height);
     button.frame = frame;
+    [button setTitle: [[tempDictionary valueForKey:@"num_comments"] stringValue] forState:UIControlStateNormal];
+    [button setTitleColor: [UIColor colorWithRed:0.651 green:0.675 blue:0.714 alpha:1.0] forState:UIControlStateNormal];
+    //button.contentEdgeInsets = UIEdgeInsetsMake(0,0,0,0); Do any padding
     [button setBackgroundImage:image forState:UIControlStateNormal];
+    [button.titleLabel setFont: [UIFont fontWithName:@"Avenir" size:13.0f]];
+    [button.titleLabel setTextAlignment:NSTextAlignmentCenter];
     
     [button addTarget:self action:@selector(accessoryButtonTapped:withEvent:) forControlEvents:UIControlEventTouchUpInside];
     button.backgroundColor = [UIColor clearColor];
