@@ -12,7 +12,7 @@
 #import "PBWebViewController.h"
 #import <PBSafariActivity.h>
 #import "ProgressHUD.h"
-
+#import "UIScrollView+SVInfiniteScrolling.h"
 
 @interface MasterViewController () {
     NSMutableArray *_objects;
@@ -37,13 +37,20 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.stories = [[NSMutableArray alloc] init];
+    self.pageNumber = [[NSNumber alloc] initWithInt:1];
+    
 	// Do any additional setup after loading the view, typically from a nib.
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
     
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(loadFrontPage:) forControlEvents:UIControlEventValueChanged];
-    
+    [self.refreshControl beginRefreshing];
     [self loadFrontPage:nil];
+    
+    [self.tableView addInfiniteScrollingWithActionHandler:^{
+        [self loadNextPage:nil];
+    }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -65,8 +72,7 @@
 #pragma mark - DN specific
 
 -(IBAction)loadFrontPage:(id)sender {
-    [ProgressHUD show:@"Loading..."];
-    
+//    [ProgressHUD show:@"Loading..."];
     NSString *queryUrl = @"";
     
     if ([self.navigationItem.title isEqualToString:@"Top stories"]) {
@@ -81,10 +87,41 @@
         self.stories = responseObject[@"stories"];
         [self.tableView reloadData];
         [(UIRefreshControl *)sender endRefreshing];
-        [ProgressHUD dismiss];
+        [self.refreshControl endRefreshing];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [ProgressHUD showError:@"Can't connect to DN"];
         NSLog(@"Error: %@", error);
+        [(UIRefreshControl *)sender endRefreshing];
+        [self.refreshControl endRefreshing];
+    }];
+}
+
+-(IBAction)loadNextPage:(id)sender {   
+    NSString *queryUrl = @"";
+    NSNumber *nextPageNumber = self.pageNumber;
+    int value = [nextPageNumber intValue];
+    nextPageNumber = [NSNumber numberWithInt:value + 1];
+    self.pageNumber = [[NSNumber alloc] initWithInt:value + 1];
+    
+    if ([self.navigationItem.title isEqualToString:@"Top stories"]) {
+        queryUrl = [NSString stringWithFormat:@"https://news.layervault.com/p/%@?format=json", nextPageNumber];
+    } else {
+        queryUrl = [NSString stringWithFormat:@"https://news.layervault.com/new/%@?format=json", nextPageNumber];
+    }
+    
+    NSLog(@"Querying %@", queryUrl);
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:queryUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"JSON: %@", responseObject);
+        self.stories = [[NSMutableArray alloc] initWithArray:self.stories];
+        [self.stories addObjectsFromArray:responseObject[@"stories"]];
+        [self.tableView reloadData];
+        [self.tableView.infiniteScrollingView stopAnimating];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [ProgressHUD showError:@"Can't connect to DN"];
+        NSLog(@"Error: %@", error);
+        [self.tableView.infiniteScrollingView stopAnimating];
     }];
 }
 
@@ -111,14 +148,49 @@
     storyName = (UILabel *)[cell viewWithTag:1];
     storyName.text = [tempDictionary valueForKey:@"title"];
     
-    NSString *metaDataText = [NSString stringWithFormat:@"%@ pts & %@ comments • from %@", [tempDictionary valueForKey:@"vote_count"], [tempDictionary valueForKey:@"num_comments"], [tempDictionary valueForKey:@"submitter_display_name"]];
+    NSString *metaDataText = [NSString stringWithFormat:@"%@ points from %@", [tempDictionary valueForKey:@"vote_count"], [tempDictionary valueForKey:@"submitter_display_name"]];
     
     UILabel *metaData;
     metaData = (UILabel *)[cell viewWithTag:2];
     metaData.text = metaDataText;
     
+    NSString* urlString = [tempDictionary valueForKey:@"url"];
+    NSURL* url = [NSURL URLWithString:urlString];
+    NSString* domain = [url host];
+    
+    UILabel *domainUrl;
+    domainUrl = (UILabel *)[cell viewWithTag:5];
+    domainUrl.text = domain;
+    
+    UIImage *image = [UIImage imageNamed:@"comments.png"];
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    CGRect frame = CGRectMake(0.0, 0.0, image.size.width, image.size.height);
+    button.frame = frame;
+    [button setTitle: [[tempDictionary valueForKey:@"num_comments"] stringValue] forState:UIControlStateNormal];
+    [button setTitleColor: [UIColor colorWithRed:0.651 green:0.675 blue:0.714 alpha:1.0] forState:UIControlStateNormal];
+    //button.contentEdgeInsets = UIEdgeInsetsMake(0,0,0,0); Do any padding
+    [button setBackgroundImage:image forState:UIControlStateNormal];
+    [button.titleLabel setFont: [UIFont fontWithName:@"Avenir" size:13.0f]];
+    [button.titleLabel setTextAlignment:NSTextAlignmentCenter];
+    
+    [button addTarget:self action:@selector(accessoryButtonTapped:withEvent:) forControlEvents:UIControlEventTouchUpInside];
+    button.backgroundColor = [UIColor clearColor];
+    cell.accessoryView = button;
+    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+    
     return cell;
 }
+
+- (void)accessoryButtonTapped:(UIControl *)button withEvent:(UIEvent *)event
+{
+    NSIndexPath * indexPath = [self.tableView indexPathForRowAtPoint: [[[event touchesForView: button] anyObject] locationInView: self.tableView]];
+    if ( indexPath == nil )
+        return;
+    
+    [self.tableView.delegate tableView: self.tableView accessoryButtonTappedForRowWithIndexPath: indexPath];
+}
+
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -177,4 +249,6 @@
     detailViewController.title = [story valueForKey:@"title"];
     [self.navigationController pushViewController:detailViewController animated:YES];
 }
+
+
 @end

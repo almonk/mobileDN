@@ -60,15 +60,33 @@
 #define COCOAPODS_VERSION_MINOR_RESideMenu 4
 #define COCOAPODS_VERSION_PATCH_RESideMenu 0
 
+// SORelativeDateTransformer
+#define COCOAPODS_POD_AVAILABLE_SORelativeDateTransformer
+#define COCOAPODS_VERSION_MAJOR_SORelativeDateTransformer 1
+#define COCOAPODS_VERSION_MINOR_SORelativeDateTransformer 1
+#define COCOAPODS_VERSION_PATCH_SORelativeDateTransformer 10
+
 // STTweetLabel
 #define COCOAPODS_POD_AVAILABLE_STTweetLabel
 #define COCOAPODS_VERSION_MAJOR_STTweetLabel 3
 #define COCOAPODS_VERSION_MINOR_STTweetLabel 1
 #define COCOAPODS_VERSION_PATCH_STTweetLabel 2
 
+// SVPullToRefresh
+#define COCOAPODS_POD_AVAILABLE_SVPullToRefresh
+#define COCOAPODS_VERSION_MAJOR_SVPullToRefresh 0
+#define COCOAPODS_VERSION_MINOR_SVPullToRefresh 4
+#define COCOAPODS_VERSION_PATCH_SVPullToRefresh 1
+
 // TTTAttributedLabel
 #define COCOAPODS_POD_AVAILABLE_TTTAttributedLabel
 #define COCOAPODS_VERSION_MAJOR_TTTAttributedLabel 1
 #define COCOAPODS_VERSION_MINOR_TTTAttributedLabel 8
 #define COCOAPODS_VERSION_PATCH_TTTAttributedLabel 0
+
+// UITableView-NXEmptyView
+#define COCOAPODS_POD_AVAILABLE_UITableView_NXEmptyView
+#define COCOAPODS_VERSION_MAJOR_UITableView_NXEmptyView 0
+#define COCOAPODS_VERSION_MINOR_UITableView_NXEmptyView 1
+#define COCOAPODS_VERSION_PATCH_UITableView_NXEmptyView 4
 

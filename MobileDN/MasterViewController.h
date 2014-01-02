@@ -11,13 +11,17 @@
 
 @class DetailViewController;
 
-@interface MasterViewController : UITableViewController <UITableViewDataSource>
+@interface MasterViewController : UITableViewController <UITableViewDataSource> {
+    IBOutlet UIButton *customAccessory;
+}
 
 @property (strong, nonatomic) DetailViewController *detailViewController;
 
 @property (strong, nonatomic) NSMutableArray *stories;
 
 @property (strong, nonatomic) NSMutableArray *readStories;
+
+@property (strong, nonatomic) NSNumber *pageNumber;
 
 @property (strong, nonatomic) PBWebViewController *webViewController;
 
