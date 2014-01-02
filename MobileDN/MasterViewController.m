@@ -12,7 +12,7 @@
 #import "PBWebViewController.h"
 #import <PBSafariActivity.h>
 #import "ProgressHUD.h"
-
+#import "UIScrollView+SVInfiniteScrolling.h"
 
 @interface MasterViewController () {
     NSMutableArray *_objects;
@@ -37,6 +37,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.stories = [[NSMutableArray alloc] init];
+    self.pageNumber = [[NSNumber alloc] initWithInt:1];
+    
 	// Do any additional setup after loading the view, typically from a nib.
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
     
@@ -44,6 +47,10 @@
     [self.refreshControl addTarget:self action:@selector(loadFrontPage:) forControlEvents:UIControlEventValueChanged];
     
     [self loadFrontPage:nil];
+    
+    [self.tableView addInfiniteScrollingWithActionHandler:^{
+        [self loadNextPage:nil];
+    }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -66,7 +73,6 @@
 
 -(IBAction)loadFrontPage:(id)sender {
     [ProgressHUD show:@"Loading..."];
-    
     NSString *queryUrl = @"";
     
     if ([self.navigationItem.title isEqualToString:@"Top stories"]) {
@@ -85,6 +91,36 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [ProgressHUD showError:@"Can't connect to DN"];
         NSLog(@"Error: %@", error);
+        [(UIRefreshControl *)sender endRefreshing];
+    }];
+}
+
+-(IBAction)loadNextPage:(id)sender {   
+    NSString *queryUrl = @"";
+    NSNumber *nextPageNumber = self.pageNumber;
+    int value = [nextPageNumber intValue];
+    nextPageNumber = [NSNumber numberWithInt:value + 1];
+    self.pageNumber = [[NSNumber alloc] initWithInt:value + 1];
+    
+    if ([self.navigationItem.title isEqualToString:@"Top stories"]) {
+        queryUrl = [NSString stringWithFormat:@"https://news.layervault.com/p/%@?format=json", nextPageNumber];
+    } else {
+        queryUrl = [NSString stringWithFormat:@"https://news.layervault.com/new/%@?format=json", nextPageNumber];
+    }
+    
+    NSLog(@"Querying %@", queryUrl);
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:queryUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"JSON: %@", responseObject);
+        self.stories = [[NSMutableArray alloc] initWithArray:self.stories];
+        [self.stories addObjectsFromArray:responseObject[@"stories"]];
+        [self.tableView reloadData];
+        [self.tableView.infiniteScrollingView stopAnimating];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [ProgressHUD showError:@"Can't connect to DN"];
+        NSLog(@"Error: %@", error);
+        [self.tableView.infiniteScrollingView stopAnimating];
     }];
 }
 
@@ -117,8 +153,30 @@
     metaData = (UILabel *)[cell viewWithTag:2];
     metaData.text = metaDataText;
     
+    UIImage *image = [UIImage imageNamed:@"comments.png"];
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    CGRect frame = CGRectMake(0.0, 0.0, image.size.width, image.size.height);
+    button.frame = frame;
+    [button setBackgroundImage:image forState:UIControlStateNormal];
+    
+    [button addTarget:self action:@selector(accessoryButtonTapped:withEvent:) forControlEvents:UIControlEventTouchUpInside];
+    button.backgroundColor = [UIColor clearColor];
+    cell.accessoryView = button;
+    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+    
     return cell;
 }
+
+- (void)accessoryButtonTapped:(UIControl *)button withEvent:(UIEvent *)event
+{
+    NSIndexPath * indexPath = [self.tableView indexPathForRowAtPoint: [[[event touchesForView: button] anyObject] locationInView: self.tableView]];
+    if ( indexPath == nil )
+        return;
+    
+    [self.tableView.delegate tableView: self.tableView accessoryButtonTappedForRowWithIndexPath: indexPath];
+}
+
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -177,4 +235,6 @@
     detailViewController.title = [story valueForKey:@"title"];
     [self.navigationController pushViewController:detailViewController animated:YES];
 }
+
+
 @end

@@ -12,6 +12,8 @@
 #import <TTTAttributedLabel.h>
 #import "PBWebViewController.h"
 #import <PBSafariActivity.h>
+#import <SORelativeDateTransformer.h>
+#import "UITableView+NXEmptyView.h"
 
 @interface DetailViewController ()
 @end
@@ -22,6 +24,11 @@
 {
     [super viewDidLoad];
     self.flatComments = [[NSMutableArray alloc] init];
+    self.flatUsers = [[NSMutableArray alloc] init];
+    self.commentDepth = [[NSMutableArray alloc] init];
+    self.flatTime = [[NSMutableArray alloc] init];
+    self.tableView.nxEV_hideSeparatorLinesWheyShowingEmptyView = YES;
+    self.tableView.nxEV_emptyView = emptyView;
     [self loadStory:nil];
 }
 
@@ -41,7 +48,6 @@
 
 - (void)enumerateJSONToFindKeys:(id)object forKeyNamed:(NSString *)keyName
 {
-    
     if ([object isKindOfClass:[NSDictionary class]])
     {
         // If it's a dictionary, enumerate it and pass in each key value to check
@@ -62,8 +68,23 @@
         //NSLog(@"We found key %@ with value %@", keyName, object);
         if ([keyName isEqualToString:@"user_display_name"]) {
             NSLog(@"Comment: %@", object);
+            [_flatUsers addObject:object];
+            NSLog(@"comments %d", [_flatUsers count]);
+        }
+        
+        if ([keyName isEqualToString:@"body"]) {
+            NSLog(@"Comment: %@", object);
             [_flatComments addObject:object];
             NSLog(@"comments %d", [_flatComments count]);
+        }
+        
+        if ([keyName isEqualToString:@"depth"]) {
+            NSLog(@"Depth: %@", object);
+            [_commentDepth addObject:object];
+        }
+        
+        if ([keyName isEqualToString:@"created_at"]) {
+            [_flatTime addObject:object];
         }
     }
 }
@@ -78,12 +99,17 @@
     return [self.flatComments count];
 }
 
+-(NSInteger)tableView:(UITableView *)tableView indentationLevelForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *indentLevelRaw = [_commentDepth objectAtIndex:indexPath.row];
+    NSUInteger indentLevel = [indentLevelRaw integerValue];
+    NSLog(@"Indentation level: %lu", (unsigned long)indentLevel);
+    return indentLevel;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-    
-    NSDictionary *tempDictionary = [self.comments objectAtIndex:indexPath.row];
-    
     
     TTTAttributedLabel *commentBody;
     commentBody = (TTTAttributedLabel *)[cell viewWithTag:1];
@@ -95,7 +121,7 @@
 //    NSDictionary *options = @{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType};
 //    NSAttributedString *preview = [[NSAttributedString alloc] initWithData:[html dataUsingEncoding:NSUTF8StringEncoding] options:options documentAttributes:nil error:nil];
     
-    commentBody.text = markdown;
+    commentBody.text = [self.flatComments objectAtIndex:indexPath.row];;
     [commentBody setText:markdown afterInheritingLabelAttributesAndConfiguringWithBlock:^ NSMutableAttributedString *(NSMutableAttributedString *mutableAttributedString) {
 
         return mutableAttributedString;
@@ -103,17 +129,20 @@
     commentBody.font = [UIFont fontWithName:@"Avenir" size:16.0f];
     [commentBody sizeToFit];
 
-    
-    
     UILabel *usernameMeta;
     usernameMeta = (UILabel *)[cell viewWithTag:2];
-    usernameMeta.text = [tempDictionary valueForKey:@"user_display_name"];
+    usernameMeta.text = [self.flatUsers objectAtIndex:indexPath.row];
+    
+    cell.indentationWidth = 25;
+    
+    UILabel *date;
+    date = (UILabel *)[cell viewWithTag:3];
+    date.text = [self convertDateToRelativeDate: [self.flatTime objectAtIndex:indexPath.row]];
     
     [cell setNeedsUpdateConstraints];
     [cell updateConstraintsIfNeeded];
     
     commentBody.preferredMaxLayoutWidth = CGRectGetWidth(tableView.frame);
-
     return cell;
 }
 
@@ -152,13 +181,18 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+
+    cell.indentationWidth = 25;
     
-    NSDictionary *tempDictionary = [self.comments objectAtIndex:indexPath.row];
+    NSString *indentLevelRaw = [_commentDepth objectAtIndex:indexPath.row];
+    NSUInteger indentLevel = [indentLevelRaw integerValue];
+    float indentPoints = indentLevel * 35;
+    float indentPointsHeight = indentLevel * 20;
     
     TTTAttributedLabel *commentBody;
     commentBody = (TTTAttributedLabel *)[cell viewWithTag:1];
     commentBody.enabledTextCheckingTypes = NSTextCheckingTypeLink;
-    NSString *markdown = [tempDictionary valueForKey:@"body"];
+    NSString *markdown = [self.flatComments objectAtIndex:indexPath.row];
 //    NSString *html = [MMMarkdown HTMLStringWithMarkdown:markdown error:nil];
 //    NSDictionary *options = @{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType};
 //    NSAttributedString *preview = [[NSAttributedString alloc] initWithData:[html dataUsingEncoding:NSUTF8StringEncoding] options:options documentAttributes:nil error:nil];
@@ -169,20 +203,26 @@
         return mutableAttributedString;
     }];
     commentBody.font = [UIFont fontWithName:@"Avenir" size:16.0f];
+    
+    commentBody.preferredMaxLayoutWidth = cell.contentView.frame.size.width;
+
     [commentBody sizeToFit];
 
-    
     UILabel *usernameMeta;
     usernameMeta = (UILabel *)[cell viewWithTag:2];
-    usernameMeta.text = [tempDictionary valueForKey:@"user_display_name"];
+    usernameMeta.text = [self.flatUsers objectAtIndex:indexPath.row];
     
     cell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), CGRectGetHeight(cell.bounds));
-
+    
     [cell setNeedsLayout];
     [cell layoutIfNeeded];
+    [cell setNeedsUpdateConstraints];
+    [cell updateConstraintsIfNeeded];
     
     CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+    
     height += 1; // Round up
+
     return height;
 }
 
@@ -199,6 +239,16 @@
     
     // Push it
     [self.navigationController pushViewController:self.webViewController animated:YES];
+}
+
+-(NSString*)convertDateToRelativeDate:(NSString*)date {;
+    NSString *origDate = date;
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"];
+    NSDate *origDateAsDate = [formatter dateFromString: origDate];
+    NSString *relativeDate = [[SORelativeDateTransformer registeredTransformer] transformedValue: origDateAsDate];
+    
+    return relativeDate;
 }
 
 @end

@@ -11,10 +11,14 @@
 #import "PBWebViewController.h"
 
 @interface DetailViewController : UITableViewController <TTTAttributedLabelDelegate,UITableViewDataSource> {
+    IBOutlet UIView *emptyView;
 }
 
 @property (strong, nonatomic) NSMutableArray *comments;
 @property (strong, nonatomic) NSMutableArray *flatComments;
+@property (strong, nonatomic) NSMutableArray *flatUsers;
+@property (strong, nonatomic) NSMutableArray *flatTime;
+@property (strong, nonatomic) NSMutableArray *commentDepth;
 @property (weak, nonatomic) NSMutableArray *heights;
 @property (strong, nonatomic) PBWebViewController *webViewController;
 
