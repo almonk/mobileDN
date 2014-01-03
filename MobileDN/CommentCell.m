@@ -7,7 +7,6 @@
 //
 
 #import "CommentCell.h"
-#import <TTTAttributedLabel.h>
 
 @implementation CommentCell
 

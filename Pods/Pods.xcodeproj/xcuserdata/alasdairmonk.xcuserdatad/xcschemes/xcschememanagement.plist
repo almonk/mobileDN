@@ -29,17 +29,7 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-STTweetLabel.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>Pods-SVPullToRefresh.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-TTTAttributedLabel.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -57,52 +47,42 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>0BA62AE0411547D098048C13</key>
+		<key>0CD18CB548E943E792783CEF</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>458E4FA3C0CB4ADFBC2837BD</key>
+		<key>4325EBD09639428A840EEABB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>482198B3AC744F36BBD7622E</key>
+		<key>76D97EB89C4C456FA81B61E1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>6A27D874E1054D3C8D2E59D9</key>
+		<key>7E1B3F5D19E24E39B6C1C51D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>8C7300433BDE47709D2ABC86</key>
+		<key>7FBC615995764C0986BD764E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A69EACF4895F4DC4B3741629</key>
+		<key>99D14DB1A4B248F09F6F2943</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B1CA4E63FC43401491B449E8</key>
+		<key>EA3630D442C641D0938E730D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C6636397FEB94EF6A2361322</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>F9DE20F1BBD54528A7F36FB6</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>FEA26A05473A41D48ECE6DCE</key>
+		<key>F1942CDD313C457AB60040B8</key>
 		<dict>
 			<key>primary</key>
 			<true/>

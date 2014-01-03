@@ -9,7 +9,6 @@
 #import "DetailViewController.h"
 #import <AFNetworking.h>
 #import "MMMarkdown.h"
-#import <TTTAttributedLabel.h>
 #import "PBWebViewController.h"
 #import <PBSafariActivity.h>
 #import <SORelativeDateTransformer.h>
@@ -127,7 +126,7 @@
     commentBody.userInteractionEnabled = YES;
     
     commentBody.font = [UIFont fontWithName:@"Avenir" size:16.0f];
-    commentBody.preferredMaxLayoutWidth = 269 - indentPoints;
+    commentBody.preferredMaxLayoutWidth = 280 - indentPoints; // <<<<< ALL THE MAGIC
 
     UILabel *usernameMeta;
     usernameMeta = (UILabel *)[cell viewWithTag:2];
@@ -147,22 +146,6 @@
     // Return NO if you do not want the specified item to be editable.
     return NO;
 }
-
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
- {
- }
- */
-
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -194,10 +177,6 @@
     CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
     
     return ceil(height) + 1;
-}
-
-+ (float)heightForAttributedString:(NSAttributedString *)attributedString inSize:(CGSize)size {
-    return ceilf([attributedString boundingRectWithSize:size options:NSStringDrawingUsesLineFragmentOrigin context:nil].size.height);
 }
 
 -(void)selectedLink:(NSString *)string

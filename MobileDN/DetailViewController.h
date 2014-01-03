@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <TTTAttributedLabel.h>
 #import "PBWebViewController.h"
+#import <AMAttributedHighlightLabel.h>
 
-@interface DetailViewController : UITableViewController <TTTAttributedLabelDelegate,UITableViewDataSource> {
+@interface DetailViewController : UITableViewController <UITableViewDataSource> {
     IBOutlet UIView *emptyView;
 }
 
