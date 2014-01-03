@@ -78,6 +78,12 @@
 #define COCOAPODS_VERSION_MINOR_SVPullToRefresh 4
 #define COCOAPODS_VERSION_PATCH_SVPullToRefresh 1
 
+// TTTAttributedLabel
+#define COCOAPODS_POD_AVAILABLE_TTTAttributedLabel
+#define COCOAPODS_VERSION_MAJOR_TTTAttributedLabel 1
+#define COCOAPODS_VERSION_MINOR_TTTAttributedLabel 8
+#define COCOAPODS_VERSION_PATCH_TTTAttributedLabel 0
+
 // UITableView-NXEmptyView
 #define COCOAPODS_POD_AVAILABLE_UITableView_NXEmptyView
 #define COCOAPODS_VERSION_MAJOR_UITableView_NXEmptyView 0

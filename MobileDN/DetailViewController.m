@@ -115,15 +115,14 @@
     NSUInteger indentLevel = [indentLevelRaw integerValue];
     float indentPoints = indentLevel * 25;
     
-    AMAttributedHighlightLabel *commentBody;
-    commentBody = (AMAttributedHighlightLabel *)[cell viewWithTag:1];
+    UILabel *commentBody;
+    commentBody = (UILabel *)[cell viewWithTag:1];
+    commentBody.userInteractionEnabled = YES;
     commentBody.numberOfLines = 0;
     
     //NSString *markdown = [tempDictionary valueForKey:@"body"];
     NSString *markdown = [self.flatComments objectAtIndex:indexPath.row];
-    [commentBody setString:markdown];
-    commentBody.delegate = self;
-    commentBody.userInteractionEnabled = YES;
+    commentBody.text = markdown;
     
     commentBody.font = [UIFont fontWithName:@"Avenir" size:16.0f];
     commentBody.preferredMaxLayoutWidth = 280 - indentPoints; // <<<<< ALL THE MAGIC
@@ -173,10 +172,18 @@
     NSString *markdown = [self.flatComments objectAtIndex:indexPath.row];
     commentBody.text = markdown;
     commentBody.preferredMaxLayoutWidth = 280 - indentPoints; // <<<<< ALL THE MAGIC
+    
+    [cell setNeedsLayout];
+    [cell layoutIfNeeded];
 
     CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
     
     return ceil(height) + 1;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 77;
 }
 
 -(void)selectedLink:(NSString *)string

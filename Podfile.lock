@@ -22,6 +22,7 @@ PODS:
   - RESideMenu (3.4)
   - SORelativeDateTransformer (1.1.10)
   - SVPullToRefresh (0.4.1)
+  - TTTAttributedLabel (1.8.0)
   - UITableView-NXEmptyView (0.1.4)
 
 DEPENDENCIES:
@@ -31,6 +32,7 @@ DEPENDENCIES:
   - RESideMenu
   - SORelativeDateTransformer
   - SVPullToRefresh
+  - TTTAttributedLabel
   - UITableView-NXEmptyView
 
 EXTERNAL SOURCES:
@@ -44,6 +46,7 @@ SPEC CHECKSUMS:
   RESideMenu: d8d6330052e0348718826045b912a1c71748357d
   SORelativeDateTransformer: eba9b9bcc290eb7c9754b9955ace59b890fa59f8
   SVPullToRefresh: 61a0e4bd12bd6f8e3465909810b0fbeb1a28d5f2
+  TTTAttributedLabel: cc759a194a485c1fdf2446bf2ee7a55bada1f08d
   UITableView-NXEmptyView: 034e5162ce7b8e3584d720d0d925c27ea7711220
 
 COCOAPODS: 0.28.0
