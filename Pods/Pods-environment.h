@@ -48,6 +48,12 @@
 #define COCOAPODS_VERSION_MINOR_AFNetworking_UIKit 0
 #define COCOAPODS_VERSION_PATCH_AFNetworking_UIKit 3
 
+// AMAttributedHighlightLabel
+#define COCOAPODS_POD_AVAILABLE_AMAttributedHighlightLabel
+#define COCOAPODS_VERSION_MAJOR_AMAttributedHighlightLabel 0
+#define COCOAPODS_VERSION_MINOR_AMAttributedHighlightLabel 0
+#define COCOAPODS_VERSION_PATCH_AMAttributedHighlightLabel 1
+
 // PBWebViewController
 #define COCOAPODS_POD_AVAILABLE_PBWebViewController
 #define COCOAPODS_VERSION_MAJOR_PBWebViewController 0

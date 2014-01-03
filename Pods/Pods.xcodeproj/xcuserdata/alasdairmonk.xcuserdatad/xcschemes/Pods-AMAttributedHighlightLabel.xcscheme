@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A69EACF4895F4DC4B3741629"
-               BuildableName = "libPods-SORelativeDateTransformer.a"
-               BlueprintName = "Pods-SORelativeDateTransformer"
+               BlueprintIdentifier = "FEA26A05473A41D48ECE6DCE"
+               BuildableName = "libPods-AMAttributedHighlightLabel.a"
+               BlueprintName = "Pods-AMAttributedHighlightLabel"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

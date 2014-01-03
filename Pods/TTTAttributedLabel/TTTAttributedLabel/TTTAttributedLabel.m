@@ -335,6 +335,21 @@ static inline CGSize CTFramesetterSuggestFrameSizeForAttributedStringWithConstra
     return self;
 }
 
+- (void)viewWillLayoutSubviews
+{
+    // Clear the preferred max layout width in case the text of the label is a single line taking less width than what would be taken from the constraints of the left and right edges to the label's superview
+    [self setPreferredMaxLayoutWidth:0.];
+}
+
+- (void)viewDidLayoutSubviews
+{
+    // Now that you know what the constraints gave you for the label's width, use that for the preferredMaxLayoutWidth—so you get the correct height for the layout
+    [self setPreferredMaxLayoutWidth:[self bounds].size.width];
+    
+    // And then layout again with the label's correct height.
+    [self layoutSubviews];
+}
+
 - (void)commonInit {
     self.userInteractionEnabled = YES;
     self.multipleTouchEnabled = NO;
