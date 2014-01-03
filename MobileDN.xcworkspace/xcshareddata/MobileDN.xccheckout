@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>052D4DE9-585A-4722-85A8-9F8010B29095</string>
+	<key>IDESourceControlProjectName</key>
+	<string>MobileDN</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>6F6DB39E-BD57-41CA-8A87-2408AE257E1E</key>
+		<string>ssh://github.com/almonk/mobileDN.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>MobileDN.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>6F6DB39E-BD57-41CA-8A87-2408AE257E1E</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/almonk/mobileDN.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>6F6DB39E-BD57-41CA-8A87-2408AE257E1E</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>6F6DB39E-BD57-41CA-8A87-2408AE257E1E</string>
+			<key>IDESourceControlWCCName</key>
+			<string>MobileDN</string>
+		</dict>
+	</array>
+</dict>
+</plist>
