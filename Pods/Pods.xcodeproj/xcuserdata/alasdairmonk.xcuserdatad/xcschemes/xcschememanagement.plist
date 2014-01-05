@@ -14,6 +14,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-NJKScrollFullScreen.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-PBWebViewController.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -52,47 +57,52 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>2501F2C175274B8B9A3BD45B</key>
+		<key>16E70C36A5AF469B8776CF16</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>558BFFB0FBFF4A96AB75565D</key>
+		<key>21529A1C30DC4056A91E66EB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>57FBE6F063214A2B9A365DFB</key>
+		<key>2353E9653F0645C18680D6F1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>582037890BAE483C994B66F7</key>
+		<key>3649B9E62683451E8CBF192A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7BF6E85827144267911C4999</key>
+		<key>3746BD2389944293A03B6A0F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BC444D244F7E4267A7705EAA</key>
+		<key>7989A72E8846436DADADCFC2</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D1FF37D7289C4C77A7281AD1</key>
+		<key>D2D228E0D8894C438A3BEB2B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E60F641BD78D4188974B11FE</key>
+		<key>D8B09BB1E0034589A0095438</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>EA0A75A0EDAB4AA793521E0D</key>
+		<key>E1263325C0734713B128753C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E6C495363BFB4243AB3C8502</key>
 		<dict>
 			<key>primary</key>
 			<true/>

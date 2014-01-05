@@ -54,6 +54,12 @@
 #define COCOAPODS_VERSION_MINOR_AMAttributedHighlightLabel 0
 #define COCOAPODS_VERSION_PATCH_AMAttributedHighlightLabel 1
 
+// NJKScrollFullScreen
+#define COCOAPODS_POD_AVAILABLE_NJKScrollFullScreen
+#define COCOAPODS_VERSION_MAJOR_NJKScrollFullScreen 0
+#define COCOAPODS_VERSION_MINOR_NJKScrollFullScreen 1
+#define COCOAPODS_VERSION_PATCH_NJKScrollFullScreen 0
+
 // PBWebViewController
 #define COCOAPODS_POD_AVAILABLE_PBWebViewController
 #define COCOAPODS_VERSION_MAJOR_PBWebViewController 0
