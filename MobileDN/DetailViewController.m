@@ -9,11 +9,11 @@
 #import "DetailViewController.h"
 #import <AFNetworking.h>
 #import "MMMarkdown.h"
-#import <TTTAttributedLabel.h>
 #import "PBWebViewController.h"
 #import <PBSafariActivity.h>
 #import <SORelativeDateTransformer.h>
 #import "UITableView+NXEmptyView.h"
+#import <AMAttributedHighlightLabel.h>
 
 @interface DetailViewController ()
 @end
@@ -112,46 +112,31 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
     NSString *indentLevelRaw = [_commentDepth objectAtIndex:indexPath.row];
+    NSUInteger indentLevel = [indentLevelRaw integerValue];
+    float indentPoints = indentLevel * 25;
     
-    TTTAttributedLabel *commentBody;
-    commentBody = (TTTAttributedLabel *)[cell viewWithTag:1];
-    commentBody.delegate = self;
-    commentBody.enabledTextCheckingTypes = NSTextCheckingTypeLink;
+    UILabel *commentBody;
+    commentBody = (UILabel *)[cell viewWithTag:1];
+    commentBody.userInteractionEnabled = YES;
+    commentBody.numberOfLines = 0;
+    
     //NSString *markdown = [tempDictionary valueForKey:@"body"];
     NSString *markdown = [self.flatComments objectAtIndex:indexPath.row];
-//    NSString *html = [MMMarkdown HTMLStringWithMarkdown:markdown error:nil];
-//    NSDictionary *options = @{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType};
-//    NSAttributedString *preview = [[NSAttributedString alloc] initWithData:[html dataUsingEncoding:NSUTF8StringEncoding] options:options documentAttributes:nil error:nil];
+    commentBody.text = markdown;
     
-    commentBody.text = [self.flatComments objectAtIndex:indexPath.row];;
-    [commentBody setText:markdown afterInheritingLabelAttributesAndConfiguringWithBlock:^ NSMutableAttributedString *(NSMutableAttributedString *mutableAttributedString) {
-
-        return mutableAttributedString;
-    }];
     commentBody.font = [UIFont fontWithName:@"Avenir" size:16.0f];
-    [commentBody sizeToFit];
+    commentBody.preferredMaxLayoutWidth = 280 - indentPoints; // <<<<< ALL THE MAGIC
 
     UILabel *usernameMeta;
     usernameMeta = (UILabel *)[cell viewWithTag:2];
     usernameMeta.text = [self.flatUsers objectAtIndex:indexPath.row];
-    
-    UIView *nestedLines;
-    nestedLines = (UIView *)[cell viewWithTag:5];
-    
-    if (indentLevelRaw == 0) {
-        nestedLines.hidden = YES;
-    }
     
     cell.indentationWidth = 25;
     
     UILabel *date;
     date = (UILabel *)[cell viewWithTag:3];
     date.text = [self convertDateToRelativeDate: [self.flatTime objectAtIndex:indexPath.row]];
-    
-    [cell setNeedsUpdateConstraints];
-    [cell updateConstraintsIfNeeded];
-    
-    commentBody.preferredMaxLayoutWidth = CGRectGetWidth(tableView.frame);
+
     return cell;
 }
 
@@ -160,22 +145,6 @@
     // Return NO if you do not want the specified item to be editable.
     return NO;
 }
-
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
- {
- }
- */
-
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -187,58 +156,42 @@
 
 }
 
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
-
-    cell.indentationWidth = 25;
     
     NSString *indentLevelRaw = [_commentDepth objectAtIndex:indexPath.row];
     NSUInteger indentLevel = [indentLevelRaw integerValue];
     float indentPoints = indentLevel * 25;
     
-    TTTAttributedLabel *commentBody;
-    commentBody = (TTTAttributedLabel *)[cell viewWithTag:1];
-    commentBody.delegate = self;
-    commentBody.enabledTextCheckingTypes = NSTextCheckingTypeLink;
+    UILabel *commentBody;
+    commentBody = (UILabel *)[cell viewWithTag:1];
+    
     //NSString *markdown = [tempDictionary valueForKey:@"body"];
     NSString *markdown = [self.flatComments objectAtIndex:indexPath.row];
-    //    NSString *html = [MMMarkdown HTMLStringWithMarkdown:markdown error:nil];
-    //    NSDictionary *options = @{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType};
-    //    NSAttributedString *preview = [[NSAttributedString alloc] initWithData:[html dataUsingEncoding:NSUTF8StringEncoding] options:options documentAttributes:nil error:nil];
-    
-    commentBody.text = [self.flatComments objectAtIndex:indexPath.row];;
-    [commentBody setText:markdown afterInheritingLabelAttributesAndConfiguringWithBlock:^ NSMutableAttributedString *(NSMutableAttributedString *mutableAttributedString) {
-        return mutableAttributedString;
-    }];
-    commentBody.font = [UIFont fontWithName:@"Avenir" size:16.0f];
-    [commentBody sizeToFit];
-    commentBody.preferredMaxLayoutWidth = (290 - indentPoints);
-    
-    NSLog(@"Comment body width = %f", commentBody.preferredMaxLayoutWidth);
+    commentBody.text = markdown;
+    commentBody.preferredMaxLayoutWidth = 280 - indentPoints; // <<<<< ALL THE MAGIC
     
     [cell setNeedsLayout];
     [cell layoutIfNeeded];
-    [cell setNeedsUpdateConstraints];
-    [cell updateConstraintsIfNeeded];
-    
-    CGFloat height = [commentBody systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-    
-    NSLog(@"Comment height = %f", height);
-    
-    return ceil(height += 80.f);
 
+    CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+    
+    return ceil(height) + 1;
 }
 
-+ (float)heightForAttributedString:(NSAttributedString *)attributedString inSize:(CGSize)size {
-    return ceilf([attributedString boundingRectWithSize:size options:NSStringDrawingUsesLineFragmentOrigin context:nil].size.height);
-}
-
-- (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url
+-(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    return 77;
+}
+
+-(void)selectedLink:(NSString *)string
+{
+    NSLog(@"Tap link");
     self.webViewController = [[PBWebViewController alloc] init];
     self.webViewController.view.backgroundColor = [UIColor whiteColor];
-    self.webViewController.URL = url;
+    self.webViewController.URL = [NSURL URLWithString: string];
     
     PBSafariActivity *activity = [[PBSafariActivity alloc] init];
     self.webViewController.applicationActivities = @[activity];

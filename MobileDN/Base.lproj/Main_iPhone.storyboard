@@ -45,7 +45,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qQE-Qf-Kix" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-544" y="730"/>
+            <point key="canvasLocation" x="-544" y="755"/>
         </scene>
         <!--Master View Controller - Master-->
         <scene sceneID="VgW-fR-Quf">
@@ -101,7 +101,7 @@
         <scene sceneID="dE4-9A-NxG">
             <objects>
                 <tableViewController storyboardIdentifier="DetailView" id="jdk-Vg-sjl" customClass="DetailViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Hwj-jI-C79">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="77" sectionHeaderHeight="22" sectionFooterHeight="22" id="Hwj-jI-C79">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -110,20 +110,27 @@
                                 <rect key="frame" x="0.0" y="22" width="320" height="77"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Xmy-D7-uwB" id="3UD-Bo-q2U">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="77"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="76"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="291" translatesAutoresizingMaskIntoConstraints="NO" id="xyH-iN-2fo" customClass="TTTAttributedLabel">
-                                            <rect key="frame" x="15" y="36" width="291" height="21"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="291" placeholderIntrinsicHeight="26" usesAttributedText="YES" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="291" translatesAutoresizingMaskIntoConstraints="NO" id="xyH-iN-2fo">
+                                            <rect key="frame" x="15" y="34" width="291" height="26"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <accessibility key="accessibilityConfiguration">
                                                 <accessibilityTraits key="traits" none="YES"/>
                                             </accessibility>
-                                            <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="16"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <attributedString key="attributedText">
+                                                <fragment content="Nunc id erat nec arcu eleifend tempus">
+                                                    <attributes>
+                                                        <color key="NSColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                        <font key="NSFont" size="16" name="Avenir-Book"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="160" translatesAutoresizingMaskIntoConstraints="NO" id="mJQ-5X-fVX">
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="160" translatesAutoresizingMaskIntoConstraints="NO" id="mJQ-5X-fVX">
                                             <rect key="frame" x="15" y="11" width="160" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <accessibility key="accessibilityConfiguration">
@@ -135,40 +142,25 @@
                                             <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="15"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="141" translatesAutoresizingMaskIntoConstraints="NO" id="f7U-Cz-crm">
-                                            <rect key="frame" x="165" y="11" width="141" height="21"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="141" translatesAutoresizingMaskIntoConstraints="NO" id="f7U-Cz-crm">
+                                            <rect key="frame" x="163" y="11" width="141" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <accessibility key="accessibilityConfiguration">
                                                 <accessibilityTraits key="traits" none="YES" staticText="YES" notEnabled="YES"/>
                                             </accessibility>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="141" id="KTY-TP-fXn"/>
-                                            </constraints>
                                             <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="15"/>
                                             <color key="textColor" red="0.59215688710000003" green="0.62745100259999997" blue="0.67450982329999998" alpha="1" colorSpace="deviceRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <view tag="5" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Otk-Ml-rFE">
-                                            <rect key="frame" x="0.0" y="0.0" width="3" height="57"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <color key="backgroundColor" red="0.92549026012420654" green="0.93333339691162109" blue="0.94509810209274292" alpha="1" colorSpace="deviceRGB"/>
-                                        </view>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="xyH-iN-2fo" secondAttribute="trailing" constant="14" id="1BK-hu-mgl"/>
-                                        <constraint firstAttribute="trailing" secondItem="f7U-Cz-crm" secondAttribute="trailing" constant="14" id="1fk-Pl-PLr"/>
-                                        <constraint firstItem="f7U-Cz-crm" firstAttribute="top" secondItem="3UD-Bo-q2U" secondAttribute="top" constant="11" id="BzE-bv-HKp"/>
-                                        <constraint firstAttribute="bottom" secondItem="Otk-Ml-rFE" secondAttribute="bottom" constant="20" id="Fnw-7R-QgA"/>
-                                        <constraint firstItem="xyH-iN-2fo" firstAttribute="leading" secondItem="3UD-Bo-q2U" secondAttribute="leading" constant="15" id="Kg6-55-XUj"/>
-                                        <constraint firstItem="mJQ-5X-fVX" firstAttribute="leading" secondItem="3UD-Bo-q2U" secondAttribute="leading" constant="15" id="PVH-ww-gTp"/>
-                                        <constraint firstAttribute="bottom" secondItem="xyH-iN-2fo" secondAttribute="bottom" constant="17" id="QHe-y1-rTw"/>
-                                        <constraint firstItem="xyH-iN-2fo" firstAttribute="top" secondItem="3UD-Bo-q2U" secondAttribute="top" constant="38" id="cXY-iB-JRZ"/>
-                                        <constraint firstItem="Otk-Ml-rFE" firstAttribute="leading" secondItem="3UD-Bo-q2U" secondAttribute="leading" id="fT2-51-Dmh"/>
-                                        <constraint firstItem="Otk-Ml-rFE" firstAttribute="top" secondItem="3UD-Bo-q2U" secondAttribute="top" id="kOt-ob-6Se"/>
-                                        <constraint firstItem="mJQ-5X-fVX" firstAttribute="top" secondItem="3UD-Bo-q2U" secondAttribute="top" constant="11" id="uzA-CC-RdV"/>
+                                        <constraint firstAttribute="trailing" secondItem="f7U-Cz-crm" secondAttribute="trailing" constant="16" id="0j6-yN-bcj"/>
+                                        <constraint firstAttribute="trailing" secondItem="xyH-iN-2fo" secondAttribute="trailing" constant="14" id="94X-fS-FqZ"/>
+                                        <constraint firstItem="xyH-iN-2fo" firstAttribute="top" secondItem="3UD-Bo-q2U" secondAttribute="top" constant="34" id="aNu-3Q-OnG"/>
+                                        <constraint firstItem="xyH-iN-2fo" firstAttribute="leading" secondItem="3UD-Bo-q2U" secondAttribute="leading" constant="15" id="f7j-eA-4Jb"/>
+                                        <constraint firstAttribute="bottom" secondItem="xyH-iN-2fo" secondAttribute="bottom" constant="16" id="hix-vH-Wsu"/>
                                     </constraints>
                                 </tableViewCellContentView>
-                                <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                             </tableViewCell>
                         </prototypes>
                         <connections>

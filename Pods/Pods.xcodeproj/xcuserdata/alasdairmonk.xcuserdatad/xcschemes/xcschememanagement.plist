@@ -9,6 +9,16 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-AMAttributedHighlightLabel.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-NJKScrollFullScreen.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-PBWebViewController.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -20,11 +30,6 @@
 			<false/>
 		</dict>
 		<key>Pods-SORelativeDateTransformer.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-STTweetLabel.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -52,102 +57,52 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>04E3CB251E814869B9ACD0BB</key>
+		<key>16E70C36A5AF469B8776CF16</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>07F4084EBD1B42C79A2BF672</key>
+		<key>21529A1C30DC4056A91E66EB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>092A8D59847C4213A69CF157</key>
+		<key>2353E9653F0645C18680D6F1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>1445DF1B056C44098FAE3710</key>
+		<key>3649B9E62683451E8CBF192A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>1D0914D9E8C34269A820B562</key>
+		<key>3746BD2389944293A03B6A0F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>267EC682E563495CA55DDCD8</key>
+		<key>7989A72E8846436DADADCFC2</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>30705AEF09D24E80AE87B1EA</key>
+		<key>D2D228E0D8894C438A3BEB2B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>32E298861DDF45E5A20A423F</key>
+		<key>D8B09BB1E0034589A0095438</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>345D1E19D28D420EB989D841</key>
+		<key>E1263325C0734713B128753C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>3AAF08028B604C80AA4FD401</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>410C8EEC9EFB4151AE09F1DC</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>4C62D051D4584E0280B2B8B6</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>75057D6EF43F4AF59949B259</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>836D9D47BE1742BDBF4EA2C7</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>892B1B0B32384905B0739BC2</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>9EFC4FECD6B4423A8C3356B2</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>B42AF312D13E4C589D6137CC</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>BA26409E3676440B843FA628</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>C353C9F54AA64B4A8D4CEB55</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>FA28FFD9DBA74D0898C03182</key>
+		<key>E6C495363BFB4243AB3C8502</key>
 		<dict>
 			<key>primary</key>
 			<true/>

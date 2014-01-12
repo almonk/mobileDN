@@ -1,1 +1,0 @@
-../../STTweetLabel/STTweetLabel/STTweetTextStorage.h

@@ -48,6 +48,18 @@
 #define COCOAPODS_VERSION_MINOR_AFNetworking_UIKit 0
 #define COCOAPODS_VERSION_PATCH_AFNetworking_UIKit 3
 
+// AMAttributedHighlightLabel
+#define COCOAPODS_POD_AVAILABLE_AMAttributedHighlightLabel
+#define COCOAPODS_VERSION_MAJOR_AMAttributedHighlightLabel 0
+#define COCOAPODS_VERSION_MINOR_AMAttributedHighlightLabel 0
+#define COCOAPODS_VERSION_PATCH_AMAttributedHighlightLabel 1
+
+// NJKScrollFullScreen
+#define COCOAPODS_POD_AVAILABLE_NJKScrollFullScreen
+#define COCOAPODS_VERSION_MAJOR_NJKScrollFullScreen 0
+#define COCOAPODS_VERSION_MINOR_NJKScrollFullScreen 1
+#define COCOAPODS_VERSION_PATCH_NJKScrollFullScreen 0
+
 // PBWebViewController
 #define COCOAPODS_POD_AVAILABLE_PBWebViewController
 #define COCOAPODS_VERSION_MAJOR_PBWebViewController 0
@@ -65,12 +77,6 @@
 #define COCOAPODS_VERSION_MAJOR_SORelativeDateTransformer 1
 #define COCOAPODS_VERSION_MINOR_SORelativeDateTransformer 1
 #define COCOAPODS_VERSION_PATCH_SORelativeDateTransformer 10
-
-// STTweetLabel
-#define COCOAPODS_POD_AVAILABLE_STTweetLabel
-#define COCOAPODS_VERSION_MAJOR_STTweetLabel 3
-#define COCOAPODS_VERSION_MINOR_STTweetLabel 1
-#define COCOAPODS_VERSION_PATCH_STTweetLabel 2
 
 // SVPullToRefresh
 #define COCOAPODS_POD_AVAILABLE_SVPullToRefresh
