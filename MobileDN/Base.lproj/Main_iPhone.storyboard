@@ -4,12 +4,11 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <scenes>
-        <!--Navigation Controller - Top stories-->
+        <!--Nav Controller - Top stories-->
         <scene sceneID="cUi-kZ-frf">
             <objects>
-                <navigationController id="rS3-R9-Ivy" sceneMemberID="viewController">
+                <navigationController id="rS3-R9-Ivy" customClass="DNNavController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Top stories" image="star.png" id="845-SQ-u2q"/>
-                    <nil key="simulatedStatusBarMetrics"/>
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="yXu-0R-QUA">
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -58,7 +57,7 @@
                         <color key="sectionIndexTrackingBackgroundColor" red="0.92549026010000002" green="0.93333339689999995" blue="0.9450981021" alpha="1" colorSpace="deviceRGB"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="89" id="m0d-ak-lc9">
-                                <rect key="frame" x="0.0" y="66" width="320" height="89"/>
+                                <rect key="frame" x="0.0" y="86" width="320" height="89"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="m0d-ak-lc9" id="F4s-2B-zPn">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="88"/>
@@ -92,6 +91,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Top stories" id="tQt-TN-PWz"/>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Cn-md-YlS" sceneMemberID="firstResponder"/>
             </objects>
@@ -191,10 +191,10 @@
             </objects>
             <point key="canvasLocation" x="898" y="64"/>
         </scene>
-        <!--Navigation Controller - Recent stories-->
+        <!--Nav Controller - Recent stories-->
         <scene sceneID="FNu-tM-I0d">
             <objects>
-                <navigationController id="9hp-op-P2x" sceneMemberID="viewController">
+                <navigationController id="9hp-op-P2x" customClass="DNNavController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Recent stories" image="recent.png" id="JLE-53-owj"/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="6tk-GH-7eY">
@@ -210,10 +210,10 @@
             </objects>
             <point key="canvasLocation" x="-1" y="755"/>
         </scene>
-        <!--Navigation Controller - Search-->
+        <!--Nav Controller - Search-->
         <scene sceneID="qI9-KW-kx5">
             <objects>
-                <navigationController id="yN4-pR-voU" sceneMemberID="viewController">
+                <navigationController id="yN4-pR-voU" customClass="DNNavController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Search" image="search.png" id="Txj-UZ-bPM"/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="4hK-vM-0So">

@@ -8,6 +8,7 @@
 
 #import "PBWebViewController.h"
 #import "OvershareKit.h"
+#import "ProgressHUD.h"
 
 @interface PBWebViewController () <UIPopoverControllerDelegate, OSKPresentationViewControllers, OSKPresentationStyle,OSKPresentationColor>
 
@@ -215,48 +216,22 @@
 
 - (void)action:(id)sender
 {
-//    if (self.activitiyPopoverController.popoverVisible) {
-//        [self.activitiyPopoverController dismissPopoverAnimated:YES];
-//        return;
-//    }
-//    
-//    NSArray *activityItems;
-//    if (self.activityItems) {
-//        activityItems = [self.activityItems arrayByAddingObject:self.URL];
-//    } else {
-//        activityItems = @[self.URL];
-//    }
-//    
-//    UIActivityViewController *vc = [[UIActivityViewController alloc] initWithActivityItems:activityItems
-//                                                                     applicationActivities:self.applicationActivities];
-//    if (self.excludedActivityTypes) {
-//        vc.excludedActivityTypes = self.excludedActivityTypes;
-//    }
-//    
-//    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-//        [self presentViewController:vc animated:YES completion:NULL];
-//    } else {
-//        if (!self.activitiyPopoverController) {
-//            self.activitiyPopoverController = [[UIPopoverController alloc] initWithContentViewController:vc];
-//        }
-//        self.activitiyPopoverController.delegate = self;
-//        [self.activitiyPopoverController presentPopoverFromBarButtonItem:[self.toolbarItems lastObject]
-//                                                permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
-//    }
-    
-    NSString *saveUrl = [self.URL absoluteString];
-    
-    // 1) Create the shareable content from the user's source content.
-    OSKShareableContent *content = [OSKShareableContent contentFromMicroblogPost:@"Test"
-                                                                      authorName:nil
-                                                                    canonicalURL:saveUrl
-                                                                          images:nil];
+    OSKShareableContent *content = [OSKShareableContent contentFromURL: self.URL];
+    //[[OSKActivitiesManager sharedInstance] activityTypeIsAlwaysExcluded: [OSKActivityType_API_AppDotNet];
     
     OSKActivityCompletionHandler completionHandler = [self activityCompletionHandler];
     OSKPresentationEndingHandler dismissalHandler = [self dismissalHandler];
     
+    NSString *object1 = OSKActivityType_URLScheme_1Password_Browser;
+    NSString *object2 = OSKActivityType_API_AppDotNet;
+    NSString *object3 = OSKActivityType_URLScheme_1Password_Search;
+
+    NSArray *excludedActivities = [NSArray arrayWithObjects:object1, object2, object3, nil];
+    
     NSDictionary *options = @{    OSKPresentationOption_ActivityCompletionHandler : completionHandler,
-                                  OSKPresentationOption_PresentationEndingHandler : dismissalHandler};
+                                  OSKPresentationOption_PresentationEndingHandler : dismissalHandler,
+                                  OSKActivityOption_ExcludedTypes : excludedActivities,
+                            };
     
     // 4) Present the activity sheet via the presentation manager.
     [[OSKPresentationManager sharedInstance] presentActivitySheetForContent:content
@@ -267,7 +242,10 @@
 - (OSKActivityCompletionHandler)activityCompletionHandler {
     OSKActivityCompletionHandler activityCompletionHandler = ^(OSKActivity *activity, BOOL successful, NSError *error){
         if (successful) {
+            //[ProgressHUD showSuccess:@"Shared"];
+            NSLog(@"Shared succesfully");
         } else {
+            [ProgressHUD showError:@"An error ocurred while sharing"];
         }
     };
     return activityCompletionHandler;

@@ -15,6 +15,7 @@
 		2E50B95A1875CB20001B5485 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E50B9591875CB20001B5485 /* MasterViewController.m */; };
 		2E50B96D1875D404001B5485 /* comments.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E50B96B1875D404001B5485 /* comments.png */; };
 		2E50B96E1875D404001B5485 /* comments@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E50B96C1875D404001B5485 /* comments@2x.png */; };
+		2E58E63D1883083D003629C8 /* DNNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E58E63C1883083D003629C8 /* DNNavController.m */; };
 		2E81D5111882249C00EF0E19 /* PBWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E81D5101882249C00EF0E19 /* PBWebViewController.m */; };
 		2E81D514188224A400EF0E19 /* PBSafariActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E81D513188224A400EF0E19 /* PBSafariActivity.m */; };
 		2EBA21521871D70700D8C5EC /* star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2EBA214E1871D70700D8C5EC /* star@2x.png */; };
@@ -65,6 +66,8 @@
 		2E50B9591875CB20001B5485 /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
 		2E50B96B1875D404001B5485 /* comments.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = comments.png; sourceTree = "<group>"; };
 		2E50B96C1875D404001B5485 /* comments@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "comments@2x.png"; sourceTree = "<group>"; };
+		2E58E63B1883083D003629C8 /* DNNavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DNNavController.h; sourceTree = "<group>"; };
+		2E58E63C1883083D003629C8 /* DNNavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DNNavController.m; sourceTree = "<group>"; };
 		2E81D50F1882249C00EF0E19 /* PBWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBWebViewController.h; sourceTree = "<group>"; };
 		2E81D5101882249C00EF0E19 /* PBWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBWebViewController.m; sourceTree = "<group>"; };
 		2E81D512188224A400EF0E19 /* PBSafariActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBSafariActivity.h; sourceTree = "<group>"; };
@@ -141,13 +144,22 @@
 			path = ProgressHUD;
 			sourceTree = "<group>";
 		};
-		2E81D50E1882248500EF0E19 /* Vendor */ = {
+		2E58E63E18830898003629C8 /* PBWebViewController */ = {
 			isa = PBXGroup;
 			children = (
 				2E81D50F1882249C00EF0E19 /* PBWebViewController.h */,
 				2E81D5101882249C00EF0E19 /* PBWebViewController.m */,
 				2E81D512188224A400EF0E19 /* PBSafariActivity.h */,
 				2E81D513188224A400EF0E19 /* PBSafariActivity.m */,
+			);
+			name = PBWebViewController;
+			sourceTree = "<group>";
+		};
+		2E81D50E1882248500EF0E19 /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				2E58E63E18830898003629C8 /* PBWebViewController */,
+				2E4A7DC21872CE5600120796 /* ProgressHUD */,
 			);
 			name = Vendor;
 			sourceTree = "<group>";
@@ -191,19 +203,20 @@
 			children = (
 				2ED1AA51187069E00085209F /* AppDelegate.h */,
 				2ED1AA52187069E00085209F /* AppDelegate.m */,
-				2ED1AA54187069E00085209F /* Main_iPhone.storyboard */,
-				2ED1AA57187069E00085209F /* Main_iPad.storyboard */,
-				2ED1AA5A187069E00085209F /* MasterViewController.h */,
-				2E50B9591875CB20001B5485 /* MasterViewController.m */,
-				2ED1AA5D187069E00085209F /* DetailViewController.h */,
-				2ED1AA5E187069E00085209F /* DetailViewController.m */,
-				2EF232F01873126E0043D7AD /* SearchViewController.h */,
-				2EFA51F518731AFA002C0587 /* SearchViewController.m */,
-				2ED1AA60187069E00085209F /* Images.xcassets */,
-				2E4A7DC21872CE5600120796 /* ProgressHUD */,
-				2ED1AA49187069E00085209F /* Supporting Files */,
 				2E4A7DC81872E16E00120796 /* CommentCell.h */,
 				2E4A7DC91872E16E00120796 /* CommentCell.m */,
+				2ED1AA5D187069E00085209F /* DetailViewController.h */,
+				2ED1AA5E187069E00085209F /* DetailViewController.m */,
+				2E58E63B1883083D003629C8 /* DNNavController.h */,
+				2E58E63C1883083D003629C8 /* DNNavController.m */,
+				2ED1AA60187069E00085209F /* Images.xcassets */,
+				2ED1AA57187069E00085209F /* Main_iPad.storyboard */,
+				2ED1AA54187069E00085209F /* Main_iPhone.storyboard */,
+				2ED1AA5A187069E00085209F /* MasterViewController.h */,
+				2E50B9591875CB20001B5485 /* MasterViewController.m */,
+				2EF232F01873126E0043D7AD /* SearchViewController.h */,
+				2EFA51F518731AFA002C0587 /* SearchViewController.m */,
+				2ED1AA49187069E00085209F /* Supporting Files */,
 				2E81D50E1882248500EF0E19 /* Vendor */,
 			);
 			path = MobileDN;
@@ -400,6 +413,7 @@
 				2E4A7DC71872CE5600120796 /* ProgressHUD.m in Sources */,
 				2ED1AA4F187069E00085209F /* main.m in Sources */,
 				2ED1AA5F187069E00085209F /* DetailViewController.m in Sources */,
+				2E58E63D1883083D003629C8 /* DNNavController.m in Sources */,
 				2E81D514188224A400EF0E19 /* PBSafariActivity.m in Sources */,
 				2EFA51F618731AFA002C0587 /* SearchViewController.m in Sources */,
 				2E50B95A1875CB20001B5485 /* MasterViewController.m in Sources */,

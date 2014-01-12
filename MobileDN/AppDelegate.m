@@ -8,6 +8,8 @@
 
 #import "AppDelegate.h"
 #import "OSKADNLoginManager.h"
+#import <OSKActivitiesManager.h>
+#import <OSKActivity.h>
 #import "PocketAPI.h"
 
 @implementation AppDelegate
@@ -37,6 +39,10 @@
     [[UINavigationBar appearance] setShadowImage:[[UIImage alloc] init]];
 
     return YES;
+}
+
+-(UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleLightContent;
 }
 			
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -68,10 +74,7 @@
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     BOOL success = NO;
-    if ([[OSKADNLoginManager sharedInstance] application:application openURL:url sourceApplication:sourceApplication annotation:annotation]) {
-        success = YES;
-    }
-    else if ([[PocketAPI sharedAPI] handleOpenURL:url]){
+    if ([[PocketAPI sharedAPI] handleOpenURL:url]){
         success = YES;
     }
     else {
