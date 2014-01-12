@@ -15,6 +15,8 @@
 		2E50B95A1875CB20001B5485 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E50B9591875CB20001B5485 /* MasterViewController.m */; };
 		2E50B96D1875D404001B5485 /* comments.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E50B96B1875D404001B5485 /* comments.png */; };
 		2E50B96E1875D404001B5485 /* comments@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E50B96C1875D404001B5485 /* comments@2x.png */; };
+		2E81D5111882249C00EF0E19 /* PBWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E81D5101882249C00EF0E19 /* PBWebViewController.m */; };
+		2E81D514188224A400EF0E19 /* PBSafariActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E81D513188224A400EF0E19 /* PBSafariActivity.m */; };
 		2EBA21521871D70700D8C5EC /* star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2EBA214E1871D70700D8C5EC /* star@2x.png */; };
 		2EBA21531871D70700D8C5EC /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 2EBA214F1871D70700D8C5EC /* star.png */; };
 		2EBA21541871D70700D8C5EC /* recent@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2EBA21501871D70700D8C5EC /* recent@2x.png */; };
@@ -63,6 +65,10 @@
 		2E50B9591875CB20001B5485 /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
 		2E50B96B1875D404001B5485 /* comments.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = comments.png; sourceTree = "<group>"; };
 		2E50B96C1875D404001B5485 /* comments@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "comments@2x.png"; sourceTree = "<group>"; };
+		2E81D50F1882249C00EF0E19 /* PBWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBWebViewController.h; sourceTree = "<group>"; };
+		2E81D5101882249C00EF0E19 /* PBWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBWebViewController.m; sourceTree = "<group>"; };
+		2E81D512188224A400EF0E19 /* PBSafariActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBSafariActivity.h; sourceTree = "<group>"; };
+		2E81D513188224A400EF0E19 /* PBSafariActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBSafariActivity.m; sourceTree = "<group>"; };
 		2EBA214E1871D70700D8C5EC /* star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star@2x.png"; sourceTree = "<group>"; };
 		2EBA214F1871D70700D8C5EC /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
 		2EBA21501871D70700D8C5EC /* recent@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recent@2x.png"; sourceTree = "<group>"; };
@@ -135,6 +141,17 @@
 			path = ProgressHUD;
 			sourceTree = "<group>";
 		};
+		2E81D50E1882248500EF0E19 /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				2E81D50F1882249C00EF0E19 /* PBWebViewController.h */,
+				2E81D5101882249C00EF0E19 /* PBWebViewController.m */,
+				2E81D512188224A400EF0E19 /* PBSafariActivity.h */,
+				2E81D513188224A400EF0E19 /* PBSafariActivity.m */,
+			);
+			name = Vendor;
+			sourceTree = "<group>";
+		};
 		2ED1AA36187069E00085209F = {
 			isa = PBXGroup;
 			children = (
@@ -187,6 +204,7 @@
 				2ED1AA49187069E00085209F /* Supporting Files */,
 				2E4A7DC81872E16E00120796 /* CommentCell.h */,
 				2E4A7DC91872E16E00120796 /* CommentCell.m */,
+				2E81D50E1882248500EF0E19 /* Vendor */,
 			);
 			path = MobileDN;
 			sourceTree = "<group>";
@@ -382,8 +400,10 @@
 				2E4A7DC71872CE5600120796 /* ProgressHUD.m in Sources */,
 				2ED1AA4F187069E00085209F /* main.m in Sources */,
 				2ED1AA5F187069E00085209F /* DetailViewController.m in Sources */,
+				2E81D514188224A400EF0E19 /* PBSafariActivity.m in Sources */,
 				2EFA51F618731AFA002C0587 /* SearchViewController.m in Sources */,
 				2E50B95A1875CB20001B5485 /* MasterViewController.m in Sources */,
+				2E81D5111882249C00EF0E19 /* PBWebViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

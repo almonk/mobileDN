@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Pods-ADNLogin.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-AFNetworking.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -14,12 +19,12 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-NJKScrollFullScreen.xcscheme</key>
+		<key>Pods-OvershareKit.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-PBWebViewController.xcscheme</key>
+		<key>Pods-PocketAPI.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -57,52 +62,57 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>16E70C36A5AF469B8776CF16</key>
+		<key>211975238D2F473483E574D5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>21529A1C30DC4056A91E66EB</key>
+		<key>2BE50467856E4329B120E0A1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>2353E9653F0645C18680D6F1</key>
+		<key>32BBE67CC69F44079941756C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>3649B9E62683451E8CBF192A</key>
+		<key>36DF4AFC1EE345CCA12B051B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>3746BD2389944293A03B6A0F</key>
+		<key>41784D370C2343BE85CB3066</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7989A72E8846436DADADCFC2</key>
+		<key>6D56C37BF35849899BD3A4DF</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D2D228E0D8894C438A3BEB2B</key>
+		<key>70FEB21831224CDB9A8EC028</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D8B09BB1E0034589A0095438</key>
+		<key>B789D48C9DAD47F489E4ADFA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E1263325C0734713B128753C</key>
+		<key>DBFE6345660948A6A1976148</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E6C495363BFB4243AB3C8502</key>
+		<key>E7BE8B64BA2E42C38A704567</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FB56CE04BBB54F309B4BF9BF</key>
 		<dict>
 			<key>primary</key>
 			<true/>

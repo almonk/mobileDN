@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <PBWebViewController.h>
+#import "PBWebViewController.h"
 #import "DetailViewController.h"
 
 @interface SearchViewController : UITableViewController {

@@ -10,7 +10,7 @@
 #import <AFNetworking.h>
 #import "MMMarkdown.h"
 #import "PBWebViewController.h"
-#import <PBSafariActivity.h>
+#import "PBSafariActivity.h"
 #import <SORelativeDateTransformer.h>
 #import "UITableView+NXEmptyView.h"
 #import <AMAttributedHighlightLabel.h>

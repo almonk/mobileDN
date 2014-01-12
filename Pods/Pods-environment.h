@@ -6,6 +6,12 @@
 // project.
 
 
+// ADNLogin
+#define COCOAPODS_POD_AVAILABLE_ADNLogin
+#define COCOAPODS_VERSION_MAJOR_ADNLogin 2
+#define COCOAPODS_VERSION_MINOR_ADNLogin 1
+#define COCOAPODS_VERSION_PATCH_ADNLogin 0
+
 // AFNetworking
 #define COCOAPODS_POD_AVAILABLE_AFNetworking
 #define COCOAPODS_VERSION_MAJOR_AFNetworking 2
@@ -54,17 +60,18 @@
 #define COCOAPODS_VERSION_MINOR_AMAttributedHighlightLabel 0
 #define COCOAPODS_VERSION_PATCH_AMAttributedHighlightLabel 1
 
-// NJKScrollFullScreen
-#define COCOAPODS_POD_AVAILABLE_NJKScrollFullScreen
-#define COCOAPODS_VERSION_MAJOR_NJKScrollFullScreen 0
-#define COCOAPODS_VERSION_MINOR_NJKScrollFullScreen 1
-#define COCOAPODS_VERSION_PATCH_NJKScrollFullScreen 0
+// OvershareKit
+#define COCOAPODS_POD_AVAILABLE_OvershareKit
+// This library does not follow semantic-versioning,
+// so we were not able to define version macros.
+// Please contact the author.
+// Version: 1.0.6.1.
 
-// PBWebViewController
-#define COCOAPODS_POD_AVAILABLE_PBWebViewController
-#define COCOAPODS_VERSION_MAJOR_PBWebViewController 0
-#define COCOAPODS_VERSION_MINOR_PBWebViewController 1
-#define COCOAPODS_VERSION_PATCH_PBWebViewController 0
+// PocketAPI
+#define COCOAPODS_POD_AVAILABLE_PocketAPI
+#define COCOAPODS_VERSION_MAJOR_PocketAPI 1
+#define COCOAPODS_VERSION_MINOR_PocketAPI 0
+#define COCOAPODS_VERSION_PATCH_PocketAPI 2
 
 // RESideMenu
 #define COCOAPODS_POD_AVAILABLE_RESideMenu
