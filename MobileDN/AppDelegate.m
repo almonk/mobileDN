@@ -30,7 +30,7 @@
         nil] forState:UIControlStateNormal];
     
     [[UINavigationBar appearance] setShadowImage:[[UIImage alloc] init]];
-    
+
     return YES;
 }
 			

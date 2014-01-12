@@ -73,7 +73,6 @@
 #pragma mark - DN specific
 
 -(IBAction)loadFrontPage:(id)sender {
-//    [ProgressHUD show:@"Loading..."];
     NSString *queryUrl = @"";
     
     if ([self.navigationItem.title isEqualToString:@"Top stories"]) {
