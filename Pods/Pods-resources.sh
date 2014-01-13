@@ -41,6 +41,10 @@ install_resource()
       ;;
   esac
 }
+install_resource "CJMTwitterFollowButton/CJMTwitterFollowButton/Resources/CJMFollowMeButtonLarge.png"
+install_resource "CJMTwitterFollowButton/CJMTwitterFollowButton/Resources/CJMFollowMeButtonLarge@2x.png"
+install_resource "CJMTwitterFollowButton/CJMTwitterFollowButton/Resources/CJMFollowMeButtonSmall.png"
+install_resource "CJMTwitterFollowButton/CJMTwitterFollowButton/Resources/CJMFollowMeButtonSmall@2x.png"
 install_resource "OvershareKit/Overshare Kit/Images/1Password-Icon-120.png"
 install_resource "OvershareKit/Overshare Kit/Images/1Password-Icon-60@2x.png"
 install_resource "OvershareKit/Overshare Kit/Images/1Password-Icon-76.png"

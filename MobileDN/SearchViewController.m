@@ -32,7 +32,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [searchBar becomeFirstResponder];
     searchBar.delegate = self;
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     [self.tableView addGestureRecognizer:gestureRecognizer];

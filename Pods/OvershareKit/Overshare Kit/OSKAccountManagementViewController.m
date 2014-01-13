@@ -82,7 +82,7 @@ static NSString * OSKAccountManagementHeaderViewIdentifier = @"OSKAccountManagem
 @end
 
 #define ACCOUNTS_SECTION 0
-#define TOGGLE_SECTION 1
+#define TOGGLE_SECTION 0
 
 @implementation OSKAccountManagementViewController
 
@@ -104,7 +104,7 @@ static NSString * OSKAccountManagementHeaderViewIdentifier = @"OSKAccountManagem
     NSMutableArray *classes = [[NSMutableArray alloc] init];
     
     NSMutableSet *defaultClasses = [NSMutableSet set];
-    [defaultClasses addObject:[OSKAppDotNetActivity class]];
+//    [defaultClasses addObject:[OSKAppDotNetActivity class]];
     [defaultClasses addObject:[OSKInstapaperActivity class]];
     [defaultClasses addObject:[OSKPocketActivity class]];
     [defaultClasses addObject:[OSKReadabilityActivity class]];

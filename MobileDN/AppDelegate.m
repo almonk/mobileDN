@@ -35,8 +35,6 @@
     [[UIBarButtonItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
         [UIFont fontWithName:@"Avenir" size:18.0f], NSFontAttributeName,
         nil] forState:UIControlStateNormal];
-    
-    [[UINavigationBar appearance] setShadowImage:[[UIImage alloc] init]];
 
     return YES;
 }

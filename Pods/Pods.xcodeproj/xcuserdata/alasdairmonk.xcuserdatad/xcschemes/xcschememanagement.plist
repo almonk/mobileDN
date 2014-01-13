@@ -19,6 +19,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-CJMTwitterFollowButton.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-OvershareKit.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -62,57 +67,62 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>211975238D2F473483E574D5</key>
+		<key>2AAD3EFF1E0C4B48AAEA0509</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>2BE50467856E4329B120E0A1</key>
+		<key>3B0CBCCCD86E4269BF10336E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>32BBE67CC69F44079941756C</key>
+		<key>45F0D8B1D24748FBBB7CA287</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>36DF4AFC1EE345CCA12B051B</key>
+		<key>5CA4F3B9F8F74E9E946C04F4</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>41784D370C2343BE85CB3066</key>
+		<key>61705B13888042D398DD6781</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>6D56C37BF35849899BD3A4DF</key>
+		<key>6FAC6294A0B4438D8081F91E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>70FEB21831224CDB9A8EC028</key>
+		<key>7DBB87D68AEE4CE3B7B91198</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B789D48C9DAD47F489E4ADFA</key>
+		<key>9138B4F36F474504B6460D94</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>DBFE6345660948A6A1976148</key>
+		<key>A0CDCC77E06045F3B607D232</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E7BE8B64BA2E42C38A704567</key>
+		<key>C8BF4272ACC04C7DB03B64C9</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>FB56CE04BBB54F309B4BF9BF</key>
+		<key>DD7B79803BCD40888A584D41</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EDFB8B18508B404D9DEED249</key>
 		<dict>
 			<key>primary</key>
 			<true/>

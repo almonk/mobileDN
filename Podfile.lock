@@ -19,6 +19,7 @@ PODS:
   - AFNetworking/UIKit (2.0.3):
     - AFNetworking/NSURLConnection
   - AMAttributedHighlightLabel (0.0.1)
+  - CJMTwitterFollowButton (0.1.0)
   - OvershareKit (1.0.6.1):
     - ADNLogin
     - PocketAPI
@@ -32,6 +33,7 @@ PODS:
 DEPENDENCIES:
   - AFNetworking (~> 2.0)
   - AMAttributedHighlightLabel
+  - CJMTwitterFollowButton (~> 0.1.0)
   - OvershareKit
   - RESideMenu
   - SORelativeDateTransformer
@@ -43,6 +45,7 @@ SPEC CHECKSUMS:
   ADNLogin: ee20dc7e648813104930d445054cc9780599d864
   AFNetworking: e499052cbf3d743e9bb727bb37adb9dc2547ba15
   AMAttributedHighlightLabel: fe668dddfcdabb2dcc32cec46d7371bcf845897c
+  CJMTwitterFollowButton: 962375d1e5a78f0ad05bb705189f6f995b551673
   OvershareKit: 4fcfe55604da823c0cd52415a15708bdcb92ede8
   PocketAPI: 2ed51391e6ea7a48c707528f782f5a2cb0eab80e
   RESideMenu: d8d6330052e0348718826045b912a1c71748357d

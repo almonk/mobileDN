@@ -60,6 +60,12 @@
 #define COCOAPODS_VERSION_MINOR_AMAttributedHighlightLabel 0
 #define COCOAPODS_VERSION_PATCH_AMAttributedHighlightLabel 1
 
+// CJMTwitterFollowButton
+#define COCOAPODS_POD_AVAILABLE_CJMTwitterFollowButton
+#define COCOAPODS_VERSION_MAJOR_CJMTwitterFollowButton 0
+#define COCOAPODS_VERSION_MINOR_CJMTwitterFollowButton 1
+#define COCOAPODS_VERSION_PATCH_CJMTwitterFollowButton 0
+
 // OvershareKit
 #define COCOAPODS_POD_AVAILABLE_OvershareKit
 // This library does not follow semantic-versioning,
