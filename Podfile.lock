@@ -1,4 +1,5 @@
 PODS:
+  - ADNLogin (2.1.0)
   - AFNetworking (2.0.3):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
@@ -18,8 +19,11 @@ PODS:
   - AFNetworking/UIKit (2.0.3):
     - AFNetworking/NSURLConnection
   - AMAttributedHighlightLabel (0.0.1)
-  - NJKScrollFullScreen (0.1)
-  - PBWebViewController (0.1)
+  - CJMTwitterFollowButton (0.1.0)
+  - OvershareKit (1.0.6.1):
+    - ADNLogin
+    - PocketAPI
+  - PocketAPI (1.0.2)
   - RESideMenu (3.4)
   - SORelativeDateTransformer (1.1.10)
   - SVPullToRefresh (0.4.1)
@@ -29,23 +33,21 @@ PODS:
 DEPENDENCIES:
   - AFNetworking (~> 2.0)
   - AMAttributedHighlightLabel
-  - NJKScrollFullScreen
-  - PBWebViewController (from `https://github.com/Palringo-Dev/PBWebViewController.git`)
+  - CJMTwitterFollowButton (~> 0.1.0)
+  - OvershareKit
   - RESideMenu
   - SORelativeDateTransformer
   - SVPullToRefresh
   - TTTAttributedLabel
   - UITableView-NXEmptyView
 
-EXTERNAL SOURCES:
-  PBWebViewController:
-    :git: https://github.com/Palringo-Dev/PBWebViewController.git
-
 SPEC CHECKSUMS:
+  ADNLogin: ee20dc7e648813104930d445054cc9780599d864
   AFNetworking: e499052cbf3d743e9bb727bb37adb9dc2547ba15
   AMAttributedHighlightLabel: fe668dddfcdabb2dcc32cec46d7371bcf845897c
-  NJKScrollFullScreen: c19623a3adac72c720375cb287e156f13e6afa55
-  PBWebViewController: 43d19eaaca585912bd09c420b822bdb957d3e77a
+  CJMTwitterFollowButton: 962375d1e5a78f0ad05bb705189f6f995b551673
+  OvershareKit: 4fcfe55604da823c0cd52415a15708bdcb92ede8
+  PocketAPI: 2ed51391e6ea7a48c707528f782f5a2cb0eab80e
   RESideMenu: d8d6330052e0348718826045b912a1c71748357d
   SORelativeDateTransformer: eba9b9bcc290eb7c9754b9955ace59b890fa59f8
   SVPullToRefresh: 61a0e4bd12bd6f8e3465909810b0fbeb1a28d5f2

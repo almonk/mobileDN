@@ -10,7 +10,7 @@
 #import "DetailViewController.h"
 #import <AFNetworking.h>
 #import "PBWebViewController.h"
-#import <PBSafariActivity.h>
+#import "PBSafariActivity.h"
 #import "ProgressHUD.h"
 #import "UIScrollView+SVInfiniteScrolling.h"
 

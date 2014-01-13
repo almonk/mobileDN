@@ -10,7 +10,7 @@
 #import "DetailViewController.h"
 #import <AFNetworking.h>
 #import "PBWebViewController.h"
-#import <PBSafariActivity.h>
+#import "PBSafariActivity.h"
 #import "ProgressHUD.h"
 #import "UIScrollView+SVInfiniteScrolling.h"
 
@@ -32,7 +32,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [searchBar becomeFirstResponder];
     searchBar.delegate = self;
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     [self.tableView addGestureRecognizer:gestureRecognizer];
