@@ -12,9 +12,13 @@
 #import "PBWebViewController.h"
 #import "PBSafariActivity.h"
 #import "ProgressHUD.h"
+#import "AppHelpers.h"
 #import "UIScrollView+SVInfiniteScrolling.h"
+#import <CRToast.h>
+#import <SVProgressHUD.h>
 
-@interface MasterViewController () {
+
+@interface MasterViewController () <MCSwipeTableViewCellDelegate> {
     NSMutableArray *_objects;
 }
 @end
@@ -73,6 +77,8 @@
 #pragma mark - DN specific
 
 -(IBAction)loadFrontPage:(id)sender {
+    AppHelpers *helper = [[AppHelpers alloc] init];
+    
     NSString *queryUrl = @"";
     
     if ([self.navigationItem.title isEqualToString:@"Top stories"]) {
@@ -113,7 +119,6 @@
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:queryUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"JSON: %@", responseObject);
         self.stories = [[NSMutableArray alloc] initWithArray:self.stories];
         [self.stories addObjectsFromArray:responseObject[@"stories"]];
         [self.tableView reloadData];
@@ -140,7 +145,21 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    static NSString *CellIdentifier = @"Cell";
+    
+    MCSwipeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    if (!cell) {
+        cell = [[MCSwipeTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+        
+        // iOS 7 separator
+        if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+            cell.separatorInset = UIEdgeInsetsZero;
+        }
+        
+        [cell setSelectionStyle:UITableViewCellSelectionStyleGray];
+        cell.contentView.backgroundColor = [UIColor whiteColor];
+    }
     
     NSDictionary *tempDictionary= [self.stories objectAtIndex:indexPath.row];
     
@@ -179,7 +198,38 @@
     cell.accessoryView = button;
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     
+    // Swipey bits
+    UIView *checkView = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"upvote.png"]];
+    UIColor *greenColor = [UIColor colorWithRed:0.102 green:0.659 blue:0.373 alpha:1.0];
+    
+    [cell setDelegate:self];
+    [cell setDefaultColor:[UIColor colorWithRed:0.925 green:0.933 blue:0.945 alpha:1.0]];
+    [cell setSwipeGestureWithView:checkView color:greenColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState1 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
+        NSLog(@"Upvote: %@", [tempDictionary valueForKey:@"id"]);
+        [SVProgressHUD showSuccessWithStatus:@"Upvoted"];
+    }];
+    
     return cell;
+}
+
+
+
+#pragma mark - MCSwipeTableViewCellDelegate
+
+
+// When the user starts swiping the cell this method is called
+- (void)swipeTableViewCellDidStartSwiping:(MCSwipeTableViewCell *)cell {
+    // NSLog(@"Did start swiping the cell!");
+}
+
+// When the user ends swiping the cell this method is called
+- (void)swipeTableViewCellDidEndSwiping:(MCSwipeTableViewCell *)cell {
+    // NSLog(@"Did end swiping the cell!");
+}
+
+// When the user is dragging, this method is called and return the dragged percentage from the border
+- (void)swipeTableViewCell:(MCSwipeTableViewCell *)cell didSwipeWithPercentage:(CGFloat)percentage {
+    // NSLog(@"Did swipe with percentage : %f", percentage);
 }
 
 - (void)accessoryButtonTapped:(UIControl *)button withEvent:(UIEvent *)event

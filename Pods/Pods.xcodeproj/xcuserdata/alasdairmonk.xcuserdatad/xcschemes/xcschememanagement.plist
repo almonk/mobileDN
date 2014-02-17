@@ -24,6 +24,16 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-CRToast.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-MCSwipeTableViewCell.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-OvershareKit.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -40,6 +50,11 @@
 			<false/>
 		</dict>
 		<key>Pods-SORelativeDateTransformer.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-SVProgressHUD.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -67,62 +82,77 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>2AAD3EFF1E0C4B48AAEA0509</key>
+		<key>1A398FBBAA6A40BE9BF1FE96</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>3B0CBCCCD86E4269BF10336E</key>
+		<key>21A9689B5E7B422EB4606878</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>45F0D8B1D24748FBBB7CA287</key>
+		<key>314174142DBA438AA4DFA8E7</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5CA4F3B9F8F74E9E946C04F4</key>
+		<key>562E1F3D6EC9480EB67488C6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>61705B13888042D398DD6781</key>
+		<key>575F8DEAFB9F4B989456B583</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>6FAC6294A0B4438D8081F91E</key>
+		<key>97531EE6F6CA4B3F953EEE0A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7DBB87D68AEE4CE3B7B91198</key>
+		<key>9E01860EAA6E44E6AD8E333A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9138B4F36F474504B6460D94</key>
+		<key>A8E8B125480D456280660CF3</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A0CDCC77E06045F3B607D232</key>
+		<key>AC06DEFB9F574D49BD749A4B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C8BF4272ACC04C7DB03B64C9</key>
+		<key>B150CA3AF6F74870B9E1DB83</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>DD7B79803BCD40888A584D41</key>
+		<key>BAD7E79B62AE42B4A3E07787</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>EDFB8B18508B404D9DEED249</key>
+		<key>C0309C9B3F814097A36E09DC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C33D0659089C4473812502A7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C72CE9EEE34F4FF5AAF21083</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F59F17340D8C44A98F136F29</key>
 		<dict>
 			<key>primary</key>
 			<true/>

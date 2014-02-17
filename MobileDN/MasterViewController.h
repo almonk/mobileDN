@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "PBWebViewController.h"
+#import <MCSwipeTableViewCell.h>
+
 
 @class DetailViewController;
 

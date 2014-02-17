@@ -66,6 +66,18 @@
 #define COCOAPODS_VERSION_MINOR_CJMTwitterFollowButton 1
 #define COCOAPODS_VERSION_PATCH_CJMTwitterFollowButton 0
 
+// CRToast
+#define COCOAPODS_POD_AVAILABLE_CRToast
+#define COCOAPODS_VERSION_MAJOR_CRToast 0
+#define COCOAPODS_VERSION_MINOR_CRToast 0
+#define COCOAPODS_VERSION_PATCH_CRToast 4
+
+// MCSwipeTableViewCell
+#define COCOAPODS_POD_AVAILABLE_MCSwipeTableViewCell
+#define COCOAPODS_VERSION_MAJOR_MCSwipeTableViewCell 2
+#define COCOAPODS_VERSION_MINOR_MCSwipeTableViewCell 1
+#define COCOAPODS_VERSION_PATCH_MCSwipeTableViewCell 0
+
 // OvershareKit
 #define COCOAPODS_POD_AVAILABLE_OvershareKit
 // This library does not follow semantic-versioning,
@@ -90,6 +102,12 @@
 #define COCOAPODS_VERSION_MAJOR_SORelativeDateTransformer 1
 #define COCOAPODS_VERSION_MINOR_SORelativeDateTransformer 1
 #define COCOAPODS_VERSION_PATCH_SORelativeDateTransformer 10
+
+// SVProgressHUD
+#define COCOAPODS_POD_AVAILABLE_SVProgressHUD
+#define COCOAPODS_VERSION_MAJOR_SVProgressHUD 1
+#define COCOAPODS_VERSION_MINOR_SVProgressHUD 0
+#define COCOAPODS_VERSION_PATCH_SVProgressHUD 0
 
 // SVPullToRefresh
 #define COCOAPODS_POD_AVAILABLE_SVPullToRefresh
