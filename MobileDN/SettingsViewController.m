@@ -8,6 +8,8 @@
 
 #import "SettingsViewController.h"
 #import <OvershareKit.h>
+#import <MTBlockAlertView.h>
+#import "AppHelpers.h"
 
 
 @interface SettingsViewController ()
@@ -35,6 +37,27 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(IBAction)signOut:(id)sender
+{
+    [MTBlockAlertView showWithTitle:@"Sign out"
+                            message:@"Are you sure you want to sign out?"
+                  cancelButtonTitle:@"Cancel"
+                   otherButtonTitle:@"Sign out"
+                     alertViewStyle:UIAlertViewStyleDefault
+                    completionBlock:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                        NSLog(@"Sign out Button: %ld", (long)buttonIndex);
+                        if (buttonIndex == 1) {
+                            AppHelpers* helper = [[AppHelpers alloc] init];
+                            [helper removeAuthToken];
+                            
+                            UIStoryboard *mainBoard = [UIStoryboard storyboardWithName:@"UserFlow" bundle:nil];
+                            UIViewController *vc = [mainBoard instantiateInitialViewController];
+                            
+                            [self presentViewController:vc animated:YES completion:nil];
+                        }
+                    }];
 }
 
 -(IBAction)showSharingSettings:(id)sender

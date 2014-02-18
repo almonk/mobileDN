@@ -39,7 +39,7 @@
 {
     AppHelpers *helper = [[AppHelpers alloc] init];
     
-    [SVProgressHUD showWithStatus:@"Signing in"];
+    [SVProgressHUD showWithStatus:@"Signing in" maskType:SVProgressHUDMaskTypeBlack];
     
     NSString *URLString = @"https://api-news.layervault.com/oauth/token";
     NSDictionary *parameters = @{@"grant_type": @"password", @"username" : [username text], @"password" : [password text], @"client_id" : @"18d55d3d8e6b6097b9403e8e59eaaf0fa8b89ab04f13bc50c4c1c12f19db820b", @"client_secret" : @"6b606c71e17addff1f16569a53e817fae745b943bcb693c2112dfa09dc58e618"};

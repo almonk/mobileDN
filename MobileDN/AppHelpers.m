@@ -26,7 +26,7 @@
 
 -(void)setAuthToken:(NSString*)token {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *bearerAndToken = [NSString stringWithFormat:@"%@ %@", @"bearer", token];
+    NSString *bearerAndToken = [NSString stringWithFormat:@"%@ %@", @"Bearer", token];
     [defaults setObject:bearerAndToken forKey:@"authToken"];
 }
 

@@ -11,7 +11,8 @@
 @interface SettingsViewController : UITableViewController {
 
 }
-    -(IBAction)showSharingSettings:(id)sender;
+-(IBAction)showSharingSettings:(id)sender;
+-(IBAction)signOut:(id)sender;
 
 
 @end

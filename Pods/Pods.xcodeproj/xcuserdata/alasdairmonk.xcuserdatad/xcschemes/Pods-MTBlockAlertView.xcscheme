@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "7097F0E144194F65A61E77B9"
-               BuildableName = "libPods-OvershareKit.a"
-               BlueprintName = "Pods-OvershareKit"
+               BlueprintIdentifier = "C15BFC207C8B44AFBF7AFA2A"
+               BuildableName = "libPods-MTBlockAlertView.a"
+               BlueprintName = "Pods-MTBlockAlertView"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

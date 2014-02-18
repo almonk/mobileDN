@@ -147,6 +147,8 @@
 {
     static NSString *CellIdentifier = @"Cell";
     
+    AppHelpers *helper = [[AppHelpers alloc] init];
+    
     MCSwipeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     if (!cell) {
@@ -206,7 +208,30 @@
     [cell setDefaultColor:[UIColor colorWithRed:0.925 green:0.933 blue:0.945 alpha:1.0]];
     [cell setSwipeGestureWithView:checkView color:greenColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState1 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
         NSLog(@"Upvote: %@", [tempDictionary valueForKey:@"id"]);
-        [SVProgressHUD showSuccessWithStatus:@"Upvoted"];
+        
+        NSString *upvoteUrl = [NSString stringWithFormat:@"https://api-news.layervault.com/api/v1/stories/%@/upvote", [tempDictionary valueForKey:@"id"]];
+        
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        [manager.requestSerializer setValue:[helper getAuthToken] forHTTPHeaderField:@"Authorization"];
+        [manager POST:upvoteUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [SVProgressHUD showSuccessWithStatus:@"Upvoted"];
+            
+            NSNumberFormatter * f = [[NSNumberFormatter alloc] init];
+            [f setNumberStyle:NSNumberFormatterDecimalStyle];
+            NSNumber *myNumber = [tempDictionary valueForKey:@"vote_count"];
+            int value = [myNumber intValue];
+            myNumber = [NSNumber numberWithInt:value + 1];
+            
+            NSString *metaDataText = [NSString stringWithFormat:@"%@ points from %@", [myNumber stringValue], [tempDictionary valueForKey:@"submitter_display_name"]];
+            
+            UILabel *metaData;
+            metaData = (UILabel *)[cell viewWithTag:2];
+            metaData.text = metaDataText;
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [SVProgressHUD showErrorWithStatus:@"Couldn't upvote"];
+            NSLog(@"Error: %@", error);
+        }];
+            
     }];
     
     return cell;

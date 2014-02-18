@@ -78,6 +78,12 @@
 #define COCOAPODS_VERSION_MINOR_MCSwipeTableViewCell 1
 #define COCOAPODS_VERSION_PATCH_MCSwipeTableViewCell 0
 
+// MTBlockAlertView
+#define COCOAPODS_POD_AVAILABLE_MTBlockAlertView
+#define COCOAPODS_VERSION_MAJOR_MTBlockAlertView 0
+#define COCOAPODS_VERSION_MINOR_MTBlockAlertView 1
+#define COCOAPODS_VERSION_PATCH_MTBlockAlertView 1
+
 // OvershareKit
 #define COCOAPODS_POD_AVAILABLE_OvershareKit
 // This library does not follow semantic-versioning,

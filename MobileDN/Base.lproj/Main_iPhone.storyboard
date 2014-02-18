@@ -393,6 +393,9 @@
                                                         <color key="titleColor" red="0.79706606657608692" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="signOut:" destination="sHD-AP-vXK" eventType="touchDown" id="1w5-wN-B3s"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                         </tableViewCellContentView>
