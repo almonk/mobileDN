@@ -29,7 +29,9 @@
     self.flatTime = [[NSMutableArray alloc] init];
     self.tableView.nxEV_hideSeparatorLinesWheyShowingEmptyView = YES;
     self.tableView.nxEV_emptyView = emptyView;
+    NSLog(@"Load story %@", self.storyId);
     [self loadStory:nil];
+
 }
 
 - (void)didReceiveMemoryWarning

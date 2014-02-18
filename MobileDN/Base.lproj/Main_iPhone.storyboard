@@ -485,6 +485,24 @@
             </objects>
             <point key="canvasLocation" x="464" y="755"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="DYQ-3U-INg">
+            <objects>
+                <viewController id="6TH-AD-EPX" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="faA-TP-lqE"/>
+                        <viewControllerLayoutGuide type="bottom" id="43O-es-AaU"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="6ei-Lp-Erc">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PC4-in-wOM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1361" y="64"/>
+        </scene>
     </scenes>
     <resources>
         <image name="gearIcon.png" width="22" height="22"/>

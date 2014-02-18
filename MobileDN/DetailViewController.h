@@ -15,6 +15,7 @@
 }
 
 @property (strong, nonatomic) NSMutableArray *comments;
+@property (strong, nonatomic) NSString *storyId;
 @property (strong, nonatomic) NSMutableArray *flatComments;
 @property (strong, nonatomic) NSMutableArray *flatUsers;
 @property (strong, nonatomic) NSMutableArray *flatTime;

@@ -102,7 +102,9 @@
     }];
 }
 
--(IBAction)loadNextPage:(id)sender {   
+-(IBAction)loadNextPage:(id)sender {
+    AppHelpers *helper = [[AppHelpers alloc] init];
+    
     NSString *queryUrl = @"";
     NSNumber *nextPageNumber = self.pageNumber;
     int value = [nextPageNumber intValue];
@@ -118,6 +120,7 @@
     NSLog(@"Querying %@", queryUrl);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager.requestSerializer setValue:[helper getAuthToken] forHTTPHeaderField:@"Authorization"];
     [manager GET:queryUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         self.stories = [[NSMutableArray alloc] initWithArray:self.stories];
         [self.stories addObjectsFromArray:responseObject[@"stories"]];
@@ -320,6 +323,7 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
     DetailViewController *detailViewController = (DetailViewController *)[storyboard instantiateViewControllerWithIdentifier:@"DetailView"];
     detailViewController.comments = comments;
+    detailViewController.storyId = [story valueForKey:@"id"];
     detailViewController.hidesBottomBarWhenPushed = YES;
     detailViewController.title = [story valueForKey:@"title"];
     [self.navigationController pushViewController:detailViewController animated:YES];
