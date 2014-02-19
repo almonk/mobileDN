@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DetailViewController.h"
 
 @interface CommentNavViewController : UINavigationController
 
 @property (nonatomic,retain) NSString *storyId;
 @property (strong, nonatomic) NSString *commentId;
+@property (strong, nonatomic) NSIndexPath *replyRow;
+@property (nonatomic, retain) DetailViewController* parent;
 
 @end

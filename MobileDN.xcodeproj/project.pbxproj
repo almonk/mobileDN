@@ -28,6 +28,8 @@
 		2E58E64918835B17003629C8 /* gearIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E58E64818835B17003629C8 /* gearIcon.png */; };
 		2E81D5111882249C00EF0E19 /* PBWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E81D5101882249C00EF0E19 /* PBWebViewController.m */; };
 		2E81D514188224A400EF0E19 /* PBSafariActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E81D513188224A400EF0E19 /* PBSafariActivity.m */; };
+		2E86325018B56A81000C58A3 /* thread.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E86324E18B56A81000C58A3 /* thread.png */; };
+		2E86325118B56A81000C58A3 /* thread@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E86324F18B56A81000C58A3 /* thread@2x.png */; };
 		2EBA21521871D70700D8C5EC /* star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2EBA214E1871D70700D8C5EC /* star@2x.png */; };
 		2EBA21531871D70700D8C5EC /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 2EBA214F1871D70700D8C5EC /* star.png */; };
 		2EBA21541871D70700D8C5EC /* recent@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2EBA21501871D70700D8C5EC /* recent@2x.png */; };
@@ -98,6 +100,8 @@
 		2E81D5101882249C00EF0E19 /* PBWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBWebViewController.m; sourceTree = "<group>"; };
 		2E81D512188224A400EF0E19 /* PBSafariActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBSafariActivity.h; sourceTree = "<group>"; };
 		2E81D513188224A400EF0E19 /* PBSafariActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBSafariActivity.m; sourceTree = "<group>"; };
+		2E86324E18B56A81000C58A3 /* thread.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thread.png; sourceTree = "<group>"; };
+		2E86324F18B56A81000C58A3 /* thread@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "thread@2x.png"; sourceTree = "<group>"; };
 		2EBA214E1871D70700D8C5EC /* star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star@2x.png"; sourceTree = "<group>"; };
 		2EBA214F1871D70700D8C5EC /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
 		2EBA21501871D70700D8C5EC /* recent@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recent@2x.png"; sourceTree = "<group>"; };
@@ -246,6 +250,7 @@
 				2E58E63C1883083D003629C8 /* DNNavController.m */,
 				2ED1AA60187069E00085209F /* Images.xcassets */,
 				2ED1AA54187069E00085209F /* Main_iPhone.storyboard */,
+				2E385A5F18B2A57200A228BD /* UserFlow.storyboard */,
 				2ED1AA5A187069E00085209F /* MasterViewController.h */,
 				2E50B9591875CB20001B5485 /* MasterViewController.m */,
 				2EF232F01873126E0043D7AD /* SearchViewController.h */,
@@ -255,7 +260,6 @@
 				2E385A6118B2A59F00A228BD /* SignInViewController.h */,
 				2E385A6218B2A59F00A228BD /* SignInViewController.m */,
 				2ED1AA49187069E00085209F /* Supporting Files */,
-				2E385A5F18B2A57200A228BD /* UserFlow.storyboard */,
 				2E81D50E1882248500EF0E19 /* Vendor */,
 			);
 			path = MobileDN;
@@ -268,6 +272,8 @@
 				2EE490B918B2CBEF00B7C66A /* upvote@2x.png */,
 				2E58E64818835B17003629C8 /* gearIcon.png */,
 				2E01913018B3F57300AA7154 /* reply@2x.png */,
+				2E86324E18B56A81000C58A3 /* thread.png */,
+				2E86324F18B56A81000C58A3 /* thread@2x.png */,
 				2E01913118B3F57300AA7154 /* reply.png */,
 				2E58E64618835B12003629C8 /* gearIcon@2x.png */,
 				2E50B96B1875D404001B5485 /* comments.png */,
@@ -399,6 +405,7 @@
 				2E58E643188318A4003629C8 /* settingsIcon@2x.png in Resources */,
 				2E385A6018B2A57200A228BD /* UserFlow.storyboard in Resources */,
 				2ED1AA61187069E00085209F /* Images.xcassets in Resources */,
+				2E86325118B56A81000C58A3 /* thread@2x.png in Resources */,
 				2ED1AA56187069E00085209F /* Main_iPhone.storyboard in Resources */,
 				2E50B96E1875D404001B5485 /* comments@2x.png in Resources */,
 				2EF232F5187317920043D7AD /* search.png in Resources */,
@@ -408,6 +415,7 @@
 				2ED1AA4D187069E00085209F /* InfoPlist.strings in Resources */,
 				2E01913218B3F57300AA7154 /* reply@2x.png in Resources */,
 				2EBA21551871D70700D8C5EC /* recent.png in Resources */,
+				2E86325018B56A81000C58A3 /* thread.png in Resources */,
 				2E01913318B3F57300AA7154 /* reply.png in Resources */,
 				2EBA21531871D70700D8C5EC /* star.png in Resources */,
 			);

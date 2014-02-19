@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DetailViewController.h"
 
 @interface CommentViewController : UIViewController {
     IBOutlet UITextView *commentBody;
@@ -16,5 +17,7 @@
 
 @property (strong, nonatomic) NSString *storyId;
 @property (strong, nonatomic) NSString *commentId;
+@property (strong, nonatomic) NSIndexPath *replyRow;
+@property (nonatomic, retain) DetailViewController* parent;
 
 @end

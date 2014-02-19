@@ -171,7 +171,7 @@
     storyName = (UILabel *)[cell viewWithTag:1];
     storyName.text = [tempDictionary valueForKey:@"title"];
     
-    NSString *metaDataText = [NSString stringWithFormat:@"%@ points from %@", [tempDictionary valueForKey:@"vote_count"], [tempDictionary valueForKey:@"submitter_display_name"]];
+    NSString *metaDataText = [NSString stringWithFormat:@"%@ points from %@", [tempDictionary valueForKey:@"vote_count"], [tempDictionary valueForKey:@"user_display_name"]];
     
     UILabel *metaData;
     metaData = (UILabel *)[cell viewWithTag:2];
@@ -190,7 +190,7 @@
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     CGRect frame = CGRectMake(0.0, 0.0, image.size.width, image.size.height);
     button.frame = frame;
-    [button setTitle: [[tempDictionary valueForKey:@"num_comments"] stringValue] forState:UIControlStateNormal];
+    [button setTitle: [[tempDictionary valueForKey:@"comment_count"] stringValue] forState:UIControlStateNormal];
     [button setTitleColor: [UIColor colorWithRed:0.651 green:0.675 blue:0.714 alpha:1.0] forState:UIControlStateNormal];
     //button.contentEdgeInsets = UIEdgeInsetsMake(0,0,0,0); Do any padding
     [button setBackgroundImage:image forState:UIControlStateNormal];
@@ -205,6 +205,9 @@
     // Swipey bits
     UIView *checkView = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"upvote.png"]];
     UIColor *greenColor = [UIColor colorWithRed:0.102 green:0.659 blue:0.373 alpha:1.0];
+    
+    UIView *threadView = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"thread.png"]];
+    UIColor *greyColor = [UIColor colorWithRed:0.565 green:0.6 blue:0.655 alpha:1.0];
     
     [cell setDelegate:self];
     [cell setDefaultColor:[UIColor colorWithRed:0.765 green:0.788 blue:0.824 alpha:1.0]];
@@ -234,7 +237,19 @@
             [SVProgressHUD showErrorWithStatus:@"Couldn't upvote"];
             NSLog(@"Error: %@", error);
         }];
-            
+    }];
+    
+    [cell setSwipeGestureWithView:threadView color:greyColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState3 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
+        NSDictionary *story = [self.stories objectAtIndex:indexPath.row];
+        NSMutableArray *comments = [story objectForKey:@"comments"];
+        
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+        DetailViewController *detailViewController = (DetailViewController *)[storyboard instantiateViewControllerWithIdentifier:@"DetailView"];
+        detailViewController.comments = comments;
+        detailViewController.storyId = [story valueForKey:@"id"];
+        detailViewController.hidesBottomBarWhenPushed = YES;
+        detailViewController.title = [story valueForKey:@"title"];
+        [self.navigationController pushViewController:detailViewController animated:YES];
     }];
     
     return cell;

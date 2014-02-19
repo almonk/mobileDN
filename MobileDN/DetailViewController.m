@@ -28,6 +28,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.comments = [[NSMutableArray alloc] init];
     self.flatComments = [[NSMutableArray alloc] init];
     self.flatUsers = [[NSMutableArray alloc] init];
     self.commentDepth = [[NSMutableArray alloc] init];
@@ -37,9 +38,11 @@
     self.tableView.nxEV_emptyView = emptyView;
     NSLog(@"Load story %@", self.storyId);
 
-    [self loadStory:nil];
 
-
+    
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(updateComments) forControlEvents:UIControlEventValueChanged];
+    [self updateComments];
 }
 
 - (void)didReceiveMemoryWarning
@@ -50,6 +53,12 @@
 
 -(IBAction)loadStory:(id)sender {
     NSArray *comments = self.comments;
+    
+    self.flatComments = [[NSMutableArray alloc] init];
+    self.flatUsers = [[NSMutableArray alloc] init];
+    self.commentDepth = [[NSMutableArray alloc] init];
+    self.flatTime = [[NSMutableArray alloc] init];
+    self.flatIds = [[NSMutableArray alloc] init];
     
     [comments enumerateObjectsUsingBlock:^(id obj,NSUInteger idx, BOOL *stop){
         NSLog(@"Body: %@", [obj objectForKey:@"body"]);
@@ -164,28 +173,17 @@
     [cell setSwipeGestureWithView:replyView color:yellowColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState3 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
         CommentNavViewController *commentNavViewController = (CommentNavViewController *)[storyboard instantiateViewControllerWithIdentifier:@"CommentView"];
-
+        commentNavViewController.parent = self;
         commentNavViewController.commentId = [self.flatIds objectAtIndex:indexPath.row];
-        [self presentViewController:commentNavViewController animated:YES completion:nil];
+        [self presentViewController:commentNavViewController animated:YES completion:^{
+            
+        }];
     }];
 
     return cell;
 }
 
--(IBAction)addLatestComment:(id)sender
-{
-    NSIndexSet *indexSet = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1,2)];
-    NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    
-    [self.flatComments insertObject:@"TESTT" atIndex: 0];
-    [self.flatUsers insertObject:@"TESTT" atIndex:0];
-    [self.commentDepth insertObject:@"TESTT" atIndex:0];
-    [self.flatTime insertObject:@"TESTT" atIndex:0];
-    
-    [self.tableView beginUpdates];
-    [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationLeft];
-    [self.tableView endUpdates];
-}
+
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -263,9 +261,71 @@
 {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
     CommentNavViewController *commentNavViewController = (CommentNavViewController *)[storyboard instantiateViewControllerWithIdentifier:@"CommentView"];
-    
+    commentNavViewController.parent = self;
     commentNavViewController.storyId = self.storyId;
-    [self presentViewController:commentNavViewController animated:YES completion:nil];
+    [self presentViewController:commentNavViewController animated:YES completion:^{
+        
+    }];
+}
+
+-(void)addLatestCommentToBottom:(NSString*)comment : (NSString*)username
+{
+    NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    
+    [self.flatComments insertObject:comment atIndex:0];
+    [self.flatUsers insertObject:username atIndex:0];
+    [self.commentDepth insertObject:@"0" atIndex:0];
+    [self.flatTime insertObject:@"Test" atIndex:0];
+    
+    [self.tableView beginUpdates];
+    [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationLeft];
+    [self.tableView endUpdates];
+}
+
+-(void)addReplyComment:(NSString*)comment : (NSString*)username : (NSIndexPath*)replyRow
+{
+    [self.flatComments insertObject:comment atIndex:0];
+    [self.flatUsers insertObject:username atIndex:0];
+    [self.commentDepth insertObject:@"0" atIndex:0];
+    [self.flatTime insertObject:@"Test" atIndex:0];
+    
+    [self.tableView beginUpdates];
+    [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:replyRow] withRowAnimation:UITableViewRowAnimationLeft];
+    [self.tableView endUpdates];
+}
+
+-(void)updateComments
+{
+    NSLog(@"UPDATE COMMENTS");
+
+    AppHelpers *helper = [[AppHelpers alloc] init];
+    
+    [SVProgressHUD showWithStatus:@"Refreshing..." maskType:SVProgressHUDMaskTypeBlack];
+    
+    NSString *queryUrl = [NSString stringWithFormat:@"https://api-news.layervault.com/api/v1/stories/%@", self.storyId];
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager.requestSerializer setValue:[helper getAuthToken] forHTTPHeaderField:@"Authorization"];
+    [manager GET:queryUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *story = responseObject[@"story"];
+        NSMutableArray *comments = [story objectForKey:@"comments"];
+        NSLog(@"STORY %@", responseObject[@"story"]);
+        NSLog(@"COMMENTS %@", comments);
+        self.comments = comments;
+        [self loadStory:nil];
+        [self.tableView reloadData];
+        NSTimeInterval delayInSeconds = 0.5;
+        
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [SVProgressHUD dismiss];
+
+            [self.refreshControl endRefreshing];
+        });
+
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
 }
 
 @end

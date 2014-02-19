@@ -15,6 +15,9 @@
 }
 
 -(IBAction)composeNewComment:(id)sender;
+-(void)addLatestCommentToBottom:(NSString*)comment : (NSString*)username;
+-(void)addReplyComment:(NSString*)comment : (NSString*)username : (NSIndexPath*)replyRow;
+-(void)updateComments;
 
 @property (strong, nonatomic) NSMutableArray *comments;
 @property (strong, nonatomic) NSString *storyId;

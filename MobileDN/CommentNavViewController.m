@@ -30,10 +30,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSLog(@"%@", self.storyId);
-    NSLog(@"%@", self.commentId);
-    [self setValue:self.storyId forKey:@"storyId"];
-    [self setValue:self.commentId forKey:@"commentId"];
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+    CommentViewController *commentViewController = (CommentViewController *)[storyboard instantiateViewControllerWithIdentifier:@"CommentViewController"];
+    commentViewController.parent = self.parent;
+    commentViewController.storyId = self.storyId;
+    commentViewController.commentId = self.commentId;
+    commentViewController.replyRow = self.replyRow;
+    [self setViewControllers: @[commentViewController]];
 	// Do any additional setup after loading the view.
 
 }

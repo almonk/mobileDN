@@ -204,23 +204,20 @@
         <!--Comment Nav View Controller-->
         <scene sceneID="OJc-Ur-gIM">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="75H-sC-Kpx" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController storyboardIdentifier="CommentView" definesPresentationContext="YES" id="xtV-kc-gLK" customClass="CommentNavViewController" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="heA-0x-KkF">
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="0.1960784495" green="0.45882356169999999" blue="0.83921575550000005" alpha="1" colorSpace="deviceRGB"/>
                     </navigationBar>
-                    <connections>
-                        <segue destination="M96-be-pKb" kind="relationship" relationship="rootViewController" id="ggQ-FJ-ut2"/>
-                    </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="75H-sC-Kpx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1406" y="64"/>
         </scene>
         <!--Comment View Controller-->
         <scene sceneID="lKZ-h8-reo">
             <objects>
-                <viewController id="M96-be-pKb" customClass="CommentViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CommentViewController" id="M96-be-pKb" customClass="CommentViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="AiK-1R-1zJ"/>
                         <viewControllerLayoutGuide type="bottom" id="pSf-Vo-3be"/>
@@ -368,8 +365,8 @@
                             <rect key="frame" x="0.0" y="261" width="320" height="61"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Made with ♥ by Alasdair Monk 👌" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HIg-eP-d66">
-                                    <rect key="frame" x="15" y="6" width="285" height="24"/>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Made with ♥ by Alasdair Monk" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HIg-eP-d66">
+                                    <rect key="frame" x="-3" y="6" width="326" height="24"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="13"/>
                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -454,7 +451,6 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
-                                                    <inset key="contentEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                     <state key="normal" title="Sign out">
                                                         <color key="titleColor" red="0.79706606657608692" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
