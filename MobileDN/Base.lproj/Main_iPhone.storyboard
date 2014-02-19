@@ -107,9 +107,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="25" reuseIdentifier="Cell" rowHeight="77" id="Xmy-D7-uwB" customClass="CommentCell">
-                                <rect key="frame" x="0.0" y="22" width="320" height="77"/>
+                                <rect key="frame" x="0.0" y="86" width="320" height="77"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Xmy-D7-uwB" id="3UD-Bo-q2U">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="76"/>
@@ -170,7 +171,14 @@
                             <outlet property="delegate" destination="jdk-Vg-sjl" id="fd6-53-Ocg"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="EHc-iR-5bg"/>
+                    <navigationItem key="navigationItem" id="EHc-iR-5bg">
+                        <barButtonItem key="rightBarButtonItem" systemItem="compose" id="1TE-8I-leD">
+                            <connections>
+                                <action selector="composeNewComment:" destination="jdk-Vg-sjl" id="Xtt-8h-YpR"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="emptyView" destination="0fI-eL-V7p" id="Rcj-TH-3Yd"/>
                     </connections>
@@ -192,6 +200,64 @@
                 </view>
             </objects>
             <point key="canvasLocation" x="898" y="64"/>
+        </scene>
+        <!--Comment Nav View Controller-->
+        <scene sceneID="OJc-Ur-gIM">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="75H-sC-Kpx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationController storyboardIdentifier="CommentView" definesPresentationContext="YES" id="xtV-kc-gLK" customClass="CommentNavViewController" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="heA-0x-KkF">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="0.1960784495" green="0.45882356169999999" blue="0.83921575550000005" alpha="1" colorSpace="deviceRGB"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="M96-be-pKb" kind="relationship" relationship="rootViewController" id="ggQ-FJ-ut2"/>
+                    </connections>
+                </navigationController>
+            </objects>
+            <point key="canvasLocation" x="1406" y="64"/>
+        </scene>
+        <!--Comment View Controller-->
+        <scene sceneID="lKZ-h8-reo">
+            <objects>
+                <viewController id="M96-be-pKb" customClass="CommentViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="AiK-1R-1zJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="pSf-Vo-3be"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="z5s-hN-HJS">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B8P-fF-7wi">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="ra1-Sr-zIZ">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="Rzd-ez-7fn">
+                            <connections>
+                                <action selector="dismissSelf:" destination="M96-be-pKb" id="qZR-nw-jZ3"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Comment" id="5CV-S4-ish">
+                            <connections>
+                                <action selector="sendComment:" destination="M96-be-pKb" id="69L-Sy-SPW"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="commentBody" destination="B8P-fF-7wi" id="HtP-KD-Njl"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Jrs-pV-7Vq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1838" y="64"/>
         </scene>
         <!--Nav Controller - Recent-->
         <scene sceneID="FNu-tM-I0d">
@@ -484,24 +550,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q3o-oA-F5v" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="464" y="755"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="DYQ-3U-INg">
-            <objects>
-                <viewController id="6TH-AD-EPX" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="faA-TP-lqE"/>
-                        <viewControllerLayoutGuide type="bottom" id="43O-es-AaU"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="6ei-Lp-Erc">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="PC4-in-wOM" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1361" y="64"/>
         </scene>
     </scenes>
     <resources>

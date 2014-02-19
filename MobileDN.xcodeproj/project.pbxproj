@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E01912F18B3C70800AA7154 /* CommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E01912E18B3C70800AA7154 /* CommentViewController.m */; };
+		2E01913218B3F57300AA7154 /* reply@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E01913018B3F57300AA7154 /* reply@2x.png */; };
+		2E01913318B3F57300AA7154 /* reply.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E01913118B3F57300AA7154 /* reply.png */; };
+		2E01913618B41CE700AA7154 /* CommentNavViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E01913518B41CE700AA7154 /* CommentNavViewController.m */; };
 		2E385A6018B2A57200A228BD /* UserFlow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2E385A5F18B2A57200A228BD /* UserFlow.storyboard */; };
 		2E385A6318B2A59F00A228BD /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E385A6218B2A59F00A228BD /* SignInViewController.m */; };
 		2E38D6AC187308AA0002224F /* launch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E38D6AA187308AA0002224F /* launch@2x.png */; };
@@ -63,6 +67,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2E01912D18B3C70800AA7154 /* CommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentViewController.h; sourceTree = "<group>"; };
+		2E01912E18B3C70800AA7154 /* CommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentViewController.m; sourceTree = "<group>"; };
+		2E01913018B3F57300AA7154 /* reply@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reply@2x.png"; sourceTree = "<group>"; };
+		2E01913118B3F57300AA7154 /* reply.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reply.png; sourceTree = "<group>"; };
+		2E01913418B41CE700AA7154 /* CommentNavViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentNavViewController.h; sourceTree = "<group>"; };
+		2E01913518B41CE700AA7154 /* CommentNavViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentNavViewController.m; sourceTree = "<group>"; };
 		2E2D53901875797D0099A991 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reveal.framework; path = "../../../../Applications/Reveal.app/Contents/SharedSupport/iOS-Libraries/Reveal.framework"; sourceTree = "<group>"; };
 		2E385A5F18B2A57200A228BD /* UserFlow.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = UserFlow.storyboard; sourceTree = "<group>"; };
 		2E385A6118B2A59F00A228BD /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInViewController.h; sourceTree = "<group>"; };
@@ -220,28 +230,32 @@
 		2ED1AA48187069E00085209F /* MobileDN */ = {
 			isa = PBXGroup;
 			children = (
-				2EE490B518B2BE2B00B7C66A /* AppHelpers.h */,
-				2EE490B618B2BE2B00B7C66A /* AppHelpers.m */,
 				2ED1AA51187069E00085209F /* AppDelegate.h */,
 				2ED1AA52187069E00085209F /* AppDelegate.m */,
+				2EE490B518B2BE2B00B7C66A /* AppHelpers.h */,
+				2EE490B618B2BE2B00B7C66A /* AppHelpers.m */,
 				2E4A7DC81872E16E00120796 /* CommentCell.h */,
 				2E4A7DC91872E16E00120796 /* CommentCell.m */,
+				2E01913418B41CE700AA7154 /* CommentNavViewController.h */,
+				2E01913518B41CE700AA7154 /* CommentNavViewController.m */,
+				2E01912D18B3C70800AA7154 /* CommentViewController.h */,
+				2E01912E18B3C70800AA7154 /* CommentViewController.m */,
 				2ED1AA5D187069E00085209F /* DetailViewController.h */,
 				2ED1AA5E187069E00085209F /* DetailViewController.m */,
 				2E58E63B1883083D003629C8 /* DNNavController.h */,
 				2E58E63C1883083D003629C8 /* DNNavController.m */,
 				2ED1AA60187069E00085209F /* Images.xcassets */,
 				2ED1AA54187069E00085209F /* Main_iPhone.storyboard */,
-				2E385A5F18B2A57200A228BD /* UserFlow.storyboard */,
 				2ED1AA5A187069E00085209F /* MasterViewController.h */,
 				2E50B9591875CB20001B5485 /* MasterViewController.m */,
-				2E385A6118B2A59F00A228BD /* SignInViewController.h */,
-				2E385A6218B2A59F00A228BD /* SignInViewController.m */,
 				2EF232F01873126E0043D7AD /* SearchViewController.h */,
 				2EFA51F518731AFA002C0587 /* SearchViewController.m */,
 				2E58E63F1883152B003629C8 /* SettingsViewController.h */,
 				2E58E6401883152B003629C8 /* SettingsViewController.m */,
+				2E385A6118B2A59F00A228BD /* SignInViewController.h */,
+				2E385A6218B2A59F00A228BD /* SignInViewController.m */,
 				2ED1AA49187069E00085209F /* Supporting Files */,
+				2E385A5F18B2A57200A228BD /* UserFlow.storyboard */,
 				2E81D50E1882248500EF0E19 /* Vendor */,
 			);
 			path = MobileDN;
@@ -253,6 +267,8 @@
 				2EE490B818B2CBEF00B7C66A /* upvote.png */,
 				2EE490B918B2CBEF00B7C66A /* upvote@2x.png */,
 				2E58E64818835B17003629C8 /* gearIcon.png */,
+				2E01913018B3F57300AA7154 /* reply@2x.png */,
+				2E01913118B3F57300AA7154 /* reply.png */,
 				2E58E64618835B12003629C8 /* gearIcon@2x.png */,
 				2E50B96B1875D404001B5485 /* comments.png */,
 				2E50B96C1875D404001B5485 /* comments@2x.png */,
@@ -390,7 +406,9 @@
 				2EF232F6187317920043D7AD /* search@2x.png in Resources */,
 				2E50B96D1875D404001B5485 /* comments.png in Resources */,
 				2ED1AA4D187069E00085209F /* InfoPlist.strings in Resources */,
+				2E01913218B3F57300AA7154 /* reply@2x.png in Resources */,
 				2EBA21551871D70700D8C5EC /* recent.png in Resources */,
+				2E01913318B3F57300AA7154 /* reply.png in Resources */,
 				2EBA21531871D70700D8C5EC /* star.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -445,9 +463,11 @@
 			files = (
 				2ED1AA53187069E00085209F /* AppDelegate.m in Sources */,
 				2E4A7DCA1872E16E00120796 /* CommentCell.m in Sources */,
+				2E01912F18B3C70800AA7154 /* CommentViewController.m in Sources */,
 				2E4A7DC71872CE5600120796 /* ProgressHUD.m in Sources */,
 				2ED1AA4F187069E00085209F /* main.m in Sources */,
 				2E385A6318B2A59F00A228BD /* SignInViewController.m in Sources */,
+				2E01913618B41CE700AA7154 /* CommentNavViewController.m in Sources */,
 				2ED1AA5F187069E00085209F /* DetailViewController.m in Sources */,
 				2E58E63D1883083D003629C8 /* DNNavController.m in Sources */,
 				2E81D514188224A400EF0E19 /* PBSafariActivity.m in Sources */,

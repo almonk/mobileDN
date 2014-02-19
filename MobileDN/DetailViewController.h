@@ -14,13 +14,17 @@
     IBOutlet UIView *emptyView;
 }
 
+-(IBAction)composeNewComment:(id)sender;
+
 @property (strong, nonatomic) NSMutableArray *comments;
 @property (strong, nonatomic) NSString *storyId;
 @property (strong, nonatomic) NSMutableArray *flatComments;
 @property (strong, nonatomic) NSMutableArray *flatUsers;
 @property (strong, nonatomic) NSMutableArray *flatTime;
+@property (strong, nonatomic) NSMutableArray *flatIds;
 @property (strong, nonatomic) NSMutableArray *commentDepth;
 @property (weak, nonatomic) NSMutableArray *heights;
 @property (strong, nonatomic) PBWebViewController *webViewController;
+
 
 @end

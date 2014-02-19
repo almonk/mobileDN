@@ -78,18 +78,17 @@
 
 -(IBAction)loadFrontPage:(id)sender {
     AppHelpers *helper = [[AppHelpers alloc] init];
-    
     NSString *queryUrl = @"";
     
     if ([self.navigationItem.title isEqualToString:@"Top stories"]) {
-        queryUrl = @"https://news.layervault.com/stories?format=json";
+        queryUrl = @"https://api-news.layervault.com/api/v1/stories/";
     } else {
-        queryUrl = @"https://news.layervault.com/new?format=json";
+        queryUrl = @"https://api-news.layervault.com/api/v1/stories/recent";
     }
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager.requestSerializer setValue:[helper getAuthToken] forHTTPHeaderField:@"Authorization"];
     [manager GET:queryUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"JSON: %@", responseObject);
         self.stories = responseObject[@"stories"];
         [self.tableView reloadData];
         [(UIRefreshControl *)sender endRefreshing];
@@ -112,9 +111,9 @@
     self.pageNumber = [[NSNumber alloc] initWithInt:value + 1];
     
     if ([self.navigationItem.title isEqualToString:@"Top stories"]) {
-        queryUrl = [NSString stringWithFormat:@"https://news.layervault.com/p/%@?format=json", nextPageNumber];
+        queryUrl = [NSString stringWithFormat:@"https://api-news.layervault.com/api/v1/stories?page=%@", nextPageNumber];
     } else {
-        queryUrl = [NSString stringWithFormat:@"https://news.layervault.com/new/%@?format=json", nextPageNumber];
+        queryUrl = [NSString stringWithFormat:@"https://api-news.layervault.com/api/v1/stories/recent?page=%@", nextPageNumber];
     }
     
     NSLog(@"Querying %@", queryUrl);
@@ -208,9 +207,10 @@
     UIColor *greenColor = [UIColor colorWithRed:0.102 green:0.659 blue:0.373 alpha:1.0];
     
     [cell setDelegate:self];
-    [cell setDefaultColor:[UIColor colorWithRed:0.925 green:0.933 blue:0.945 alpha:1.0]];
+    [cell setDefaultColor:[UIColor colorWithRed:0.765 green:0.788 blue:0.824 alpha:1.0]];
     [cell setSwipeGestureWithView:checkView color:greenColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState1 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
         NSLog(@"Upvote: %@", [tempDictionary valueForKey:@"id"]);
+        [SVProgressHUD showWithStatus:@"Upvoting..."];
         
         NSString *upvoteUrl = [NSString stringWithFormat:@"https://api-news.layervault.com/api/v1/stories/%@/upvote", [tempDictionary valueForKey:@"id"]];
         
@@ -316,7 +316,6 @@
 
 -(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"Test");
     NSDictionary *story = [self.stories objectAtIndex:indexPath.row];
     NSMutableArray *comments = [story objectForKey:@"comments"];
     

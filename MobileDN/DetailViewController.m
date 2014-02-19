@@ -14,8 +14,13 @@
 #import <SORelativeDateTransformer.h>
 #import "UITableView+NXEmptyView.h"
 #import <AMAttributedHighlightLabel.h>
+#import <MCSwipeTableViewCell.h>
+#import "AppHelpers.h"
+#import <SVProgressHUD.h>
+#import "CommentNavViewController.h"
+#import "CommentViewController.h"
 
-@interface DetailViewController ()
+@interface DetailViewController () <MCSwipeTableViewCellDelegate>
 @end
 
 @implementation DetailViewController
@@ -27,10 +32,13 @@
     self.flatUsers = [[NSMutableArray alloc] init];
     self.commentDepth = [[NSMutableArray alloc] init];
     self.flatTime = [[NSMutableArray alloc] init];
+    self.flatIds = [[NSMutableArray alloc] init];
     self.tableView.nxEV_hideSeparatorLinesWheyShowingEmptyView = YES;
     self.tableView.nxEV_emptyView = emptyView;
     NSLog(@"Load story %@", self.storyId);
+
     [self loadStory:nil];
+
 
 }
 
@@ -41,54 +49,36 @@
 }
 
 -(IBAction)loadStory:(id)sender {
-    [self processParsedObject:self.comments];
-}
-
--(void)processParsedObject:(id)object{
-    [self enumerateJSONToFindKeys:object forKeyNamed:nil];
-}
-
-- (void)enumerateJSONToFindKeys:(id)object forKeyNamed:(NSString *)keyName
-{
-    if ([object isKindOfClass:[NSDictionary class]])
-    {
-        // If it's a dictionary, enumerate it and pass in each key value to check
-        [object enumerateKeysAndObjectsUsingBlock:^(id key, id value, BOOL *stop) {
-            [self enumerateJSONToFindKeys:value forKeyNamed:key];
-        }];
-    }
-    else if ([object isKindOfClass:[NSArray class]])
-    {
-        // If it's an array, pass in the objects of the array to check
-        [object enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            [self enumerateJSONToFindKeys:obj forKeyNamed:nil];
-        }];
-    }
-    else
-    {
-        // If we got here (i.e. it's not a dictionary or array) so its a key/value that we needed
-        //NSLog(@"We found key %@ with value %@", keyName, object);
-        if ([keyName isEqualToString:@"user_display_name"]) {
-            NSLog(@"Comment: %@", object);
-            [_flatUsers addObject:object];
-            NSLog(@"comments %d", [_flatUsers count]);
-        }
+    NSArray *comments = self.comments;
+    [comments enumerateObjectsUsingBlock:^(id obj,NSUInteger idx, BOOL *stop){
+        NSLog(@"Body: %@", [obj objectForKey:@"body"]);
+        [_flatUsers addObject: [obj objectForKey:@"user_display_name"]];
+        [_flatComments addObject: [obj objectForKey:@"body"]];
+        [_commentDepth addObject: [obj objectForKey:@"depth"]];
+        [_flatTime addObject: [obj objectForKey:@"created_at"]];
+        [_flatIds addObject: [obj objectForKey:@"id"]];
+        [_flatUsers count];
         
-        if ([keyName isEqualToString:@"body"]) {
-            NSLog(@"Comment: %@", object);
-            [_flatComments addObject:object];
-            NSLog(@"comments %d", [_flatComments count]);
+        for (NSDictionary *dict in [obj objectForKey:@"comments"]) {
+            NSLog(@"Body: %@", [dict objectForKey:@"body"]);
+            [_flatUsers addObject: [dict objectForKey:@"user_display_name"]];
+            [_flatComments addObject: [dict objectForKey:@"body"]];
+            [_commentDepth addObject: [dict objectForKey:@"depth"]];
+            [_flatTime addObject: [dict objectForKey:@"created_at"]];
+            [_flatIds addObject: [dict objectForKey:@"id"]];
+            [_flatUsers count];
+            
+            for (NSDictionary *dict2 in [dict objectForKey:@"comments"]) {
+                NSLog(@"Body: %@", [dict2 objectForKey:@"body"]);
+                [_flatUsers addObject: [dict2 objectForKey:@"user_display_name"]];
+                [_flatComments addObject: [dict2 objectForKey:@"body"]];
+                [_commentDepth addObject: [dict2 objectForKey:@"depth"]];
+                [_flatTime addObject: [dict2 objectForKey:@"created_at"]];
+                [_flatIds addObject: [dict2 objectForKey:@"id"]];
+                [_flatUsers count];
+            }
         }
-        
-        if ([keyName isEqualToString:@"depth"]) {
-            NSLog(@"Depth: %@", object);
-            [_commentDepth addObject:object];
-        }
-        
-        if ([keyName isEqualToString:@"created_at"]) {
-            [_flatTime addObject:object];
-        }
-    }
+    }];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -111,7 +101,11 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    static NSString *CellIdentifier = @"Cell";
+    
+    AppHelpers *helper = [[AppHelpers alloc] init];
+    
+    MCSwipeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     NSString *indentLevelRaw = [_commentDepth objectAtIndex:indexPath.row];
     NSUInteger indentLevel = [indentLevelRaw integerValue];
@@ -132,14 +126,60 @@
     UILabel *usernameMeta;
     usernameMeta = (UILabel *)[cell viewWithTag:2];
     usernameMeta.text = [self.flatUsers objectAtIndex:indexPath.row];
+    NSLog(@"%@",[self.flatUsers objectAtIndex:indexPath.row] );
     
     cell.indentationWidth = 25;
     
     UILabel *date;
     date = (UILabel *)[cell viewWithTag:3];
     date.text = [self convertDateToRelativeDate: [self.flatTime objectAtIndex:indexPath.row]];
+    
+    // Swipey bits
+    UIView *checkView = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"upvote.png"]];
+    UIColor *greenColor = [UIColor colorWithRed:0.102 green:0.659 blue:0.373 alpha:1.0];
+    
+    UIView *replyView = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"reply.png"]];
+    UIColor *yellowColor = [UIColor colorWithRed:254.0 / 255.0 green:217.0 / 255.0 blue:56.0 / 255.0 alpha:1.0];
+    
+    [cell setDelegate:self];
+    [cell setDefaultColor:[UIColor colorWithRed:0.765 green:0.788 blue:0.824 alpha:1.0]];
+    [cell setSwipeGestureWithView:checkView color:greenColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState1 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
+        NSLog(@"Upvote %@", [self.flatIds objectAtIndex:indexPath.row]);
+        [SVProgressHUD showWithStatus:@"Upvoting..."];
+        
+        NSString *upvoteUrl = [NSString stringWithFormat:@"https://api-news.layervault.com/api/v1/comments/%@/upvote", [self.flatIds objectAtIndex:indexPath.row]];
+        
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        [manager.requestSerializer setValue:[helper getAuthToken] forHTTPHeaderField:@"Authorization"];
+        [manager POST:upvoteUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [SVProgressHUD showSuccessWithStatus:@"Upvoted"];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [SVProgressHUD showErrorWithStatus:@"Couldn't upvote"];
+            NSLog(@"Error: %@", error);
+        }];
+
+    }];
+    
+    [cell setSwipeGestureWithView:replyView color:yellowColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState3 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+        CommentNavViewController *commentNavViewController = (CommentNavViewController *)[storyboard instantiateViewControllerWithIdentifier:@"CommentView"];
+
+        commentNavViewController.commentId = [self.flatIds objectAtIndex:indexPath.row];
+        [self presentViewController:commentNavViewController animated:YES completion:nil];
+    }];
 
     return cell;
+}
+
+-(IBAction)addLatestComment:(id)sender
+{
+//    NSIndexSet *indexSet = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0,1)];
+//    [self.customerArray insertObjects:responseObject atIndexes:indexSet];
+//    NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+//    
+//    [self.tableView beginUpdates];
+//    [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationLeft];
+//    [self.tableView endUpdates];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -212,6 +252,15 @@
     NSString *relativeDate = [[SORelativeDateTransformer registeredTransformer] transformedValue: origDateAsDate];
     
     return relativeDate;
+}
+
+-(IBAction)composeNewComment:(id)sender
+{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+    CommentNavViewController *commentNavViewController = (CommentNavViewController *)[storyboard instantiateViewControllerWithIdentifier:@"CommentView"];
+    
+    commentNavViewController.storyId = self.storyId;
+    [self presentViewController:commentNavViewController animated:YES completion:nil];
 }
 
 @end
