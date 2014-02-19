@@ -50,6 +50,7 @@
 
 -(IBAction)loadStory:(id)sender {
     NSArray *comments = self.comments;
+    
     [comments enumerateObjectsUsingBlock:^(id obj,NSUInteger idx, BOOL *stop){
         NSLog(@"Body: %@", [obj objectForKey:@"body"]);
         [_flatUsers addObject: [obj objectForKey:@"user_display_name"]];
@@ -173,13 +174,17 @@
 
 -(IBAction)addLatestComment:(id)sender
 {
-//    NSIndexSet *indexSet = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0,1)];
-//    [self.customerArray insertObjects:responseObject atIndexes:indexSet];
-//    NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-//    
-//    [self.tableView beginUpdates];
-//    [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationLeft];
-//    [self.tableView endUpdates];
+    NSIndexSet *indexSet = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1,2)];
+    NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    
+    [self.flatComments insertObject:@"TESTT" atIndex: 0];
+    [self.flatUsers insertObject:@"TESTT" atIndex:0];
+    [self.commentDepth insertObject:@"TESTT" atIndex:0];
+    [self.flatTime insertObject:@"TESTT" atIndex:0];
+    
+    [self.tableView beginUpdates];
+    [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationLeft];
+    [self.tableView endUpdates];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
