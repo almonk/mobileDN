@@ -228,7 +228,7 @@
             int value = [myNumber intValue];
             myNumber = [NSNumber numberWithInt:value + 1];
             
-            NSString *metaDataText = [NSString stringWithFormat:@"%@ points from %@", [myNumber stringValue], [tempDictionary valueForKey:@"submitter_display_name"]];
+            NSString *metaDataText = [NSString stringWithFormat:@"%@ points from %@", [myNumber stringValue], [tempDictionary valueForKey:@"user_display_name"]];
             
             UILabel *metaData;
             metaData = (UILabel *)[cell viewWithTag:2];

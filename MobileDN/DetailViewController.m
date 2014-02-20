@@ -300,7 +300,7 @@
 
     AppHelpers *helper = [[AppHelpers alloc] init];
     
-    [SVProgressHUD showWithStatus:@"Refreshing..." maskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD showWithStatus:@"Loading..." maskType:SVProgressHUDMaskTypeBlack];
     
     NSString *queryUrl = [NSString stringWithFormat:@"https://api-news.layervault.com/api/v1/stories/%@", self.storyId];
     

@@ -44,8 +44,8 @@
     if ([[commentBody text] isEqualToString:@""]) {
         [self dismissViewControllerAnimated:YES completion:nil];
     } else {
-        [MTBlockAlertView showWithTitle:@"Discard comment"
-                                message:@"You'll lose your comment"
+        [MTBlockAlertView showWithTitle:nil
+                                message:@"Are you sure you want to discard your comment?"
                       cancelButtonTitle:@"Cancel"
                        otherButtonTitle:@"Discard"
                          alertViewStyle:UIAlertViewStyleDefault

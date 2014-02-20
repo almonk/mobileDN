@@ -41,7 +41,6 @@
 		2ED1AA4D187069E00085209F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2ED1AA4B187069E00085209F /* InfoPlist.strings */; };
 		2ED1AA4F187069E00085209F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2ED1AA4E187069E00085209F /* main.m */; };
 		2ED1AA53187069E00085209F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2ED1AA52187069E00085209F /* AppDelegate.m */; };
-		2ED1AA56187069E00085209F /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2ED1AA54187069E00085209F /* Main_iPhone.storyboard */; };
 		2ED1AA5F187069E00085209F /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2ED1AA5E187069E00085209F /* DetailViewController.m */; };
 		2ED1AA61187069E00085209F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2ED1AA60187069E00085209F /* Images.xcassets */; };
 		2ED1AA68187069E00085209F /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2ED1AA67187069E00085209F /* XCTest.framework */; };
@@ -52,6 +51,7 @@
 		2EE490B718B2BE2B00B7C66A /* AppHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EE490B618B2BE2B00B7C66A /* AppHelpers.m */; };
 		2EE490BA18B2CBEF00B7C66A /* upvote.png in Resources */ = {isa = PBXBuildFile; fileRef = 2EE490B818B2CBEF00B7C66A /* upvote.png */; };
 		2EE490BB18B2CBEF00B7C66A /* upvote@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2EE490B918B2CBEF00B7C66A /* upvote@2x.png */; };
+		2EEAED6518B5752400FCD5DD /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2ED1AA54187069E00085209F /* Main_iPhone.storyboard */; };
 		2EF232F5187317920043D7AD /* search.png in Resources */ = {isa = PBXBuildFile; fileRef = 2EF232F3187317920043D7AD /* search.png */; };
 		2EF232F6187317920043D7AD /* search@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2EF232F4187317920043D7AD /* search@2x.png */; };
 		2EFA51F618731AFA002C0587 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EFA51F518731AFA002C0587 /* SearchViewController.m */; };
@@ -406,7 +406,7 @@
 				2E385A6018B2A57200A228BD /* UserFlow.storyboard in Resources */,
 				2ED1AA61187069E00085209F /* Images.xcassets in Resources */,
 				2E86325118B56A81000C58A3 /* thread@2x.png in Resources */,
-				2ED1AA56187069E00085209F /* Main_iPhone.storyboard in Resources */,
+				2EEAED6518B5752400FCD5DD /* Main_iPhone.storyboard in Resources */,
 				2E50B96E1875D404001B5485 /* comments@2x.png in Resources */,
 				2EF232F5187317920043D7AD /* search.png in Resources */,
 				2E4A7DC61872CE5600120796 /* ProgressHUD.bundle in Resources */,
