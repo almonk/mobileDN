@@ -82,7 +82,7 @@
     NSString *commentUrl;
     
     if (self.storyId) {
-        commentUrl = [NSString stringWithFormat:@"https://api-news.layervault.com/api/v1/stories/%@/reply", self.commentId];
+        commentUrl = [NSString stringWithFormat:@"https://api-news.layervault.com/api/v1/stories/%@/reply", self.storyId];
     }
     
     if (self.commentId) {
