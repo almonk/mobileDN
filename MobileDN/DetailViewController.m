@@ -321,6 +321,8 @@
             [SVProgressHUD dismiss];
 
             [self.refreshControl endRefreshing];
+            
+            [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
         });
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
