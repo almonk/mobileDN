@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4DE6002812B246089098D594"
+               BlueprintIdentifier = "3778903D0FB14F5E97DE2AD5"
                BuildableName = "libPods-SORelativeDateTransformer.a"
                BlueprintName = "Pods-SORelativeDateTransformer"
                ReferencedContainer = "container:Pods.xcodeproj">

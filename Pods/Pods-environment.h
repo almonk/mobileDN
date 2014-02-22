@@ -84,12 +84,6 @@
 #define COCOAPODS_VERSION_MINOR_MTBlockAlertView 1
 #define COCOAPODS_VERSION_PATCH_MTBlockAlertView 1
 
-// OHAttributedLabel
-#define COCOAPODS_POD_AVAILABLE_OHAttributedLabel
-#define COCOAPODS_VERSION_MAJOR_OHAttributedLabel 3
-#define COCOAPODS_VERSION_MINOR_OHAttributedLabel 5
-#define COCOAPODS_VERSION_PATCH_OHAttributedLabel 3
-
 // OvershareKit
 #define COCOAPODS_POD_AVAILABLE_OvershareKit
 // This library does not follow semantic-versioning,
@@ -126,6 +120,12 @@
 #define COCOAPODS_VERSION_MAJOR_SVPullToRefresh 0
 #define COCOAPODS_VERSION_MINOR_SVPullToRefresh 4
 #define COCOAPODS_VERSION_PATCH_SVPullToRefresh 1
+
+// TTTAttributedLabel
+#define COCOAPODS_POD_AVAILABLE_TTTAttributedLabel
+#define COCOAPODS_VERSION_MAJOR_TTTAttributedLabel 1
+#define COCOAPODS_VERSION_MINOR_TTTAttributedLabel 8
+#define COCOAPODS_VERSION_PATCH_TTTAttributedLabel 1
 
 // UITableView-NXEmptyView
 #define COCOAPODS_POD_AVAILABLE_UITableView_NXEmptyView

@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "3DB4E1B895464AA3B4C8A4BA"
+               BlueprintIdentifier = "E585BD0A5D8B4D2A843B4F60"
                BuildableName = "libPods-OvershareKit.a"
                BlueprintName = "Pods-OvershareKit"
                ReferencedContainer = "container:Pods.xcodeproj">

@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8A18393923DF40C3B67D55A4"
+               BlueprintIdentifier = "7C4E13776F834348B8DE11F6"
                BuildableName = "libPods-AMAttributedHighlightLabel.a"
                BlueprintName = "Pods-AMAttributedHighlightLabel"
                ReferencedContainer = "container:Pods.xcodeproj">

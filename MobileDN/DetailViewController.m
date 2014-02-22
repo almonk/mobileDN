@@ -13,7 +13,7 @@
 #import "PBSafariActivity.h"
 #import <SORelativeDateTransformer.h>
 #import "UITableView+NXEmptyView.h"
-#import <AMAttributedHighlightLabel.h>
+#import <TTTAttributedLabel.h>
 #import <MCSwipeTableViewCell.h>
 #import "AppHelpers.h"
 #import <SVProgressHUD.h>
@@ -121,14 +121,23 @@
     NSUInteger indentLevel = [indentLevelRaw integerValue];
     float indentPoints = indentLevel * 25;
     
-    UILabel *commentBody;
-    commentBody = (UILabel *)[cell viewWithTag:1];
+    TTTAttributedLabel *commentBody;
+    commentBody = (TTTAttributedLabel *)[cell viewWithTag:1];
     commentBody.userInteractionEnabled = YES;
-    commentBody.numberOfLines = 0;
+    commentBody.delegate = self;
     
-    //NSString *markdown = [tempDictionary valueForKey:@"body"];
-    NSString *markdown = [self.flatComments objectAtIndex:indexPath.row];
-    commentBody.text = markdown;
+    
+    NSString *htmlAndStyle = [NSString stringWithFormat:@"<html><head><style>\
+                              img { max-width:180px; }</style><body>%@</body></html>", [self.flatComments objectAtIndex:indexPath.row]];
+    
+    NSData *htmlData = [htmlAndStyle dataUsingEncoding:NSUTF8StringEncoding];
+    
+    // Create the HTML string
+    NSDictionary *importParams = @{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType};
+    NSError *error = nil;
+    NSAttributedString *htmlString = [[NSAttributedString alloc] initWithData:htmlData options:importParams documentAttributes:NULL error:&error];
+    
+    commentBody.attributedText = htmlString;
     
     commentBody.font = [UIFont fontWithName:@"Avenir" size:16.0f];
     commentBody.preferredMaxLayoutWidth = 280 - indentPoints; // <<<<< ALL THE MAGIC
@@ -184,6 +193,13 @@
     return cell;
 }
 
+- (void)attributedLabel:(__unused TTTAttributedLabel *)label
+   didSelectLinkWithURL:(NSURL *)url
+{
+    [[[UIActionSheet alloc] initWithTitle:[url absoluteString] delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Open Link in Safari", nil), nil] showInView:self.view];
+}
+
+
 
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -211,12 +227,22 @@
     NSUInteger indentLevel = [indentLevelRaw integerValue];
     float indentPoints = indentLevel * 25;
     
-    UILabel *commentBody;
-    commentBody = (UILabel *)[cell viewWithTag:1];
+    TTTAttributedLabel *commentBody;
+    commentBody = (TTTAttributedLabel *)[cell viewWithTag:1];
+
     
-    //NSString *markdown = [tempDictionary valueForKey:@"body"];
-    NSString *markdown = [self.flatComments objectAtIndex:indexPath.row];
-    commentBody.text = markdown;
+    NSString *htmlAndStyle = [NSString stringWithFormat:@"<html><head><style>img { max-width:160px; }</style></style><body>%@</body></html>", [self.flatComments objectAtIndex:indexPath.row]];
+    
+    NSData *htmlData = [htmlAndStyle dataUsingEncoding:NSUTF8StringEncoding];
+    
+    // Create the HTML string
+    NSDictionary *importParams = @{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType};
+    NSError *error = nil;
+    NSAttributedString *htmlString = [[NSAttributedString alloc] initWithData:htmlData options:importParams documentAttributes:NULL error:&error];
+    
+    commentBody.attributedText = htmlString;
+    
+    commentBody.font = [UIFont fontWithName:@"Avenir" size:16.0f];
     commentBody.preferredMaxLayoutWidth = 280 - indentPoints; // <<<<< ALL THE MAGIC
     
     [cell setNeedsLayout];
@@ -230,22 +256,6 @@
 -(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 77;
-}
-
--(void)selectedLink:(NSString *)string
-{
-    NSLog(@"Tap link");
-    self.webViewController = [[PBWebViewController alloc] init];
-    self.webViewController.view.backgroundColor = [UIColor whiteColor];
-    self.webViewController.URL = [NSURL URLWithString: string];
-    
-    PBSafariActivity *activity = [[PBSafariActivity alloc] init];
-    self.webViewController.applicationActivities = @[activity];
-    
-    self.webViewController.hidesBottomBarWhenPushed = YES;
-    
-    // Push it
-    [self.navigationController pushViewController:self.webViewController animated:YES];
 }
 
 -(NSString*)convertDateToRelativeDate:(NSString*)date {;
