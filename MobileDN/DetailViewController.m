@@ -121,10 +121,14 @@
     NSUInteger indentLevel = [indentLevelRaw integerValue];
     float indentPoints = indentLevel * 25;
     
-    TTTAttributedLabel *commentBody;
-    commentBody = (TTTAttributedLabel *)[cell viewWithTag:1];
+    UITextView *commentBody;
+    commentBody = (UITextView *)[cell viewWithTag:1];
     commentBody.userInteractionEnabled = YES;
+    commentBody.scrollEnabled = NO;
     commentBody.delegate = self;
+    commentBody.bounces = NO;
+    commentBody.contentInset = UIEdgeInsetsZero;
+    //commentBody.delegate = self;
     
     
     NSString *htmlAndStyle = [NSString stringWithFormat:@"<html><head><style>\
@@ -140,7 +144,7 @@
     commentBody.attributedText = htmlString;
     
     commentBody.font = [UIFont fontWithName:@"Avenir" size:16.0f];
-    commentBody.preferredMaxLayoutWidth = 280 - indentPoints; // <<<<< ALL THE MAGIC
+    //commentBody.preferredMaxLayoutWidth = 280 - indentPoints; // <<<<< ALL THE MAGIC
 
     UILabel *usernameMeta;
     usernameMeta = (UILabel *)[cell viewWithTag:2];
@@ -193,13 +197,6 @@
     return cell;
 }
 
-- (void)attributedLabel:(__unused TTTAttributedLabel *)label
-   didSelectLinkWithURL:(NSURL *)url
-{
-    [[[UIActionSheet alloc] initWithTitle:[url absoluteString] delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Open Link in Safari", nil), nil] showInView:self.view];
-}
-
-
 
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -227,8 +224,8 @@
     NSUInteger indentLevel = [indentLevelRaw integerValue];
     float indentPoints = indentLevel * 25;
     
-    TTTAttributedLabel *commentBody;
-    commentBody = (TTTAttributedLabel *)[cell viewWithTag:1];
+    UITextView *commentBody;
+    commentBody = (UITextView *)[cell viewWithTag:1];
 
     
     NSString *htmlAndStyle = [NSString stringWithFormat:@"<html><head><style>img { max-width:160px; }</style></style><body>%@</body></html>", [self.flatComments objectAtIndex:indexPath.row]];
@@ -242,15 +239,44 @@
     
     commentBody.attributedText = htmlString;
     
-    commentBody.font = [UIFont fontWithName:@"Avenir" size:16.0f];
-    commentBody.preferredMaxLayoutWidth = 280 - indentPoints; // <<<<< ALL THE MAGIC
+    [commentBody sizeToFit]; //added
+    [commentBody layoutIfNeeded]; //added
     
+    CGSize size = [commentBody sizeThatFits:CGSizeMake(293 - indentPoints, CGFLOAT_MAX)];
+    
+    //CGSize size = [commentBody sizeThatFits:CGSizeMake(270 - indentPoints, FLT_MAX)];
+    
+    commentBody.font = [UIFont fontWithName:@"Avenir" size:16.0f];
+    //commentBody.preferredMaxLayoutWidth = 280 - indentPoints; // <<<<< ALL THE MAGIC
+
     [cell setNeedsLayout];
     [cell layoutIfNeeded];
 
-    CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+    //CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+
+    return ceil(size.height) + 100;
+}
+
+-(void)textViewDidChange:(UITextView *)textView
+{
+    [self.tableView beginUpdates];
+    [self.tableView endUpdates];
+}
+
+- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange
+{
+    self.webViewController = [[PBWebViewController alloc] init];
+    self.webViewController.view.backgroundColor = [UIColor whiteColor];
+    self.webViewController.URL = URL;
     
-    return ceil(height) + 1;
+    PBSafariActivity *activity = [[PBSafariActivity alloc] init];
+    self.webViewController.applicationActivities = @[activity];
+    
+    self.webViewController.hidesBottomBarWhenPushed = YES;
+    
+    // Push it
+    [self.navigationController pushViewController:self.webViewController animated:YES];
+    return NO;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath

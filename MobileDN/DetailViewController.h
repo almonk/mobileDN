@@ -8,10 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "PBWebViewController.h"
-#import <TTTAttributedLabel.h>
 
 
-@interface DetailViewController : UITableViewController <UITableViewDataSource, TTTAttributedLabelDelegate> {
+@interface DetailViewController : UITableViewController <UITableViewDataSource, UITextViewDelegate> {
     IBOutlet UIView *emptyView;
 }
 
