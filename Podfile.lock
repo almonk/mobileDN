@@ -23,6 +23,7 @@ PODS:
   - CRToast (0.0.4)
   - MCSwipeTableViewCell (2.1.0)
   - MTBlockAlertView (0.1.1)
+  - OHAttributedLabel (3.5.3)
   - OvershareKit (1.0.6.1):
     - ADNLogin
     - PocketAPI
@@ -31,7 +32,6 @@ PODS:
   - SORelativeDateTransformer (1.1.10)
   - SVProgressHUD (1.0)
   - SVPullToRefresh (0.4.1)
-  - TTTAttributedLabel (1.8.0)
   - UITableView-NXEmptyView (0.1.4)
 
 DEPENDENCIES:
@@ -41,12 +41,12 @@ DEPENDENCIES:
   - CRToast (~> 0.0.4)
   - MCSwipeTableViewCell
   - MTBlockAlertView
+  - OHAttributedLabel
   - OvershareKit
   - RESideMenu
   - SORelativeDateTransformer
   - SVProgressHUD
   - SVPullToRefresh
-  - TTTAttributedLabel
   - UITableView-NXEmptyView
 
 SPEC CHECKSUMS:
@@ -57,13 +57,13 @@ SPEC CHECKSUMS:
   CRToast: ed256a5cbf09d5c9e31cc0c7491dea78a82defe0
   MCSwipeTableViewCell: 4a26851568843d15340eeca00210c219aa9f76d5
   MTBlockAlertView: 05cf381a078c0005bcbad973cf63d9740ca67323
+  OHAttributedLabel: 985e4b57eec0dc6add79179ac47ec888b8a914e7
   OvershareKit: 4fcfe55604da823c0cd52415a15708bdcb92ede8
   PocketAPI: 2ed51391e6ea7a48c707528f782f5a2cb0eab80e
   RESideMenu: d8d6330052e0348718826045b912a1c71748357d
   SORelativeDateTransformer: eba9b9bcc290eb7c9754b9955ace59b890fa59f8
   SVProgressHUD: 5e10939a296debf5fe5a5895eda9539b8b2114f1
   SVPullToRefresh: 61a0e4bd12bd6f8e3465909810b0fbeb1a28d5f2
-  TTTAttributedLabel: cc759a194a485c1fdf2446bf2ee7a55bada1f08d
   UITableView-NXEmptyView: 034e5162ce7b8e3584d720d0d925c27ea7711220
 
 COCOAPODS: 0.28.0
