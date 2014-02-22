@@ -93,9 +93,18 @@
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager.requestSerializer setValue:[helper getAuthToken] forHTTPHeaderField:@"Authorization"];
-    [manager POST:commentUrl parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:@"http://www.mocky.io/v2/530508d5b4d2d46b05327906" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-            [_parent updateComments];
+            NSDictionary *comment = responseObject[@"comment"];
+            
+            if (self.storyId) {
+                [_parent addLatestCommentToBottom:[comment objectForKey:@"body"] : [comment objectForKey:@"user_display_name"] : [comment objectForKey:@"id"]];
+            }
+            
+            if (self.commentId) {
+                [_parent addReplyComment:[comment objectForKey:@"body"] : [comment objectForKey:@"user_display_name"] : self.replyRow : [comment objectForKey:@"depth"] : [comment objectForKey:@"id"]];
+            }
+
             [self dismissViewControllerAnimated:YES completion:nil];
         });
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

@@ -63,7 +63,7 @@
     [comments enumerateObjectsUsingBlock:^(id obj,NSUInteger idx, BOOL *stop){
         NSLog(@"Body: %@", [obj objectForKey:@"body"]);
         [_flatUsers addObject: [obj objectForKey:@"user_display_name"]];
-        [_flatComments addObject: [obj objectForKey:@"body"]];
+        [_flatComments addObject: [obj objectForKey:@"body_html"]];
         [_commentDepth addObject: [obj objectForKey:@"depth"]];
         [_flatTime addObject: [obj objectForKey:@"created_at"]];
         [_flatIds addObject: [obj objectForKey:@"id"]];
@@ -72,7 +72,7 @@
         for (NSDictionary *dict in [obj objectForKey:@"comments"]) {
             NSLog(@"Body: %@", [dict objectForKey:@"body"]);
             [_flatUsers addObject: [dict objectForKey:@"user_display_name"]];
-            [_flatComments addObject: [dict objectForKey:@"body"]];
+            [_flatComments addObject: [dict objectForKey:@"body_html"]];
             [_commentDepth addObject: [dict objectForKey:@"depth"]];
             [_flatTime addObject: [dict objectForKey:@"created_at"]];
             [_flatIds addObject: [dict objectForKey:@"id"]];
@@ -81,7 +81,7 @@
             for (NSDictionary *dict2 in [dict objectForKey:@"comments"]) {
                 NSLog(@"Body: %@", [dict2 objectForKey:@"body"]);
                 [_flatUsers addObject: [dict2 objectForKey:@"user_display_name"]];
-                [_flatComments addObject: [dict2 objectForKey:@"body"]];
+                [_flatComments addObject: [dict2 objectForKey:@"body_html"]];
                 [_commentDepth addObject: [dict2 objectForKey:@"depth"]];
                 [_flatTime addObject: [dict2 objectForKey:@"created_at"]];
                 [_flatIds addObject: [dict2 objectForKey:@"id"]];
@@ -175,6 +175,7 @@
         CommentNavViewController *commentNavViewController = (CommentNavViewController *)[storyboard instantiateViewControllerWithIdentifier:@"CommentView"];
         commentNavViewController.parent = self;
         commentNavViewController.commentId = [self.flatIds objectAtIndex:indexPath.row];
+        commentNavViewController.replyRow = [self.tableView indexPathForCell: cell];
         [self presentViewController:commentNavViewController animated:YES completion:^{
             
         }];
@@ -268,7 +269,7 @@
     }];
 }
 
--(void)addLatestCommentToBottom:(NSString*)comment : (NSString*)username
+-(void)addLatestCommentToBottom:(NSString*)comment : (NSString*)username : (NSString*)commentId
 {
     NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     
@@ -276,18 +277,23 @@
     [self.flatUsers insertObject:username atIndex:0];
     [self.commentDepth insertObject:@"0" atIndex:0];
     [self.flatTime insertObject:@"Test" atIndex:0];
+    [self.flatIds insertObject:commentId atIndex:0];
     
     [self.tableView beginUpdates];
     [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationLeft];
     [self.tableView endUpdates];
 }
 
--(void)addReplyComment:(NSString*)comment : (NSString*)username : (NSIndexPath*)replyRow
+-(void)addReplyComment: (NSString*)comment : (NSString*)username : (NSIndexPath*)replyRow : (NSString*)depth : (NSString*)commentId
 {
-    [self.flatComments insertObject:comment atIndex:0];
-    [self.flatUsers insertObject:username atIndex:0];
-    [self.commentDepth insertObject:@"0" atIndex:0];
-    [self.flatTime insertObject:@"Test" atIndex:0];
+    NSInteger newLast = [replyRow indexAtPosition:replyRow.length-1]+1;
+    replyRow = [[replyRow indexPathByRemovingLastIndex] indexPathByAddingIndex:newLast];
+    
+    [self.flatComments insertObject:comment atIndex:replyRow.row];
+    [self.flatUsers insertObject:username atIndex:replyRow.row];
+    [self.commentDepth insertObject:depth atIndex:replyRow.row];
+    [self.flatTime insertObject:@"Test" atIndex:replyRow.row];
+    [self.flatIds insertObject:commentId atIndex:replyRow.row];
     
     [self.tableView beginUpdates];
     [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:replyRow] withRowAnimation:UITableViewRowAnimationLeft];
