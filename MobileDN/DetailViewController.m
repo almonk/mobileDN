@@ -125,21 +125,24 @@
     
     MCSwipeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
+    [cell setNeedsUpdateConstraints];
+    [cell updateConstraintsIfNeeded];
+    
     NSString *indentLevelRaw = [_commentDepth objectAtIndex:indexPath.row];
     NSUInteger indentLevel = [indentLevelRaw integerValue];
     float indentPoints = indentLevel * 25;
     
-    UILabel *commentBody;
-    commentBody = (UILabel *)[cell viewWithTag:1];
+    UITextView *commentBody;
+    commentBody = (UITextView *)[cell viewWithTag:1];
     commentBody.userInteractionEnabled = YES;
-    commentBody.numberOfLines = 0;
+    //commentBody.numberOfLines = 0;
     
     //NSString *markdown = [tempDictionary valueForKey:@"body"];
     NSString *markdown = [self.flatComments objectAtIndex:indexPath.row];
     commentBody.text = markdown;
     
     commentBody.font = [UIFont fontWithName:@"Avenir" size:16.0f];
-    commentBody.preferredMaxLayoutWidth = 280 - indentPoints; // <<<<< ALL THE MAGIC
+    //commentBody.preferredMaxLayoutWidth = 280 - indentPoints; // <<<<< ALL THE MAGIC
 
     UILabel *usernameMeta;
     usernameMeta = (UILabel *)[cell viewWithTag:2];
@@ -219,21 +222,41 @@
     NSUInteger indentLevel = [indentLevelRaw integerValue];
     float indentPoints = indentLevel * 25;
     
-    UILabel *commentBody;
-    commentBody = (UILabel *)[cell viewWithTag:1];
+    [cell setNeedsUpdateConstraints];
+    [cell updateConstraintsIfNeeded];
+    
+    cell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), CGRectGetHeight(cell.bounds));
+    
+    UITextView *commentBody;
+    commentBody = (UITextView *)[cell viewWithTag:1];
+    commentBody.userInteractionEnabled = YES;
+    //commentBody.numberOfLines = 0;
     
     //NSString *markdown = [tempDictionary valueForKey:@"body"];
     NSString *markdown = [self.flatComments objectAtIndex:indexPath.row];
     commentBody.text = markdown;
-    commentBody.preferredMaxLayoutWidth = 280 - indentPoints; // <<<<< ALL THE MAGIC
     
-    [cell setNeedsLayout];
-    [cell layoutIfNeeded];
+    commentBody.font = [UIFont fontWithName:@"Avenir" size:16.0f];
+    
+    NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:markdown attributes:nil];
+    
+    CGFloat width = 291 - indentPoints;
 
-    CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+    CGSize size = [commentBody sizeThatFits:CGSizeMake(width, FLT_MAX)];
     
-    return ceil(height) + 1;
+    [commentBody sizeToFit];
+
+    [cell setNeedsUpdateConstraints];
+    [cell updateConstraintsIfNeeded];
+    [cell.contentView setNeedsLayout];
+    [cell.contentView layoutIfNeeded];
+    
+    
+    //CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+    
+    return size.height + 2 * 40;
 }
+
 
 -(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
