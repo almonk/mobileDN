@@ -79,7 +79,7 @@
 -(void)submitComment
 {
     AppHelpers *helper = [[AppHelpers alloc] init];
-    [SVProgressHUD showWithStatus:@"Sending..."];
+    [SVProgressHUD showWithStatus:@"Sending..." maskType:SVProgressHUDMaskTypeBlack];
     NSString *commentUrl;
     
     if (self.storyId) {
@@ -106,7 +106,7 @@
                 [_parent addReplyComment:[comment objectForKey:@"body"] : [comment objectForKey:@"user_display_name"] : self.replyRow : [comment objectForKey:@"depth"] : [comment objectForKey:@"id"]];
             }
             
-            [SVProgressHUD dismiss];
+            [SVProgressHUD showSuccessWithStatus:@"Posted"];
 
             [self dismissViewControllerAnimated:YES completion:nil];
         });

@@ -281,19 +281,34 @@
 
 -(void)addLatestCommentToBottom:(NSString*)comment : (NSString*)username : (NSString*)commentId
 {
-    NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    NSInteger sectionsAmount = [self.tableView numberOfSections];
+    NSInteger rowsAmount = [self.tableView numberOfRowsInSection:sectionsAmount-1];
     
-    [self.flatComments insertObject:comment atIndex:0];
-    [self.flatUsers insertObject:username atIndex:0];
-    [self.commentDepth insertObject:@"0" atIndex:0];
-    [self.flatTime insertObject:@"Test" atIndex:0];
-    [self.flatIds insertObject:commentId atIndex:0];
+    NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:(rowsAmount - 1) inSection:(sectionsAmount - 1)];
     
+    if (rowsAmount == 0) {
+        // No rows so we have to create indexes
+        [self.flatComments addObject:comment];
+        [self.flatUsers addObject:username];
+        [self.commentDepth addObject:@"0"];
+        [self.flatTime addObject:@"Test"];
+        [self.flatIds addObject:commentId];
+        [self.tableView reloadData];
+        return;
+    } else {
+        // There's data already so we just add to the end of the array
+        [self.flatComments insertObject:comment atIndex:rowsAmount];
+        [self.flatUsers insertObject:username atIndex:rowsAmount];
+        [self.commentDepth insertObject:@"0" atIndex:rowsAmount];
+        [self.flatTime insertObject:@"Test" atIndex:rowsAmount];
+        [self.flatIds insertObject:commentId atIndex:rowsAmount];
+    }
+
     [self.tableView beginUpdates];
     [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationLeft];
     [self.tableView endUpdates];
     
-    [self.tableView scrollToRowAtIndexPath:newIndexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    [self.tableView scrollToRowAtIndexPath:newIndexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
 }
 
 -(void)addReplyComment: (NSString*)comment : (NSString*)username : (NSIndexPath*)replyRow : (NSString*)depth : (NSString*)commentId
@@ -311,7 +326,7 @@
     [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:replyRow] withRowAnimation:UITableViewRowAnimationLeft];
     [self.tableView endUpdates];
     
-    [self.tableView scrollToRowAtIndexPath:replyRow atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    [self.tableView scrollToRowAtIndexPath:replyRow atScrollPosition:UITableViewScrollPositionTop animated:NO];
 }
 
 -(void)updateComments
@@ -346,6 +361,7 @@
         });
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [self.refreshControl endRefreshing];
         [SVProgressHUD showErrorWithStatus:@"Couldn't get comments"];
         NSLog(@"Error: %@", error);
     }];
