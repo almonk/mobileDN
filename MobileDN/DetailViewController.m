@@ -322,7 +322,7 @@
     NSInteger rowsAmount = [self.tableView numberOfRowsInSection:sectionsAmount-1];
     
     NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:(rowsAmount - 1) inSection:(sectionsAmount - 1)];
-    
+
     if (rowsAmount == 0) {
         // No rows so we have to create indexes
         [self.flatComments addObject:comment];
@@ -331,22 +331,30 @@
         [self.flatTime addObject:@"Test"];
         [self.flatIds addObject:commentId];
         [self.tableView reloadData];
-        return;
     } else {
         // There's data already so we just add to the end of the array
+        
         [self.flatComments insertObject:comment atIndex:rowsAmount];
         [self.flatUsers insertObject:username atIndex:rowsAmount];
         [self.commentDepth insertObject:@"0" atIndex:rowsAmount];
         [self.flatTime insertObject:@"Test" atIndex:rowsAmount];
         [self.flatIds insertObject:commentId atIndex:rowsAmount];
+        
+        [self.tableView beginUpdates];
+        [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationLeft];
+        
+        [self.tableView endUpdates];
+        
+        NSTimeInterval delayInSeconds = 0.2;
+        
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [self.tableView scrollToRowAtIndexPath:newIndexPath atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
+        });
     }
-
-    [self.tableView beginUpdates];
-    [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationLeft];
-    [self.tableView endUpdates];
-    
-    [self.tableView scrollToRowAtIndexPath:newIndexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
 }
+
+
 
 -(void)addReplyComment: (NSString*)comment : (NSString*)username : (NSIndexPath*)replyRow : (NSString*)depth : (NSString*)commentId
 {
@@ -363,7 +371,14 @@
     [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:replyRow] withRowAnimation:UITableViewRowAnimationLeft];
     [self.tableView endUpdates];
     
-    [self.tableView scrollToRowAtIndexPath:replyRow atScrollPosition:UITableViewScrollPositionTop animated:NO];
+    NSTimeInterval delayInSeconds = 0.2;
+    
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [self.tableView scrollToRowAtIndexPath:replyRow atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
+    });
+
+    
 }
 
 -(void)updateComments
@@ -393,8 +408,6 @@
             [SVProgressHUD dismiss];
 
             [self.refreshControl endRefreshing];
-            
-            [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
         });
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
