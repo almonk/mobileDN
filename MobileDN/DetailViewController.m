@@ -63,7 +63,7 @@
     [comments enumerateObjectsUsingBlock:^(id obj,NSUInteger idx, BOOL *stop){
         NSLog(@"Body: %@", [obj objectForKey:@"body"]);
         [_flatUsers addObject: [obj objectForKey:@"user_display_name"]];
-        [_flatComments addObject: [obj objectForKey:@"body_html"]];
+        [_flatComments addObject: [obj objectForKey:@"body"]];
         [_commentDepth addObject: [obj objectForKey:@"depth"]];
         [_flatTime addObject: [obj objectForKey:@"created_at"]];
         [_flatIds addObject: [obj objectForKey:@"id"]];
@@ -72,7 +72,7 @@
         for (NSDictionary *dict in [obj objectForKey:@"comments"]) {
             NSLog(@"Body: %@", [dict objectForKey:@"body"]);
             [_flatUsers addObject: [dict objectForKey:@"user_display_name"]];
-            [_flatComments addObject: [dict objectForKey:@"body_html"]];
+            [_flatComments addObject: [dict objectForKey:@"body"]];
             [_commentDepth addObject: [dict objectForKey:@"depth"]];
             [_flatTime addObject: [dict objectForKey:@"created_at"]];
             [_flatIds addObject: [dict objectForKey:@"id"]];
@@ -81,7 +81,7 @@
             for (NSDictionary *dict2 in [dict objectForKey:@"comments"]) {
                 NSLog(@"Body: %@", [dict2 objectForKey:@"body"]);
                 [_flatUsers addObject: [dict2 objectForKey:@"user_display_name"]];
-                [_flatComments addObject: [dict2 objectForKey:@"body_html"]];
+                [_flatComments addObject: [dict2 objectForKey:@"body"]];
                 [_commentDepth addObject: [dict2 objectForKey:@"depth"]];
                 [_flatTime addObject: [dict2 objectForKey:@"created_at"]];
                 [_flatIds addObject: [dict2 objectForKey:@"id"]];
@@ -282,6 +282,8 @@
     [self.tableView beginUpdates];
     [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationLeft];
     [self.tableView endUpdates];
+    
+    [self.tableView scrollToRowAtIndexPath:newIndexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
 }
 
 -(void)addReplyComment: (NSString*)comment : (NSString*)username : (NSIndexPath*)replyRow : (NSString*)depth : (NSString*)commentId
@@ -298,6 +300,8 @@
     [self.tableView beginUpdates];
     [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:replyRow] withRowAnimation:UITableViewRowAnimationLeft];
     [self.tableView endUpdates];
+    
+    [self.tableView scrollToRowAtIndexPath:replyRow atScrollPosition:UITableViewScrollPositionTop animated:YES];
 }
 
 -(void)updateComments
@@ -332,6 +336,7 @@
         });
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [SVProgressHUD showErrorWithStatus:@"Couldn't get comments"];
         NSLog(@"Error: %@", error);
     }];
 }
