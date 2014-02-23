@@ -37,8 +37,6 @@
     self.tableView.nxEV_hideSeparatorLinesWheyShowingEmptyView = YES;
     self.tableView.nxEV_emptyView = emptyView;
     NSLog(@"Load story %@", self.storyId);
-
-
     
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(updateComments) forControlEvents:UIControlEventValueChanged];
