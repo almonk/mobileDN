@@ -86,6 +86,16 @@
                 [_flatTime addObject: [dict2 objectForKey:@"created_at"]];
                 [_flatIds addObject: [dict2 objectForKey:@"id"]];
                 [_flatUsers count];
+                
+                for (NSDictionary *dict3 in [dict2 objectForKey:@"comments"]) {
+                    NSLog(@"Body: %@", [dict3 objectForKey:@"body"]);
+                    [_flatUsers addObject: [dict3 objectForKey:@"user_display_name"]];
+                    [_flatComments addObject: [dict3 objectForKey:@"body"]];
+                    [_commentDepth addObject: [dict3 objectForKey:@"depth"]];
+                    [_flatTime addObject: [dict3 objectForKey:@"created_at"]];
+                    [_flatIds addObject: [dict3 objectForKey:@"id"]];
+                    [_flatUsers count];
+                }
             }
         }
     }];
