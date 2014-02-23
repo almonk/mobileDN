@@ -30,6 +30,7 @@
 		2E81D514188224A400EF0E19 /* PBSafariActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E81D513188224A400EF0E19 /* PBSafariActivity.m */; };
 		2E86325018B56A81000C58A3 /* thread.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E86324E18B56A81000C58A3 /* thread.png */; };
 		2E86325118B56A81000C58A3 /* thread@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E86324F18B56A81000C58A3 /* thread@2x.png */; };
+		2E8E06DB18B928730041E821 /* JTSTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E8E06DA18B928730041E821 /* JTSTextView.m */; };
 		2EBA21521871D70700D8C5EC /* star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2EBA214E1871D70700D8C5EC /* star@2x.png */; };
 		2EBA21531871D70700D8C5EC /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 2EBA214F1871D70700D8C5EC /* star.png */; };
 		2EBA21541871D70700D8C5EC /* recent@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2EBA21501871D70700D8C5EC /* recent@2x.png */; };
@@ -102,6 +103,8 @@
 		2E81D513188224A400EF0E19 /* PBSafariActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBSafariActivity.m; sourceTree = "<group>"; };
 		2E86324E18B56A81000C58A3 /* thread.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thread.png; sourceTree = "<group>"; };
 		2E86324F18B56A81000C58A3 /* thread@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "thread@2x.png"; sourceTree = "<group>"; };
+		2E8E06D918B928730041E821 /* JTSTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTSTextView.h; sourceTree = "<group>"; };
+		2E8E06DA18B928730041E821 /* JTSTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTSTextView.m; sourceTree = "<group>"; };
 		2EBA214E1871D70700D8C5EC /* star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star@2x.png"; sourceTree = "<group>"; };
 		2EBA214F1871D70700D8C5EC /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
 		2EBA21501871D70700D8C5EC /* recent@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recent@2x.png"; sourceTree = "<group>"; };
@@ -259,6 +262,8 @@
 				2E58E6401883152B003629C8 /* SettingsViewController.m */,
 				2E385A6118B2A59F00A228BD /* SignInViewController.h */,
 				2E385A6218B2A59F00A228BD /* SignInViewController.m */,
+				2E8E06D918B928730041E821 /* JTSTextView.h */,
+				2E8E06DA18B928730041E821 /* JTSTextView.m */,
 				2ED1AA49187069E00085209F /* Supporting Files */,
 				2E81D50E1882248500EF0E19 /* Vendor */,
 			);
@@ -478,6 +483,7 @@
 				2E01913618B41CE700AA7154 /* CommentNavViewController.m in Sources */,
 				2ED1AA5F187069E00085209F /* DetailViewController.m in Sources */,
 				2E58E63D1883083D003629C8 /* DNNavController.m in Sources */,
+				2E8E06DB18B928730041E821 /* JTSTextView.m in Sources */,
 				2E81D514188224A400EF0E19 /* PBSafariActivity.m in Sources */,
 				2EFA51F618731AFA002C0587 /* SearchViewController.m in Sources */,
 				2EE490B718B2BE2B00B7C66A /* AppHelpers.m in Sources */,

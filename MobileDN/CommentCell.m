@@ -35,7 +35,7 @@
                                 indentPoints,
                                 self.contentView.frame.origin.y,
                                 self.contentView.frame.size.width - indentPoints,
-                                self.contentView.frame.size.height + 20
+                                self.contentView.frame.size.height
                                 );
 
  

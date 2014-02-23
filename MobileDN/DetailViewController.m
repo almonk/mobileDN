@@ -19,6 +19,7 @@
 #import <SVProgressHUD.h>
 #import "CommentNavViewController.h"
 #import "CommentViewController.h"
+#import "JTSTextView.h"
 
 @interface DetailViewController () <MCSwipeTableViewCellDelegate>
 @end
@@ -121,8 +122,8 @@
     NSUInteger indentLevel = [indentLevelRaw integerValue];
     float indentPoints = indentLevel * 25;
     
-    UITextView *commentBody;
-    commentBody = (UITextView *)[cell viewWithTag:1];
+    JTSTextView *commentBody;
+    commentBody = (JTSTextView *)[cell viewWithTag:1];
     commentBody.userInteractionEnabled = YES;
     commentBody.scrollEnabled = NO;
     commentBody.delegate = self;
@@ -222,12 +223,11 @@
     
     NSString *indentLevelRaw = [_commentDepth objectAtIndex:indexPath.row];
     NSUInteger indentLevel = [indentLevelRaw integerValue];
-    float indentPoints = indentLevel * 25;
+    //float indentPoints = indentLevel * 25;
     
-    UITextView *commentBody;
-    commentBody = (UITextView *)[cell viewWithTag:1];
+    JTSTextView *commentBody;
+    commentBody = (JTSTextView *)[cell viewWithTag:1];
 
-    
     NSString *htmlAndStyle = [NSString stringWithFormat:@"<html><head><style>img { max-width:160px; }</style></style><body>%@</body></html>", [self.flatComments objectAtIndex:indexPath.row]];
     
     NSData *htmlData = [htmlAndStyle dataUsingEncoding:NSUTF8StringEncoding];
@@ -239,29 +239,23 @@
     
     commentBody.attributedText = htmlString;
     
-    [commentBody sizeToFit]; //added
-    [commentBody layoutIfNeeded]; //added
-    
-    CGSize size = [commentBody sizeThatFits:CGSizeMake(293 - indentPoints, CGFLOAT_MAX)];
-    
-    //CGSize size = [commentBody sizeThatFits:CGSizeMake(270 - indentPoints, FLT_MAX)];
-    
     commentBody.font = [UIFont fontWithName:@"Avenir" size:16.0f];
     //commentBody.preferredMaxLayoutWidth = 280 - indentPoints; // <<<<< ALL THE MAGIC
+    
+    cell.contentView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
 
+    
+    [commentBody sizeToFit];
+    [commentBody.layoutManager ensureLayoutForTextContainer:commentBody.textContainer];
+    [commentBody layoutIfNeeded];
     [cell setNeedsLayout];
     [cell layoutIfNeeded];
+    
+    CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
 
-    //CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-
-    return ceil(size.height) + 100;
+    return ceil(height + 55);
 }
 
--(void)textViewDidChange:(UITextView *)textView
-{
-    [self.tableView beginUpdates];
-    [self.tableView endUpdates];
-}
 
 - (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange
 {
