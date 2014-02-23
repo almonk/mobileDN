@@ -38,7 +38,7 @@ NSString * const kTTTBackgroundCornerRadiusAttributeName = @"TTTBackgroundCorner
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 60000
 const NSTextAlignment TTTTextAlignmentLeft = NSTextAlignmentLeft;
 const NSTextAlignment TTTTextAlignmentCenter = NSTextAlignmentCenter;
-const NSTextAlignment TTTTextAlignmentRight = NSTextAlignmentRight;
+const NSTextAlignment TTTTextAlignmentRigth = NSTextAlignmentRight;
 const NSTextAlignment TTTTextAlignmentJustified = NSTextAlignmentJustified;
 const NSTextAlignment TTTTextAlignmentNatural = NSTextAlignmentNatural;
 
@@ -54,7 +54,7 @@ typedef NSLineBreakMode TTTLineBreakMode;
 #else
 const UITextAlignment TTTTextAlignmentLeft = NSTextAlignmentLeft;
 const UITextAlignment TTTTextAlignmentCenter = NSTextAlignmentCenter;
-const UITextAlignment TTTTextAlignmentRight = NSTextAlignmentRight;
+const UITextAlignment TTTTextAlignmentRigth = NSTextAlignmentRight;
 const UITextAlignment TTTTextAlignmentJustified = NSTextAlignmentJustified;
 const UITextAlignment TTTTextAlignmentNatural = NSTextAlignmentNatural;
 
@@ -162,6 +162,7 @@ static inline CGFLOAT_TYPE CGFloat_round(CGFLOAT_TYPE cgfloat) {
 #endif
 }
 
+
 static inline NSDictionary * NSAttributedStringAttributesFromLabel(TTTAttributedLabel *label) {
     NSMutableDictionary *mutableAttributes = [NSMutableDictionary dictionary]; 
 
@@ -173,10 +174,10 @@ static inline NSDictionary * NSAttributedStringAttributesFromLabel(TTTAttributed
         paragraphStyle.alignment = label.textAlignment;
         paragraphStyle.lineSpacing = label.leading;
         paragraphStyle.lineHeightMultiple = label.lineHeightMultiple;
+        paragraphStyle.firstLineHeadIndent = label.firstLineIndent;
         paragraphStyle.paragraphSpacingBefore = label.textInsets.top;
         paragraphStyle.paragraphSpacing = label.textInsets.bottom;
-        paragraphStyle.firstLineHeadIndent = label.firstLineIndent + label.textInsets.left;
-        paragraphStyle.headIndent = paragraphStyle.firstLineHeadIndent;
+        paragraphStyle.headIndent = label.textInsets.left;
         paragraphStyle.tailIndent = -label.textInsets.right;
 
         if (label.numberOfLines == 1) {
@@ -214,9 +215,9 @@ static inline NSDictionary * NSAttributedStringAttributesFromLabel(TTTAttributed
             {.spec = kCTParagraphStyleSpecifierLineSpacing, .valueSize = sizeof(CGFloat), .value = (const void *)&lineSpacing},
             {.spec = kCTParagraphStyleSpecifierLineSpacingAdjustment, .valueSize = sizeof (CGFloat), .value = (const void *)&lineSpacingAdjustment},
             {.spec = kCTParagraphStyleSpecifierLineHeightMultiple, .valueSize = sizeof(CGFloat), .value = (const void *)&lineHeightMultiple},
+            {.spec = kCTParagraphStyleSpecifierFirstLineHeadIndent, .valueSize = sizeof(CGFloat), .value = (const void *)&firstLineIndent},
             {.spec = kCTParagraphStyleSpecifierParagraphSpacingBefore, .valueSize = sizeof(CGFloat), .value = (const void *)&topMargin},
             {.spec = kCTParagraphStyleSpecifierParagraphSpacing, .valueSize = sizeof(CGFloat), .value = (const void *)&bottomMargin},
-            {.spec = kCTParagraphStyleSpecifierFirstLineHeadIndent, .valueSize = sizeof(CGFloat), .value = (const void *)&firstLineIndent},
             {.spec = kCTParagraphStyleSpecifierHeadIndent, .valueSize = sizeof(CGFloat), .value = (const void *)&leftMargin},
             {.spec = kCTParagraphStyleSpecifierTailIndent, .valueSize = sizeof(CGFloat), .value = (const void *)&rightMargin}
         };
@@ -348,24 +349,18 @@ static inline CGSize CTFramesetterSuggestFrameSizeForAttributedStringWithConstra
     NSMutableDictionary *mutableActiveLinkAttributes = [NSMutableDictionary dictionary];
     [mutableActiveLinkAttributes setObject:[NSNumber numberWithBool:NO] forKey:(NSString *)kCTUnderlineStyleAttributeName];
 
-    NSMutableDictionary *mutableInactiveLinkAttributes = [NSMutableDictionary dictionary];
-    [mutableInactiveLinkAttributes setObject:[NSNumber numberWithBool:NO] forKey:(NSString *)kCTUnderlineStyleAttributeName];
-
     if ([NSMutableParagraphStyle class]) {
         [mutableLinkAttributes setObject:[UIColor blueColor] forKey:(NSString *)kCTForegroundColorAttributeName];
         [mutableActiveLinkAttributes setObject:[UIColor redColor] forKey:(NSString *)kCTForegroundColorAttributeName];
-        [mutableInactiveLinkAttributes setObject:[UIColor grayColor] forKey:(NSString *)kCTForegroundColorAttributeName];
 
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
         paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
         
         [mutableLinkAttributes setObject:paragraphStyle forKey:(NSString *)kCTParagraphStyleAttributeName];
         [mutableActiveLinkAttributes setObject:paragraphStyle forKey:(NSString *)kCTParagraphStyleAttributeName];
-        [mutableInactiveLinkAttributes setObject:paragraphStyle forKey:(NSString *)kCTParagraphStyleAttributeName];
     } else {
         [mutableLinkAttributes setObject:(__bridge id)[[UIColor blueColor] CGColor] forKey:(NSString *)kCTForegroundColorAttributeName];
         [mutableActiveLinkAttributes setObject:(__bridge id)[[UIColor redColor] CGColor] forKey:(NSString *)kCTForegroundColorAttributeName];
-        [mutableInactiveLinkAttributes setObject:(__bridge id)[[UIColor grayColor] CGColor] forKey:(NSString *)kCTForegroundColorAttributeName];
 
         CTLineBreakMode lineBreakMode = kCTLineBreakByWordWrapping;
         CTParagraphStyleSetting paragraphStyles[1] = {
@@ -375,14 +370,12 @@ static inline CGSize CTFramesetterSuggestFrameSizeForAttributedStringWithConstra
         
         [mutableLinkAttributes setObject:(__bridge id)paragraphStyle forKey:(NSString *)kCTParagraphStyleAttributeName];
         [mutableActiveLinkAttributes setObject:(__bridge id)paragraphStyle forKey:(NSString *)kCTParagraphStyleAttributeName];
-        [mutableInactiveLinkAttributes setObject:(__bridge id)paragraphStyle forKey:(NSString *)kCTParagraphStyleAttributeName];
-
+        
         CFRelease(paragraphStyle);
     }
 	    
     self.linkAttributes = [NSDictionary dictionaryWithDictionary:mutableLinkAttributes];
     self.activeLinkAttributes = [NSDictionary dictionaryWithDictionary:mutableActiveLinkAttributes];
-    self.inactiveLinkAttributes = [NSDictionary dictionaryWithDictionary:mutableInactiveLinkAttributes];
 }
 
 - (void)dealloc {
@@ -451,32 +444,33 @@ static inline CGSize CTFramesetterSuggestFrameSizeForAttributedStringWithConstra
     return _framesetter;
 }
 
-- (void)setFramesetter:(CTFramesetterRef)framesetter {
-    if (framesetter) {
-        CFRetain(framesetter);
-    }
-
-    if (_framesetter) {
-        CFRelease(_framesetter);
-    }
-
+- (void)setFramesetter:(CTFramesetterRef)framesetter
+{
+    CTFramesetterRef oldFramesetter = _framesetter;
     _framesetter = framesetter;
+    if (_framesetter) {
+        CFRetain(_framesetter);
+    }
+    if (oldFramesetter) {
+        CFRelease(oldFramesetter);
+    }
 }
 
-- (CTFramesetterRef)highlightFramesetter {
+- (CTFramesetterRef)highlightFramesetter
+{
     return _highlightFramesetter;
 }
 
-- (void)setHighlightFramesetter:(CTFramesetterRef)highlightFramesetter {
-    if (highlightFramesetter) {
-        CFRetain(highlightFramesetter);
-    }
-
-    if (_highlightFramesetter) {
-        CFRelease(_highlightFramesetter);
-    }
-
+- (void)setHighlightFramesetter:(CTFramesetterRef)highlightFramesetter
+{
+    CTFramesetterRef oldHighlightFramesetter = _highlightFramesetter;
     _highlightFramesetter = highlightFramesetter;
+    if (_highlightFramesetter) {
+        CFRetain(_highlightFramesetter);
+    }
+    if (oldHighlightFramesetter) {
+        CFRelease(oldHighlightFramesetter);
+    }
 }
 
 - (NSAttributedString *)renderedAttributedText {
@@ -522,7 +516,6 @@ static inline CGSize CTFramesetterSuggestFrameSizeForAttributedStringWithConstra
         for (NSTextCheckingResult *result in results) {
             [mutableAttributedString addAttributes:attributes range:result.range];
         }
-
         self.attributedText = mutableAttributedString;
         [self setNeedsDisplay];
     }
@@ -755,7 +748,7 @@ static inline CGSize CTFramesetterSuggestFrameSizeForAttributedStringWithConstra
                     case TTTTextAlignmentCenter:
                         flushFactor = 0.5f;
                         break;
-                    case TTTTextAlignmentRight:
+                    case TTTTextAlignmentRigth:
                         flushFactor = 1.0f;
                         break;
                     case TTTTextAlignmentLeft:
@@ -1015,11 +1008,9 @@ afterInheritingLabelAttributesAndConfiguringWithBlock:(NSMutableAttributedString
         }
 
         NSMutableAttributedString *mutableAttributedString = [self.inactiveAttributedText mutableCopy];
-        if (NSLocationInRange(NSMaxRange(self.activeLink.range), NSMakeRange(0, [self.inactiveAttributedText length]))) {
-            [mutableAttributedString addAttributes:self.activeLinkAttributes range:self.activeLink.range];
-        }
-
+        [mutableAttributedString addAttributes:self.activeLinkAttributes range:_activeLink.range];
         self.attributedText = mutableAttributedString;
+
         [self setNeedsDisplay];
     } else if (self.inactiveAttributedText) {
         self.attributedText = self.inactiveAttributedText;
@@ -1180,27 +1171,6 @@ afterInheritingLabelAttributesAndConfiguringWithBlock:(NSMutableAttributedString
     return [self sizeThatFits:[super intrinsicContentSize]];
 }
 
-- (void)tintColorDidChange {
-    BOOL isInactive = (CGColorSpaceGetModel(CGColorGetColorSpace([self.tintColor CGColor])) == kCGColorSpaceModelMonochrome);
-
-    NSDictionary *attributesToRemove = isInactive ? self.linkAttributes : self.inactiveLinkAttributes;
-    NSDictionary *attributesToAdd = isInactive ? self.inactiveLinkAttributes : self.linkAttributes;
-
-    NSMutableAttributedString *mutableAttributedString = [self.attributedText mutableCopy];
-    for (NSTextCheckingResult *result in self.links) {
-        [attributesToRemove enumerateKeysAndObjectsUsingBlock:^(NSString *name, __unused id value, __unused BOOL *stop) {
-            [mutableAttributedString removeAttribute:name range:result.range];
-        }];
-
-        if (attributesToAdd) {
-            [mutableAttributedString addAttributes:attributesToAdd range:result.range];
-        }
-    }
-
-    self.attributedText = mutableAttributedString;
-    [self setNeedsDisplay];
-}
-
 #pragma mark - UIResponder
 
 - (BOOL)canBecomeFirstResponder {
@@ -1318,7 +1288,6 @@ afterInheritingLabelAttributesAndConfiguringWithBlock:(NSMutableAttributedString
     if ([NSMutableParagraphStyle class]) {
         [coder encodeObject:self.linkAttributes forKey:NSStringFromSelector(@selector(linkAttributes))];
         [coder encodeObject:self.activeLinkAttributes forKey:NSStringFromSelector(@selector(activeLinkAttributes))];
-        [coder encodeObject:self.inactiveLinkAttributes forKey:NSStringFromSelector(@selector(inactiveLinkAttributes))];
     }
     [coder encodeObject:@(self.shadowRadius) forKey:NSStringFromSelector(@selector(shadowRadius))];
     [coder encodeObject:@(self.highlightedShadowRadius) forKey:NSStringFromSelector(@selector(highlightedShadowRadius))];
@@ -1357,18 +1326,14 @@ afterInheritingLabelAttributesAndConfiguringWithBlock:(NSMutableAttributedString
         if ([coder containsValueForKey:NSStringFromSelector(@selector(activeLinkAttributes))]) {
             self.activeLinkAttributes = [coder decodeObjectForKey:NSStringFromSelector(@selector(activeLinkAttributes))];
         }
-
-        if ([coder containsValueForKey:NSStringFromSelector(@selector(inactiveLinkAttributes))]) {
-            self.inactiveLinkAttributes = [coder decodeObjectForKey:NSStringFromSelector(@selector(inactiveLinkAttributes))];
-        }
     }
 
     if ([coder containsValueForKey:NSStringFromSelector(@selector(shadowRadius))]) {
-        self.shadowRadius = [[coder decodeObjectForKey:NSStringFromSelector(@selector(shadowRadius))] floatValue];
+        self.shadowRadius = [coder decodeFloatForKey:NSStringFromSelector(@selector(shadowRadius))];
     }
 
     if ([coder containsValueForKey:NSStringFromSelector(@selector(highlightedShadowRadius))]) {
-        self.highlightedShadowRadius = [[coder decodeObjectForKey:NSStringFromSelector(@selector(highlightedShadowRadius))] floatValue];
+        self.highlightedShadowRadius = [coder decodeFloatForKey:NSStringFromSelector(@selector(highlightedShadowRadius))];
     }
 
     if ([coder containsValueForKey:NSStringFromSelector(@selector(highlightedShadowOffset))]) {
@@ -1380,15 +1345,15 @@ afterInheritingLabelAttributesAndConfiguringWithBlock:(NSMutableAttributedString
     }
 
     if ([coder containsValueForKey:NSStringFromSelector(@selector(firstLineIndent))]) {
-        self.firstLineIndent = [[coder decodeObjectForKey:NSStringFromSelector(@selector(firstLineIndent))] floatValue];
+        self.firstLineIndent = [coder decodeFloatForKey:NSStringFromSelector(@selector(firstLineIndent))];
     }
 
     if ([coder containsValueForKey:NSStringFromSelector(@selector(leading))]) {
-        self.leading = [[coder decodeObjectForKey:NSStringFromSelector(@selector(leading))] floatValue];
+        self.leading = [coder decodeFloatForKey:NSStringFromSelector(@selector(leading))];
     }
 
     if ([coder containsValueForKey:NSStringFromSelector(@selector(lineHeightMultiple))]) {
-        self.lineHeightMultiple = [[coder decodeObjectForKey:NSStringFromSelector(@selector(lineHeightMultiple))] floatValue];
+        self.lineHeightMultiple = [coder decodeFloatForKey:NSStringFromSelector(@selector(lineHeightMultiple))];
     }
 
     if ([coder containsValueForKey:NSStringFromSelector(@selector(textInsets))]) {

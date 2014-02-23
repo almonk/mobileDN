@@ -13,13 +13,12 @@
 #import "PBSafariActivity.h"
 #import <SORelativeDateTransformer.h>
 #import "UITableView+NXEmptyView.h"
-#import <TTTAttributedLabel.h>
+#import <AMAttributedHighlightLabel.h>
 #import <MCSwipeTableViewCell.h>
 #import "AppHelpers.h"
 #import <SVProgressHUD.h>
 #import "CommentNavViewController.h"
 #import "CommentViewController.h"
-#import "JTSTextView.h"
 
 @interface DetailViewController () <MCSwipeTableViewCellDelegate>
 @end
@@ -122,30 +121,17 @@
     NSUInteger indentLevel = [indentLevelRaw integerValue];
     float indentPoints = indentLevel * 25;
     
-    JTSTextView *commentBody;
-    commentBody = (JTSTextView *)[cell viewWithTag:1];
+    UILabel *commentBody;
+    commentBody = (UILabel *)[cell viewWithTag:1];
     commentBody.userInteractionEnabled = YES;
-    commentBody.scrollEnabled = NO;
-    commentBody.delegate = self;
-    commentBody.bounces = NO;
-    commentBody.contentInset = UIEdgeInsetsZero;
-    //commentBody.delegate = self;
+    commentBody.numberOfLines = 0;
     
-    
-    NSString *htmlAndStyle = [NSString stringWithFormat:@"<html><head><style>\
-                              img { max-width:180px; }</style><body>%@</body></html>", [self.flatComments objectAtIndex:indexPath.row]];
-    
-    NSData *htmlData = [htmlAndStyle dataUsingEncoding:NSUTF8StringEncoding];
-    
-    // Create the HTML string
-    NSDictionary *importParams = @{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType};
-    NSError *error = nil;
-    NSAttributedString *htmlString = [[NSAttributedString alloc] initWithData:htmlData options:importParams documentAttributes:NULL error:&error];
-    
-    commentBody.attributedText = htmlString;
+    //NSString *markdown = [tempDictionary valueForKey:@"body"];
+    NSString *markdown = [self.flatComments objectAtIndex:indexPath.row];
+    commentBody.text = markdown;
     
     commentBody.font = [UIFont fontWithName:@"Avenir" size:16.0f];
-    //commentBody.preferredMaxLayoutWidth = 280 - indentPoints; // <<<<< ALL THE MAGIC
+    commentBody.preferredMaxLayoutWidth = 280 - indentPoints; // <<<<< ALL THE MAGIC
 
     UILabel *usernameMeta;
     usernameMeta = (UILabel *)[cell viewWithTag:2];
@@ -223,45 +209,35 @@
     
     NSString *indentLevelRaw = [_commentDepth objectAtIndex:indexPath.row];
     NSUInteger indentLevel = [indentLevelRaw integerValue];
-    //float indentPoints = indentLevel * 25;
+    float indentPoints = indentLevel * 25;
     
-    JTSTextView *commentBody;
-    commentBody = (JTSTextView *)[cell viewWithTag:1];
-
-    NSString *htmlAndStyle = [NSString stringWithFormat:@"<html><head><style>img { max-width:160px; }</style></style><body>%@</body></html>", [self.flatComments objectAtIndex:indexPath.row]];
+    UILabel *commentBody;
+    commentBody = (UILabel *)[cell viewWithTag:1];
     
-    NSData *htmlData = [htmlAndStyle dataUsingEncoding:NSUTF8StringEncoding];
+    //NSString *markdown = [tempDictionary valueForKey:@"body"];
+    NSString *markdown = [self.flatComments objectAtIndex:indexPath.row];
+    commentBody.text = markdown;
+    commentBody.preferredMaxLayoutWidth = 280 - indentPoints; // <<<<< ALL THE MAGIC
     
-    // Create the HTML string
-    NSDictionary *importParams = @{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType};
-    NSError *error = nil;
-    NSAttributedString *htmlString = [[NSAttributedString alloc] initWithData:htmlData options:importParams documentAttributes:NULL error:&error];
-    
-    commentBody.attributedText = htmlString;
-    
-    commentBody.font = [UIFont fontWithName:@"Avenir" size:16.0f];
-    //commentBody.preferredMaxLayoutWidth = 280 - indentPoints; // <<<<< ALL THE MAGIC
-    
-    cell.contentView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
-
-    
-    [commentBody sizeToFit];
-    [commentBody.layoutManager ensureLayoutForTextContainer:commentBody.textContainer];
-    [commentBody layoutIfNeeded];
     [cell setNeedsLayout];
     [cell layoutIfNeeded];
-    
-    CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
 
-    return ceil(height + 55);
+    CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+    
+    return ceil(height) + 1;
 }
 
-
-- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange
+-(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    return 77;
+}
+
+-(void)selectedLink:(NSString *)string
+{
+    NSLog(@"Tap link");
     self.webViewController = [[PBWebViewController alloc] init];
     self.webViewController.view.backgroundColor = [UIColor whiteColor];
-    self.webViewController.URL = URL;
+    self.webViewController.URL = [NSURL URLWithString: string];
     
     PBSafariActivity *activity = [[PBSafariActivity alloc] init];
     self.webViewController.applicationActivities = @[activity];
@@ -270,12 +246,6 @@
     
     // Push it
     [self.navigationController pushViewController:self.webViewController animated:YES];
-    return NO;
-}
-
--(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 77;
 }
 
 -(NSString*)convertDateToRelativeDate:(NSString*)date {;

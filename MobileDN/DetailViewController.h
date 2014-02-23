@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "PBWebViewController.h"
+#import <AMAttributedHighlightLabel.h>
 
-
-@interface DetailViewController : UITableViewController <UITableViewDataSource, UITextViewDelegate> {
+@interface DetailViewController : UITableViewController <UITableViewDataSource> {
     IBOutlet UIView *emptyView;
 }
 
