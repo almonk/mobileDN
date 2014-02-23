@@ -10,7 +10,7 @@
 #import "PBWebViewController.h"
 #import <AMAttributedHighlightLabel.h>
 
-@interface DetailViewController : UITableViewController <UITableViewDataSource> {
+@interface DetailViewController : UITableViewController <UITableViewDataSource, UITextViewDelegate> {
     IBOutlet UIView *emptyView;
 }
 

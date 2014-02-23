@@ -61,7 +61,7 @@
     [comments enumerateObjectsUsingBlock:^(id obj,NSUInteger idx, BOOL *stop){
         NSLog(@"Body: %@", [obj objectForKey:@"body"]);
         [_flatUsers addObject: [obj objectForKey:@"user_display_name"]];
-        [_flatComments addObject: [obj objectForKey:@"body"]];
+        [_flatComments addObject: [obj objectForKey:@"body_html"]];
         [_commentDepth addObject: [obj objectForKey:@"depth"]];
         [_flatTime addObject: [obj objectForKey:@"created_at"]];
         [_flatIds addObject: [obj objectForKey:@"id"]];
@@ -70,7 +70,7 @@
         for (NSDictionary *dict in [obj objectForKey:@"comments"]) {
             NSLog(@"Body: %@", [dict objectForKey:@"body"]);
             [_flatUsers addObject: [dict objectForKey:@"user_display_name"]];
-            [_flatComments addObject: [dict objectForKey:@"body"]];
+            [_flatComments addObject: [dict objectForKey:@"body_html"]];
             [_commentDepth addObject: [dict objectForKey:@"depth"]];
             [_flatTime addObject: [dict objectForKey:@"created_at"]];
             [_flatIds addObject: [dict objectForKey:@"id"]];
@@ -79,7 +79,7 @@
             for (NSDictionary *dict2 in [dict objectForKey:@"comments"]) {
                 NSLog(@"Body: %@", [dict2 objectForKey:@"body"]);
                 [_flatUsers addObject: [dict2 objectForKey:@"user_display_name"]];
-                [_flatComments addObject: [dict2 objectForKey:@"body"]];
+                [_flatComments addObject: [dict2 objectForKey:@"body_html"]];
                 [_commentDepth addObject: [dict2 objectForKey:@"depth"]];
                 [_flatTime addObject: [dict2 objectForKey:@"created_at"]];
                 [_flatIds addObject: [dict2 objectForKey:@"id"]];
@@ -88,7 +88,7 @@
                 for (NSDictionary *dict3 in [dict2 objectForKey:@"comments"]) {
                     NSLog(@"Body: %@", [dict3 objectForKey:@"body"]);
                     [_flatUsers addObject: [dict3 objectForKey:@"user_display_name"]];
-                    [_flatComments addObject: [dict3 objectForKey:@"body"]];
+                    [_flatComments addObject: [dict3 objectForKey:@"body_html"]];
                     [_commentDepth addObject: [dict3 objectForKey:@"depth"]];
                     [_flatTime addObject: [dict3 objectForKey:@"created_at"]];
                     [_flatIds addObject: [dict3 objectForKey:@"id"]];
@@ -135,11 +135,21 @@
     UITextView *commentBody;
     commentBody = (UITextView *)[cell viewWithTag:1];
     commentBody.userInteractionEnabled = YES;
-    //commentBody.numberOfLines = 0;
+    commentBody.scrollEnabled = NO;
+    commentBody.bounces = NO;
+    commentBody.delegate = self;
     
-    //NSString *markdown = [tempDictionary valueForKey:@"body"];
-    NSString *markdown = [self.flatComments objectAtIndex:indexPath.row];
-    commentBody.text = markdown;
+    NSString *htmlAndStyle = [NSString stringWithFormat:@"<html><head><style>img { max-width:160px; }</style></style><body>%@</body></html>", [self.flatComments objectAtIndex:indexPath.row]];
+    
+    NSData *htmlData = [htmlAndStyle dataUsingEncoding:NSUTF8StringEncoding];
+    
+    // Create the HTML string
+    NSDictionary *importParams = @{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType};
+    NSError *error = nil;
+    NSAttributedString *htmlString = [[NSAttributedString alloc] initWithData:htmlData options:importParams documentAttributes:NULL error:&error];
+    
+    // Instantiate UITextView object
+    commentBody.attributedText = htmlString;
     
     commentBody.font = [UIFont fontWithName:@"Avenir" size:16.0f];
     //commentBody.preferredMaxLayoutWidth = 280 - indentPoints; // <<<<< ALL THE MAGIC
@@ -230,15 +240,20 @@
     UITextView *commentBody;
     commentBody = (UITextView *)[cell viewWithTag:1];
     commentBody.userInteractionEnabled = YES;
-    //commentBody.numberOfLines = 0;
     
-    //NSString *markdown = [tempDictionary valueForKey:@"body"];
-    NSString *markdown = [self.flatComments objectAtIndex:indexPath.row];
-    commentBody.text = markdown;
+    NSString *htmlAndStyle = [NSString stringWithFormat:@"<html><head><style>img { max-width:160px; }</style></style><body>%@</body></html>", [self.flatComments objectAtIndex:indexPath.row]];
+    
+    NSData *htmlData = [htmlAndStyle dataUsingEncoding:NSUTF8StringEncoding];
+    
+    // Create the HTML string
+    NSDictionary *importParams = @{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType};
+    NSError *error = nil;
+    NSAttributedString *htmlString = [[NSAttributedString alloc] initWithData:htmlData options:importParams documentAttributes:NULL error:&error];
+    
+    // Instantiate UITextView object
+    commentBody.attributedText = htmlString;
     
     commentBody.font = [UIFont fontWithName:@"Avenir" size:16.0f];
-    
-    NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:markdown attributes:nil];
     
     CGFloat width = 291 - indentPoints;
 
@@ -254,7 +269,7 @@
     
     //CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
     
-    return size.height + 2 * 40;
+    return size.height + 2 * 20;
 }
 
 
@@ -263,12 +278,12 @@
     return 77;
 }
 
--(void)selectedLink:(NSString *)string
+- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange
 {
     NSLog(@"Tap link");
     self.webViewController = [[PBWebViewController alloc] init];
     self.webViewController.view.backgroundColor = [UIColor whiteColor];
-    self.webViewController.URL = [NSURL URLWithString: string];
+    self.webViewController.URL = URL;
     
     PBSafariActivity *activity = [[PBSafariActivity alloc] init];
     self.webViewController.applicationActivities = @[activity];
@@ -277,6 +292,7 @@
     
     // Push it
     [self.navigationController pushViewController:self.webViewController animated:YES];
+    return NO;
 }
 
 -(NSString*)convertDateToRelativeDate:(NSString*)date {;
