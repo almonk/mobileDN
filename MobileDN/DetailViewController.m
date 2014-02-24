@@ -362,28 +362,15 @@
 
 -(void)addReplyComment: (NSString*)comment : (NSString*)username : (NSIndexPath*)replyRow : (NSString*)depth : (NSString*)commentId
 {
-    NSInteger newLast = [replyRow indexAtPosition:replyRow.length-1]+1;
-    replyRow = [[replyRow indexPathByRemovingLastIndex] indexPathByAddingIndex:newLast];
+    NSIndexPath* top = [NSIndexPath indexPathForRow:NSNotFound inSection:0];
+    [self.tableView scrollToRowAtIndexPath:top atScrollPosition:UITableViewScrollPositionTop animated:NO];
     
-    [self.flatComments insertObject:comment atIndex:replyRow.row];
-    [self.flatUsers insertObject:username atIndex:replyRow.row];
-    [self.commentDepth insertObject:depth atIndex:replyRow.row];
-    [self.flatTime insertObject:@"Test" atIndex:replyRow.row];
-    [self.flatIds insertObject:commentId atIndex:replyRow.row];
-    
-//    [self.tableView beginUpdates];
-//    [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:replyRow] withRowAnimation:UITableViewRowAnimationLeft];
-//    [self.tableView endUpdates];
-    
-    [self.tableView reloadData];
-    
-    NSTimeInterval delayInSeconds = 0.2;
+    NSTimeInterval delayInSeconds = 0.8;
     
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        [self.tableView scrollToRowAtIndexPath:replyRow atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
+        [self updateComments];
     });
-
     
 }
 
@@ -411,9 +398,11 @@
         
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            
             [SVProgressHUD dismiss];
 
             [self.refreshControl endRefreshing];
+            
         });
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
