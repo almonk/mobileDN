@@ -318,40 +318,44 @@
 
 -(void)addLatestCommentToBottom:(NSString*)comment : (NSString*)username : (NSString*)commentId
 {
-    NSInteger sectionsAmount = [self.tableView numberOfSections];
-    NSInteger rowsAmount = [self.tableView numberOfRowsInSection:sectionsAmount-1];
+    NSTimeInterval delayInSeconds = 0.8;
     
-    NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:(rowsAmount - 1) inSection:(sectionsAmount - 1)];
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [self updateComments];
+    });
 
-    if (rowsAmount == 0) {
-        // No rows so we have to create indexes
-        [self.flatComments addObject:comment];
-        [self.flatUsers addObject:username];
-        [self.commentDepth addObject:@"0"];
-        [self.flatTime addObject:@"Test"];
-        [self.flatIds addObject:commentId];
-        [self.tableView reloadData];
-    } else {
-        // There's data already so we just add to the end of the array
-        
-        [self.flatComments insertObject:comment atIndex:rowsAmount];
-        [self.flatUsers insertObject:username atIndex:rowsAmount];
-        [self.commentDepth insertObject:@"0" atIndex:rowsAmount];
-        [self.flatTime insertObject:@"Test" atIndex:rowsAmount];
-        [self.flatIds insertObject:commentId atIndex:rowsAmount];
-        
-        [self.tableView beginUpdates];
-        [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationLeft];
-        
-        [self.tableView endUpdates];
-        
-        NSTimeInterval delayInSeconds = 0.2;
-        
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            [self.tableView scrollToRowAtIndexPath:newIndexPath atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
-        });
-    }
+//    if (rowsAmount == 0) {
+//        // No rows so we have to create indexes
+//        [self.flatComments addObject:comment];
+//        [self.flatUsers addObject:username];
+//        [self.commentDepth addObject:@"0"];
+//        [self.flatTime addObject:@"Test"];
+//        [self.flatIds addObject:commentId];
+//        [self.tableView reloadData];
+//    } else {
+//        // There's data already so we just add to the end of the array
+//        
+//        [self.flatComments insertObject:comment atIndex:rowsAmount];
+//        [self.flatUsers insertObject:username atIndex:rowsAmount];
+//        [self.commentDepth insertObject:@"0" atIndex:rowsAmount];
+//        [self.flatTime insertObject:@"Test" atIndex:rowsAmount];
+//        [self.flatIds insertObject:commentId atIndex:rowsAmount];
+//        
+//        [self.tableView beginUpdates];
+//        [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationLeft];
+//        
+//        [self.tableView endUpdates];
+//
+//        [self.tableView reloadData];
+//        
+//        NSTimeInterval delayInSeconds = 0.5;
+//        
+//        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+//        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+//            [self.tableView scrollToRowAtIndexPath:newIndexPath atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
+//        });
+//    }
 }
 
 
@@ -367,9 +371,11 @@
     [self.flatTime insertObject:@"Test" atIndex:replyRow.row];
     [self.flatIds insertObject:commentId atIndex:replyRow.row];
     
-    [self.tableView beginUpdates];
-    [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:replyRow] withRowAnimation:UITableViewRowAnimationLeft];
-    [self.tableView endUpdates];
+//    [self.tableView beginUpdates];
+//    [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:replyRow] withRowAnimation:UITableViewRowAnimationLeft];
+//    [self.tableView endUpdates];
+    
+    [self.tableView reloadData];
     
     NSTimeInterval delayInSeconds = 0.2;
     
