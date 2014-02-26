@@ -94,7 +94,7 @@
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager.requestSerializer setValue:[helper getAuthToken] forHTTPHeaderField:@"Authorization"];
-    [manager POST:@"http://www.mocky.io/v2/530a3982199be5d50210b125" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:commentUrl parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
             NSDictionary *comment = responseObject[@"comment"];
             

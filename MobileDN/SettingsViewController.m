@@ -10,6 +10,7 @@
 #import <OvershareKit.h>
 #import <MTBlockAlertView.h>
 #import "AppHelpers.h"
+#import <AFNetworking.h>
 
 
 @interface SettingsViewController ()
@@ -30,6 +31,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self loadProfileInfo];
 	// Do any additional setup after loading the view.
 }
 
@@ -37,6 +39,31 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)loadProfileInfo
+{
+    AppHelpers *helper = [[AppHelpers alloc] init];
+    
+    NSLog(@"Loading info");
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager.requestSerializer setValue:[helper getAuthToken] forHTTPHeaderField:@"Authorization"];
+    [manager GET:@"https://api-news.layervault.com/api/v1/me" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *profile = responseObject[@"me"];
+        
+        NSString *fullName = [NSString stringWithFormat:@"%@ %@", [profile valueForKey:@"first_name"], [profile valueForKey:@"last_name"]];
+        [name setText: fullName];
+        
+        [jobTitle setText: [profile valueForKey:@"job"]];
+        
+        NSString *ImageURL = [profile valueForKey:@"portrait_url"];
+        NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:ImageURL]];
+        avatar.image = [UIImage imageWithData:imageData];
+        [spinner stopAnimating];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
 }
 
 -(IBAction)signOut:(id)sender

@@ -4,11 +4,13 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <scenes>
-        <!--Nav Controller - Top-->
+        <!--Nav Controller-->
         <scene sceneID="cUi-kZ-frf">
             <objects>
                 <navigationController id="rS3-R9-Ivy" customClass="DNNavController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Top" image="star.png" id="845-SQ-u2q"/>
+                    <tabBarItem key="tabBarItem" image="top-2.png" id="845-SQ-u2q">
+                        <inset key="imageInsets" minX="0.0" minY="4" maxX="0.0" maxY="-4"/>
+                    </tabBarItem>
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="yXu-0R-QUA">
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -35,6 +37,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <color key="tintColor" red="0.1764705926" green="0.44705885649999999" blue="0.85098046059999999" alpha="1" colorSpace="deviceRGB"/>
+                        <color key="selectedImageTintColor" red="0.1764705926" green="0.44705885649999999" blue="0.85098046059999999" alpha="1" colorSpace="deviceRGB"/>
                     </tabBar>
                     <connections>
                         <segue destination="rS3-R9-Ivy" kind="relationship" relationship="viewControllers" id="EjY-gI-LSx"/>
@@ -248,11 +251,13 @@
             </objects>
             <point key="canvasLocation" x="1838" y="64"/>
         </scene>
-        <!--Nav Controller - Recent-->
+        <!--Nav Controller-->
         <scene sceneID="FNu-tM-I0d">
             <objects>
                 <navigationController id="9hp-op-P2x" customClass="DNNavController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Recent" image="recent.png" id="JLE-53-owj"/>
+                    <tabBarItem key="tabBarItem" image="recent-2.png" id="JLE-53-owj">
+                        <inset key="imageInsets" minX="0.0" minY="4" maxX="0.0" maxY="-4"/>
+                    </tabBarItem>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="6tk-GH-7eY">
                         <autoresizingMask key="autoresizingMask"/>
@@ -267,11 +272,13 @@
             </objects>
             <point key="canvasLocation" x="-1" y="755"/>
         </scene>
-        <!--Nav Controller - Search-->
+        <!--Nav Controller-->
         <scene sceneID="qI9-KW-kx5">
             <objects>
                 <navigationController id="yN4-pR-voU" customClass="DNNavController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Search" image="search.png" id="Txj-UZ-bPM"/>
+                    <tabBarItem key="tabBarItem" image="search-2.png" id="Txj-UZ-bPM">
+                        <inset key="imageInsets" minX="0.0" minY="4" maxX="0.0" maxY="-4"/>
+                    </tabBarItem>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="4hK-vM-0So">
                         <autoresizingMask key="autoresizingMask"/>
@@ -353,8 +360,36 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="kXU-Gi-3aF">
+                            <rect key="frame" x="0.0" y="64" width="320" height="137"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NQa-4h-Nu0">
+                                    <rect key="frame" x="136" y="20" width="48" height="48"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </imageView>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ia8-FM-nFl">
+                                    <rect key="frame" x="20" y="76" width="280" height="24"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
+                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gcw-oh-jF0">
+                                    <rect key="frame" x="20" y="98" width="280" height="24"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="15"/>
+                                    <color key="textColor" name="windowFrameColor" catalog="System" colorSpace="catalog"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="YAo-U4-GPI">
+                                    <rect key="frame" x="150" y="56" width="20" height="20"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </activityIndicatorView>
+                            </subviews>
+                        </view>
                         <view key="tableFooterView" contentMode="scaleToFill" id="StE-qO-T4d">
-                            <rect key="frame" x="0.0" y="261" width="320" height="61"/>
+                            <rect key="frame" x="0.0" y="299" width="320" height="61"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Made with ♥ by Alasdair Monk" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HIg-eP-d66">
@@ -383,7 +418,7 @@
                             <tableViewSection id="cPW-9T-9Ds">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="wCx-nh-p3y">
-                                        <rect key="frame" x="0.0" y="99" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="201" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wCx-nh-p3y" id="GAi-oH-89X">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -406,7 +441,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="bsX-kf-Oi8">
-                                        <rect key="frame" x="0.0" y="143" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="245" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bsX-kf-Oi8" id="BH2-dn-Vdb">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -417,38 +452,12 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                                     <inset key="contentEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                    <state key="normal" title="Rate MobileDN">
-                                                        <color key="titleColor" name="shadowColor" catalog="System" colorSpace="catalog"/>
-                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="rateApp:" destination="sHD-AP-vXK" eventType="touchDown" id="j6v-5s-UQ4"/>
-                                                    </connections>
-                                                </button>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection id="b9O-Cd-OEs">
-                                <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="opj-UF-uUd">
-                                        <rect key="frame" x="0.0" y="207" width="320" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="opj-UF-uUd" id="rgQ-Op-y6z">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QSK-z8-dcC">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                                     <state key="normal" title="Sign out">
-                                                        <color key="titleColor" red="0.79706606657608692" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="titleColor" red="0.79706606660000001" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="signOut:" destination="sHD-AP-vXK" eventType="touchDown" id="1w5-wN-B3s"/>
+                                                        <action selector="signOut:" destination="sHD-AP-vXK" eventType="touchDown" id="bbq-uT-Ae9"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -462,17 +471,25 @@
                             <outlet property="delegate" destination="sHD-AP-vXK" id="icS-7n-Xal"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="More" id="MHu-gR-tcW"/>
+                    <navigationItem key="navigationItem" title="You" id="MHu-gR-tcW"/>
+                    <connections>
+                        <outlet property="avatar" destination="NQa-4h-Nu0" id="Qc1-Xv-iRR"/>
+                        <outlet property="jobTitle" destination="gcw-oh-jF0" id="wq7-Ok-OMC"/>
+                        <outlet property="name" destination="ia8-FM-nFl" id="tSM-Pr-VFh"/>
+                        <outlet property="spinner" destination="YAo-U4-GPI" id="cdU-n7-xDk"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="by7-uH-l9f" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="459" y="2246"/>
         </scene>
-        <!--Nav Controller - More-->
+        <!--Nav Controller-->
         <scene sceneID="Hvd-vm-Y7r">
             <objects>
                 <navigationController id="2Qn-iO-q5Z" customClass="DNNavController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="More" image="gearIcon.png" id="PJG-Xp-NNZ"/>
+                    <tabBarItem key="tabBarItem" image="more-2.png" id="PJG-Xp-NNZ">
+                        <inset key="imageInsets" minX="0.0" minY="4" maxX="0.0" maxY="-4"/>
+                    </tabBarItem>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="bSs-6e-m48">
                         <autoresizingMask key="autoresizingMask"/>
@@ -541,10 +558,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="gearIcon.png" width="22" height="22"/>
-        <image name="recent.png" width="25" height="25"/>
-        <image name="search.png" width="25" height="25"/>
-        <image name="star.png" width="25" height="25"/>
+        <image name="more-2.png" width="27" height="27"/>
+        <image name="recent-2.png" width="27" height="27"/>
+        <image name="search-2.png" width="27" height="27"/>
+        <image name="top-2.png" width="26" height="25"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
