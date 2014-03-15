@@ -50,6 +50,7 @@
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager.requestSerializer setValue:[helper getAuthToken] forHTTPHeaderField:@"Authorization"];
     [manager GET:@"https://api-news.layervault.com/api/v1/me" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"Got info");
         NSDictionary *profile = responseObject[@"me"];
         
         NSString *fullName = [NSString stringWithFormat:@"%@ %@", [profile valueForKey:@"first_name"], [profile valueForKey:@"last_name"]];

@@ -30,6 +30,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     [username becomeFirstResponder];
+    username.accessibilityLabel = @"UsernameField";
 }
 
 -(UIStatusBarStyle)preferredStatusBarStyle{

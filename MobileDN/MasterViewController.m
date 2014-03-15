@@ -16,11 +16,14 @@
 #import "UIScrollView+SVInfiniteScrolling.h"
 #import <CRToast.h>
 #import <SVProgressHUD.h>
+#import "OvershareKit.h"
 
 
-@interface MasterViewController () <MCSwipeTableViewCellDelegate> {
+@interface MasterViewController () <MCSwipeTableViewCellDelegate, UIPopoverControllerDelegate, OSKPresentationViewControllers, OSKPresentationStyle,OSKPresentationColor, UIGestureRecognizerDelegate> {
     NSMutableArray *_objects;
 }
+
+@property (assign, nonatomic) OSKActivitySheetViewControllerStyle sheetStyle;
 @end
 
 @implementation MasterViewController
@@ -37,6 +40,7 @@
 -(UIStatusBarStyle)preferredStatusBarStyle{
     return UIStatusBarStyleLightContent;
 }
+
 
 - (void)viewDidLoad
 {
@@ -56,6 +60,8 @@
     [self.tableView addInfiniteScrollingWithActionHandler:^{
         [self loadNextPage:nil];
     }];
+    
+    [self setupLongPress];
 }
 
 - (void)didReceiveMemoryWarning
@@ -209,6 +215,9 @@
     UIView *threadView = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"thread.png"]];
     UIColor *greyColor = [UIColor colorWithRed:0.565 green:0.6 blue:0.655 alpha:1.0];
     
+    UIView *bookmarkView = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"bookmark.png"]];
+    UIColor *blueColor = [UIColor colorWithRed:0.11 green:0.322 blue:0.635 alpha:1.0];
+    
     [cell setDelegate:self];
     [cell setDefaultColor:[UIColor colorWithRed:0.765 green:0.788 blue:0.824 alpha:1.0]];
     [cell setSwipeGestureWithView:checkView color:greenColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState1 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
@@ -315,10 +324,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSDictionary *story = [self.stories objectAtIndex:indexPath.row];
-    
+    NSString *storyUrl = [story objectForKey:@"url"];
+
     self.webViewController = [[PBWebViewController alloc] init];
     self.webViewController.view.backgroundColor = [UIColor whiteColor];
-    self.webViewController.URL = [NSURL URLWithString:[story objectForKey:@"url"]];
+    self.webViewController.URL = [NSURL URLWithString:storyUrl];
     
     PBSafariActivity *activity = [[PBSafariActivity alloc] init];
     self.webViewController.applicationActivities = @[activity];
@@ -343,5 +353,59 @@
     [self.navigationController pushViewController:detailViewController animated:YES];
 }
 
+
+- (OSKActivityCompletionHandler)activityCompletionHandler {
+    OSKActivityCompletionHandler activityCompletionHandler = ^(OSKActivity *activity, BOOL successful, NSError *error){
+        if (successful) {
+            //[ProgressHUD showSuccess:@"Shared"];
+            [SVProgressHUD showSuccessWithStatus:@"Shared"];
+            NSLog(@"Shared succesfully");
+            
+        } else {
+            [SVProgressHUD showErrorWithStatus:@"Couldn't share"];
+        }
+    };
+    return activityCompletionHandler;
+}
+
+-(void)setupLongPress
+{
+    UILongPressGestureRecognizer *lpgr = [[UILongPressGestureRecognizer alloc]
+                                          initWithTarget:self action:@selector(handleLongPress:)];
+    lpgr.minimumPressDuration = 0.4; //seconds
+    lpgr.delegate = self;
+    [self.tableView addGestureRecognizer:lpgr];
+}
+
+-(void)handleLongPress:(UILongPressGestureRecognizer *)gestureRecognizer
+{
+    CGPoint p = [gestureRecognizer locationInView:self.tableView];
+    
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:p];
+    if (indexPath == nil)
+        NSLog(@"long press on table view but not on a row");
+    else
+        NSLog(@"long press on table view at row %d", indexPath.row);
+        NSDictionary *story = [self.stories objectAtIndex:indexPath.row];
+        OSKShareableContent *content = [OSKShareableContent contentFromURL: [NSURL URLWithString:[story valueForKey:@"url"]]];
+        //[[OSKActivitiesManager sharedInstance] activityTypeIsAlwaysExcluded: [OSKActivityType_API_AppDotNet];
+        
+        OSKActivityCompletionHandler completionHandler = [self activityCompletionHandler];
+        
+        NSString *object1 = OSKActivityType_URLScheme_1Password_Browser;
+        NSString *object2 = OSKActivityType_API_AppDotNet;
+        NSString *object3 = OSKActivityType_URLScheme_1Password_Search;
+        
+        NSArray *excludedActivities = [NSArray arrayWithObjects:object1, object2, object3, nil];
+        
+        NSDictionary *options = @{    OSKPresentationOption_ActivityCompletionHandler : completionHandler,
+                                      OSKActivityOption_ExcludedTypes : excludedActivities,
+                                      };
+        
+        // 4) Present the activity sheet via the presentation manager.
+        [[OSKPresentationManager sharedInstance] presentActivitySheetForContent:content
+                                                       presentingViewController:self
+                                                                        options:options];
+}
 
 @end

@@ -20,6 +20,7 @@
 #import "CommentNavViewController.h"
 #import "CommentViewController.h"
 
+
 @interface DetailViewController () <MCSwipeTableViewCellDelegate>
 @end
 
@@ -139,7 +140,9 @@
     commentBody.bounces = NO;
     commentBody.delegate = self;
     
-    NSString *htmlAndStyle = [NSString stringWithFormat:@"<html><head><style>img { max-width:160px; }</style></style><body>%@</body></html>", [self.flatComments objectAtIndex:indexPath.row]];
+    NSString *rawHtml = [[self.flatComments objectAtIndex:indexPath.row] stringByReplacingOccurrencesOfString:@"<img[^>]*>" withString:@"" options:NSCaseInsensitiveSearch | NSRegularExpressionSearch range:NSMakeRange(0, [[self.flatComments objectAtIndex:indexPath.row] length])];
+    
+    NSString *htmlAndStyle = [NSString stringWithFormat:@"<html><head><style>img { max-width:160px; }</style></style><body>%@</body></html>", rawHtml];
     
     NSData *htmlData = [htmlAndStyle dataUsingEncoding:NSUTF8StringEncoding];
     
@@ -148,10 +151,9 @@
     NSError *error = nil;
     NSAttributedString *htmlString = [[NSAttributedString alloc] initWithData:htmlData options:importParams documentAttributes:NULL error:&error];
     
-    // Instantiate UITextView object
     commentBody.attributedText = htmlString;
-    
     commentBody.font = [UIFont fontWithName:@"Avenir" size:16.0f];
+
     //commentBody.preferredMaxLayoutWidth = 280 - indentPoints; // <<<<< ALL THE MAGIC
 
     UILabel *usernameMeta;
@@ -241,7 +243,9 @@
     commentBody = (UITextView *)[cell viewWithTag:1];
     commentBody.userInteractionEnabled = YES;
     
-    NSString *htmlAndStyle = [NSString stringWithFormat:@"<html><head><style>img { max-width:160px; }</style></style><body>%@</body></html>", [self.flatComments objectAtIndex:indexPath.row]];
+    NSString *rawHtml = [[self.flatComments objectAtIndex:indexPath.row] stringByReplacingOccurrencesOfString:@"<img[^>]*>" withString:@"" options:NSCaseInsensitiveSearch | NSRegularExpressionSearch range:NSMakeRange(0, [[self.flatComments objectAtIndex:indexPath.row] length])];
+    
+    NSString *htmlAndStyle = [NSString stringWithFormat:@"<html><head><style>img { max-width:160px; }</style></style><body>%@</body></html>", rawHtml];
     
     NSData *htmlData = [htmlAndStyle dataUsingEncoding:NSUTF8StringEncoding];
     
@@ -269,7 +273,7 @@
     
     //CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
     
-    return size.height + 2 * 20;
+    return size.height + 2 * 15;
 }
 
 
@@ -292,6 +296,7 @@
     
     // Push it
     [self.navigationController pushViewController:self.webViewController animated:YES];
+    
     return NO;
 }
 

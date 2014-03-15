@@ -12,6 +12,7 @@
 #import "AppHelpers.h"
 #import <MTBlockAlertView.h>
 
+
 @interface CommentViewController ()
 
 @end
@@ -66,7 +67,7 @@
     }
     
     if (self.storyId) {
-        // This is a reply
+        // This is a new comment
         [self submitComment];
     }
 }

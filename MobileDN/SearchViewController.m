@@ -56,11 +56,6 @@
     // Dispose of any resources that can be recreated.
 }
 
--(IBAction)doSearch:(id)sender
-{
-    NSLog(@"Attempt search");
-}
-
 -(void) searchBarSearchButtonClicked:(UISearchBar*) searchContact
 {
     [self loadFrontPage:nil];
