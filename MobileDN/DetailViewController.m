@@ -14,8 +14,14 @@
 #import <SORelativeDateTransformer.h>
 #import "UITableView+NXEmptyView.h"
 #import <AMAttributedHighlightLabel.h>
+#import <MCSwipeTableViewCell.h>
+#import "AppHelpers.h"
+#import <SVProgressHUD.h>
+#import "CommentNavViewController.h"
+#import "CommentViewController.h"
 
-@interface DetailViewController ()
+
+@interface DetailViewController () <MCSwipeTableViewCellDelegate>
 @end
 
 @implementation DetailViewController
@@ -23,13 +29,19 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.comments = [[NSMutableArray alloc] init];
     self.flatComments = [[NSMutableArray alloc] init];
     self.flatUsers = [[NSMutableArray alloc] init];
     self.commentDepth = [[NSMutableArray alloc] init];
     self.flatTime = [[NSMutableArray alloc] init];
+    self.flatIds = [[NSMutableArray alloc] init];
     self.tableView.nxEV_hideSeparatorLinesWheyShowingEmptyView = YES;
     self.tableView.nxEV_emptyView = emptyView;
-    [self loadStory:nil];
+    NSLog(@"Load story %@", self.storyId);
+    
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(updateComments) forControlEvents:UIControlEventValueChanged];
+    [self updateComments];
 }
 
 - (void)didReceiveMemoryWarning
@@ -39,54 +51,53 @@
 }
 
 -(IBAction)loadStory:(id)sender {
-    [self processParsedObject:self.comments];
-}
-
--(void)processParsedObject:(id)object{
-    [self enumerateJSONToFindKeys:object forKeyNamed:nil];
-}
-
-- (void)enumerateJSONToFindKeys:(id)object forKeyNamed:(NSString *)keyName
-{
-    if ([object isKindOfClass:[NSDictionary class]])
-    {
-        // If it's a dictionary, enumerate it and pass in each key value to check
-        [object enumerateKeysAndObjectsUsingBlock:^(id key, id value, BOOL *stop) {
-            [self enumerateJSONToFindKeys:value forKeyNamed:key];
-        }];
-    }
-    else if ([object isKindOfClass:[NSArray class]])
-    {
-        // If it's an array, pass in the objects of the array to check
-        [object enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            [self enumerateJSONToFindKeys:obj forKeyNamed:nil];
-        }];
-    }
-    else
-    {
-        // If we got here (i.e. it's not a dictionary or array) so its a key/value that we needed
-        //NSLog(@"We found key %@ with value %@", keyName, object);
-        if ([keyName isEqualToString:@"user_display_name"]) {
-            NSLog(@"Comment: %@", object);
-            [_flatUsers addObject:object];
-            NSLog(@"comments %d", [_flatUsers count]);
-        }
+    NSArray *comments = self.comments;
+    
+    self.flatComments = [[NSMutableArray alloc] init];
+    self.flatUsers = [[NSMutableArray alloc] init];
+    self.commentDepth = [[NSMutableArray alloc] init];
+    self.flatTime = [[NSMutableArray alloc] init];
+    self.flatIds = [[NSMutableArray alloc] init];
+    
+    [comments enumerateObjectsUsingBlock:^(id obj,NSUInteger idx, BOOL *stop){
+        NSLog(@"Body: %@", [obj objectForKey:@"body"]);
+        [_flatUsers addObject: [obj objectForKey:@"user_display_name"]];
+        [_flatComments addObject: [obj objectForKey:@"body_html"]];
+        [_commentDepth addObject: [obj objectForKey:@"depth"]];
+        [_flatTime addObject: [obj objectForKey:@"created_at"]];
+        [_flatIds addObject: [obj objectForKey:@"id"]];
+        [_flatUsers count];
         
-        if ([keyName isEqualToString:@"body"]) {
-            NSLog(@"Comment: %@", object);
-            [_flatComments addObject:object];
-            NSLog(@"comments %d", [_flatComments count]);
+        for (NSDictionary *dict in [obj objectForKey:@"comments"]) {
+            NSLog(@"Body: %@", [dict objectForKey:@"body"]);
+            [_flatUsers addObject: [dict objectForKey:@"user_display_name"]];
+            [_flatComments addObject: [dict objectForKey:@"body_html"]];
+            [_commentDepth addObject: [dict objectForKey:@"depth"]];
+            [_flatTime addObject: [dict objectForKey:@"created_at"]];
+            [_flatIds addObject: [dict objectForKey:@"id"]];
+            [_flatUsers count];
+            
+            for (NSDictionary *dict2 in [dict objectForKey:@"comments"]) {
+                NSLog(@"Body: %@", [dict2 objectForKey:@"body"]);
+                [_flatUsers addObject: [dict2 objectForKey:@"user_display_name"]];
+                [_flatComments addObject: [dict2 objectForKey:@"body_html"]];
+                [_commentDepth addObject: [dict2 objectForKey:@"depth"]];
+                [_flatTime addObject: [dict2 objectForKey:@"created_at"]];
+                [_flatIds addObject: [dict2 objectForKey:@"id"]];
+                [_flatUsers count];
+                
+                for (NSDictionary *dict3 in [dict2 objectForKey:@"comments"]) {
+                    NSLog(@"Body: %@", [dict3 objectForKey:@"body"]);
+                    [_flatUsers addObject: [dict3 objectForKey:@"user_display_name"]];
+                    [_flatComments addObject: [dict3 objectForKey:@"body_html"]];
+                    [_commentDepth addObject: [dict3 objectForKey:@"depth"]];
+                    [_flatTime addObject: [dict3 objectForKey:@"created_at"]];
+                    [_flatIds addObject: [dict3 objectForKey:@"id"]];
+                    [_flatUsers count];
+                }
+            }
         }
-        
-        if ([keyName isEqualToString:@"depth"]) {
-            NSLog(@"Depth: %@", object);
-            [_commentDepth addObject:object];
-        }
-        
-        if ([keyName isEqualToString:@"created_at"]) {
-            [_flatTime addObject:object];
-        }
-    }
+    }];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -109,36 +120,94 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    static NSString *CellIdentifier = @"Cell";
+    
+    AppHelpers *helper = [[AppHelpers alloc] init];
+    
+    MCSwipeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    [cell setNeedsUpdateConstraints];
+    [cell updateConstraintsIfNeeded];
     
     NSString *indentLevelRaw = [_commentDepth objectAtIndex:indexPath.row];
     NSUInteger indentLevel = [indentLevelRaw integerValue];
     float indentPoints = indentLevel * 25;
     
-    UILabel *commentBody;
-    commentBody = (UILabel *)[cell viewWithTag:1];
+    UITextView *commentBody;
+    commentBody = (UITextView *)[cell viewWithTag:1];
     commentBody.userInteractionEnabled = YES;
-    commentBody.numberOfLines = 0;
+    commentBody.scrollEnabled = NO;
+    commentBody.bounces = NO;
+    commentBody.delegate = self;
     
-    //NSString *markdown = [tempDictionary valueForKey:@"body"];
-    NSString *markdown = [self.flatComments objectAtIndex:indexPath.row];
-    commentBody.text = markdown;
+    NSString *rawHtml = [[self.flatComments objectAtIndex:indexPath.row] stringByReplacingOccurrencesOfString:@"<img[^>]*>" withString:@"" options:NSCaseInsensitiveSearch | NSRegularExpressionSearch range:NSMakeRange(0, [[self.flatComments objectAtIndex:indexPath.row] length])];
     
+    NSString *htmlAndStyle = [NSString stringWithFormat:@"<html><head><style>img { max-width:160px; }</style></style><body>%@</body></html>", rawHtml];
+    
+    NSData *htmlData = [htmlAndStyle dataUsingEncoding:NSUTF8StringEncoding];
+    
+    // Create the HTML string
+    NSDictionary *importParams = @{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType};
+    NSError *error = nil;
+    NSAttributedString *htmlString = [[NSAttributedString alloc] initWithData:htmlData options:importParams documentAttributes:NULL error:&error];
+    
+    commentBody.attributedText = htmlString;
     commentBody.font = [UIFont fontWithName:@"Avenir" size:16.0f];
-    commentBody.preferredMaxLayoutWidth = 280 - indentPoints; // <<<<< ALL THE MAGIC
+
+    //commentBody.preferredMaxLayoutWidth = 280 - indentPoints; // <<<<< ALL THE MAGIC
 
     UILabel *usernameMeta;
     usernameMeta = (UILabel *)[cell viewWithTag:2];
     usernameMeta.text = [self.flatUsers objectAtIndex:indexPath.row];
+    NSLog(@"%@",[self.flatUsers objectAtIndex:indexPath.row] );
     
     cell.indentationWidth = 25;
     
     UILabel *date;
     date = (UILabel *)[cell viewWithTag:3];
     date.text = [self convertDateToRelativeDate: [self.flatTime objectAtIndex:indexPath.row]];
+    
+    // Swipey bits
+    UIView *checkView = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"upvote.png"]];
+    UIColor *greenColor = [UIColor colorWithRed:0.102 green:0.659 blue:0.373 alpha:1.0];
+    
+    UIView *replyView = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"reply.png"]];
+    UIColor *yellowColor = [UIColor colorWithRed:254.0 / 255.0 green:217.0 / 255.0 blue:56.0 / 255.0 alpha:1.0];
+    
+    [cell setDelegate:self];
+    [cell setDefaultColor:[UIColor colorWithRed:0.765 green:0.788 blue:0.824 alpha:1.0]];
+    [cell setSwipeGestureWithView:checkView color:greenColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState1 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
+        NSLog(@"Upvote %@", [self.flatIds objectAtIndex:indexPath.row]);
+        [SVProgressHUD showWithStatus:@"Upvoting..."];
+        
+        NSString *upvoteUrl = [NSString stringWithFormat:@"https://api-news.layervault.com/api/v1/comments/%@/upvote", [self.flatIds objectAtIndex:indexPath.row]];
+        
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        [manager.requestSerializer setValue:[helper getAuthToken] forHTTPHeaderField:@"Authorization"];
+        [manager POST:upvoteUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [SVProgressHUD showSuccessWithStatus:@"Upvoted"];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [SVProgressHUD showErrorWithStatus:@"Couldn't upvote"];
+            NSLog(@"Error: %@", error);
+        }];
+
+    }];
+    
+    [cell setSwipeGestureWithView:replyView color:yellowColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState3 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+        CommentNavViewController *commentNavViewController = (CommentNavViewController *)[storyboard instantiateViewControllerWithIdentifier:@"CommentView"];
+        commentNavViewController.parent = self;
+        commentNavViewController.commentId = [self.flatIds objectAtIndex:indexPath.row];
+        commentNavViewController.replyRow = [self.tableView indexPathForCell: cell];
+        [self presentViewController:commentNavViewController animated:YES completion:^{
+            
+        }];
+    }];
 
     return cell;
 }
+
+
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -165,33 +234,60 @@
     NSUInteger indentLevel = [indentLevelRaw integerValue];
     float indentPoints = indentLevel * 25;
     
-    UILabel *commentBody;
-    commentBody = (UILabel *)[cell viewWithTag:1];
+    [cell setNeedsUpdateConstraints];
+    [cell updateConstraintsIfNeeded];
     
-    //NSString *markdown = [tempDictionary valueForKey:@"body"];
-    NSString *markdown = [self.flatComments objectAtIndex:indexPath.row];
-    commentBody.text = markdown;
-    commentBody.preferredMaxLayoutWidth = 280 - indentPoints; // <<<<< ALL THE MAGIC
+    cell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), CGRectGetHeight(cell.bounds));
     
-    [cell setNeedsLayout];
-    [cell layoutIfNeeded];
+    UITextView *commentBody;
+    commentBody = (UITextView *)[cell viewWithTag:1];
+    commentBody.userInteractionEnabled = YES;
+    
+    NSString *rawHtml = [[self.flatComments objectAtIndex:indexPath.row] stringByReplacingOccurrencesOfString:@"<img[^>]*>" withString:@"" options:NSCaseInsensitiveSearch | NSRegularExpressionSearch range:NSMakeRange(0, [[self.flatComments objectAtIndex:indexPath.row] length])];
+    
+    NSString *htmlAndStyle = [NSString stringWithFormat:@"<html><head><style>img { max-width:160px; }</style></style><body>%@</body></html>", rawHtml];
+    
+    NSData *htmlData = [htmlAndStyle dataUsingEncoding:NSUTF8StringEncoding];
+    
+    // Create the HTML string
+    NSDictionary *importParams = @{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType};
+    NSError *error = nil;
+    NSAttributedString *htmlString = [[NSAttributedString alloc] initWithData:htmlData options:importParams documentAttributes:NULL error:&error];
+    
+    // Instantiate UITextView object
+    commentBody.attributedText = htmlString;
+    
+    commentBody.font = [UIFont fontWithName:@"Avenir" size:16.0f];
+    
+    CGFloat width = 291 - indentPoints;
 
-    CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+    CGSize size = [commentBody sizeThatFits:CGSizeMake(width, FLT_MAX)];
     
-    return ceil(height) + 1;
+    [commentBody sizeToFit];
+
+    [cell setNeedsUpdateConstraints];
+    [cell updateConstraintsIfNeeded];
+    [cell.contentView setNeedsLayout];
+    [cell.contentView layoutIfNeeded];
+    
+    
+    //CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+    
+    return size.height + 2 * 15;
 }
+
 
 -(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 77;
 }
 
--(void)selectedLink:(NSString *)string
+- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange
 {
     NSLog(@"Tap link");
     self.webViewController = [[PBWebViewController alloc] init];
     self.webViewController.view.backgroundColor = [UIColor whiteColor];
-    self.webViewController.URL = [NSURL URLWithString: string];
+    self.webViewController.URL = URL;
     
     PBSafariActivity *activity = [[PBSafariActivity alloc] init];
     self.webViewController.applicationActivities = @[activity];
@@ -200,6 +296,8 @@
     
     // Push it
     [self.navigationController pushViewController:self.webViewController animated:YES];
+    
+    return NO;
 }
 
 -(NSString*)convertDateToRelativeDate:(NSString*)date {;
@@ -210,6 +308,113 @@
     NSString *relativeDate = [[SORelativeDateTransformer registeredTransformer] transformedValue: origDateAsDate];
     
     return relativeDate;
+}
+
+-(IBAction)composeNewComment:(id)sender
+{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+    CommentNavViewController *commentNavViewController = (CommentNavViewController *)[storyboard instantiateViewControllerWithIdentifier:@"CommentView"];
+    commentNavViewController.parent = self;
+    commentNavViewController.storyId = self.storyId;
+    [self presentViewController:commentNavViewController animated:YES completion:^{
+        
+    }];
+}
+
+-(void)addLatestCommentToBottom:(NSString*)comment : (NSString*)username : (NSString*)commentId
+{
+    NSTimeInterval delayInSeconds = 0.8;
+    
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [self updateComments];
+    });
+
+//    if (rowsAmount == 0) {
+//        // No rows so we have to create indexes
+//        [self.flatComments addObject:comment];
+//        [self.flatUsers addObject:username];
+//        [self.commentDepth addObject:@"0"];
+//        [self.flatTime addObject:@"Test"];
+//        [self.flatIds addObject:commentId];
+//        [self.tableView reloadData];
+//    } else {
+//        // There's data already so we just add to the end of the array
+//        
+//        [self.flatComments insertObject:comment atIndex:rowsAmount];
+//        [self.flatUsers insertObject:username atIndex:rowsAmount];
+//        [self.commentDepth insertObject:@"0" atIndex:rowsAmount];
+//        [self.flatTime insertObject:@"Test" atIndex:rowsAmount];
+//        [self.flatIds insertObject:commentId atIndex:rowsAmount];
+//        
+//        [self.tableView beginUpdates];
+//        [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationLeft];
+//        
+//        [self.tableView endUpdates];
+//
+//        [self.tableView reloadData];
+//        
+//        NSTimeInterval delayInSeconds = 0.5;
+//        
+//        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+//        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+//            [self.tableView scrollToRowAtIndexPath:newIndexPath atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
+//        });
+//    }
+}
+
+
+
+-(void)addReplyComment: (NSString*)comment : (NSString*)username : (NSIndexPath*)replyRow : (NSString*)depth : (NSString*)commentId
+{
+    NSIndexPath* top = [NSIndexPath indexPathForRow:NSNotFound inSection:0];
+    [self.tableView scrollToRowAtIndexPath:top atScrollPosition:UITableViewScrollPositionTop animated:NO];
+    
+    NSTimeInterval delayInSeconds = 0.8;
+    
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [self updateComments];
+    });
+    
+}
+
+-(void)updateComments
+{
+    NSLog(@"UPDATE COMMENTS");
+
+    AppHelpers *helper = [[AppHelpers alloc] init];
+    
+    [SVProgressHUD showWithStatus:@"Loading..." maskType:SVProgressHUDMaskTypeBlack];
+    
+    NSString *queryUrl = [NSString stringWithFormat:@"https://api-news.layervault.com/api/v1/stories/%@", self.storyId];
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager.requestSerializer setValue:[helper getAuthToken] forHTTPHeaderField:@"Authorization"];
+    [manager GET:queryUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *story = responseObject[@"story"];
+        NSMutableArray *comments = [story objectForKey:@"comments"];
+        NSLog(@"STORY %@", responseObject[@"story"]);
+        NSLog(@"COMMENTS %@", comments);
+        self.comments = comments;
+        [self loadStory:nil];
+        [self.tableView reloadData];
+        NSTimeInterval delayInSeconds = 0.5;
+        
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            
+            [SVProgressHUD dismiss];
+
+            [self.refreshControl endRefreshing];
+            
+        });
+
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [self.refreshControl endRefreshing];
+        [SVProgressHUD showErrorWithStatus:@"Couldn't get comments"];
+        NSLog(@"Error: %@", error);
+    }];
 }
 
 @end

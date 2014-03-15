@@ -13,6 +13,8 @@
 #import "PBSafariActivity.h"
 #import "ProgressHUD.h"
 #import "UIScrollView+SVInfiniteScrolling.h"
+#import "AppHelpers.h"
+#import <SVProgressHUD.h>
 
 @interface SearchViewController ()
 
@@ -54,11 +56,6 @@
     // Dispose of any resources that can be recreated.
 }
 
--(IBAction)doSearch:(id)sender
-{
-    NSLog(@"Attempt search");
-}
-
 -(void) searchBarSearchButtonClicked:(UISearchBar*) searchContact
 {
     [self loadFrontPage:nil];
@@ -66,18 +63,22 @@
 
 -(IBAction)loadFrontPage:(id)sender {
     [self.refreshControl beginRefreshing];
-    NSString *queryUrl = @"";
     
-    queryUrl = [NSString stringWithFormat:@"https://news.layervault.com/search?&query=%@&commit=Search&format=json", [searchBar.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    [SVProgressHUD showWithStatus:@"Searching..."];
+    
+    AppHelpers *helper = [[AppHelpers alloc] init];
+    
+    NSDictionary *parameters = @{@"query" : [searchBar.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]};
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:queryUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager.requestSerializer setValue:[helper getAuthToken] forHTTPHeaderField:@"Authorization"];
+    [manager GET:@"https://api-news.layervault.com/api/v1/stories/search" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"JSON: %@", responseObject);
         self.stories = responseObject;
         [self.tableView reloadData];
         [(UIRefreshControl *)sender endRefreshing];
         [self.refreshControl endRefreshing];
-        [ProgressHUD dismiss];
+        [SVProgressHUD dismiss];
         [self.view endEditing:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [ProgressHUD showError:@"Can't connect to DN"];

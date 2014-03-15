@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MCSwipeTableViewCell.h>
 
-@interface CommentCell : UITableViewCell
+@interface CommentCell : MCSwipeTableViewCell
 
 @end

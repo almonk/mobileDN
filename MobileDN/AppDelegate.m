@@ -20,12 +20,7 @@
     
     [[PocketAPI sharedAPI] setConsumerKey:@"22401-ee70c5d7ec1f0329c936961a"];
     
-    // Override point for customization after application launch.
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        UISplitViewController *splitViewController = (UISplitViewController *)self.window.rootViewController;
-        UINavigationController *navigationController = [splitViewController.viewControllers lastObject];
-        splitViewController.delegate = (id)navigationController.topViewController;
-    }
+
     
     [[UINavigationBar appearance] setTitleTextAttributes: @{
         NSFontAttributeName: [UIFont fontWithName:@"Avenir" size:18.0f],
@@ -35,6 +30,18 @@
     [[UIBarButtonItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
         [UIFont fontWithName:@"Avenir" size:18.0f], NSFontAttributeName,
         nil] forState:UIControlStateNormal];
+    
+    AppHelpers *helper = [[AppHelpers alloc] init];
+    if ([helper getAuthToken] == NULL) {
+        // No auth token
+        NSLog(@"No auth token");
+        UIStoryboard *authBoard = [UIStoryboard storyboardWithName:@"UserFlow" bundle:nil];
+        UIViewController *vc = [authBoard instantiateInitialViewController];
+        self.window.rootViewController = vc;
+    } else{
+        // Has auth token
+        NSLog(@"Has auth token");
+    }
 
     return YES;
 }

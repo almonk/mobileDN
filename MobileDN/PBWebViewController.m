@@ -9,6 +9,7 @@
 #import "PBWebViewController.h"
 #import "OvershareKit.h"
 #import "ProgressHUD.h"
+#import <SVProgressHUD.h>
 
 @interface PBWebViewController () <UIPopoverControllerDelegate, OSKPresentationViewControllers, OSKPresentationStyle,OSKPresentationColor>
 
@@ -243,9 +244,11 @@
     OSKActivityCompletionHandler activityCompletionHandler = ^(OSKActivity *activity, BOOL successful, NSError *error){
         if (successful) {
             //[ProgressHUD showSuccess:@"Shared"];
+            [SVProgressHUD showSuccessWithStatus:@"Shared"];
             NSLog(@"Shared succesfully");
+            
         } else {
-            [ProgressHUD showError:@"An error ocurred while sharing"];
+            [SVProgressHUD showErrorWithStatus:@"Couldn't share"];
         }
     };
     return activityCompletionHandler;

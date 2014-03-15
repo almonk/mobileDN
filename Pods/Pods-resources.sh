@@ -150,6 +150,7 @@ install_resource "OvershareKit/Overshare Kit/OSKActivitySheetViewController.xib"
 install_resource "OvershareKit/Overshare Kit/OSKFacebookPublishingViewController.xib"
 install_resource "OvershareKit/Overshare Kit/OSKMicroblogPublishingViewController.xib"
 install_resource "SORelativeDateTransformer/SORelativeDateTransformer/SORelativeDateTransformer.bundle"
+install_resource "SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle"
 
 rsync -avr --copy-links --no-relative --exclude '*/.svn/*' --files-from="$RESOURCES_TO_COPY" / "${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"
 if [[ "${ACTION}" == "install" ]]; then

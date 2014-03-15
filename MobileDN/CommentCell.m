@@ -31,8 +31,6 @@
     [super layoutSubviews];
     float indentPoints = self.indentationLevel * self.indentationWidth;
     
-
-    
     self.contentView.frame = CGRectMake(
                                 indentPoints,
                                 self.contentView.frame.origin.y,
