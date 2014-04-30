@@ -63,16 +63,20 @@
     return NO;
 }
 
-+ (OSKPublishingViewControllerType)publishingViewControllerType {
-    return OSKPublishingViewControllerType_None;
++ (OSKPublishingMethod)publishingMethod {
+    return OSKPublishingMethod_None;
 }
 
 - (BOOL)isReadyToPerform {
-    return self.pasteboardItem.text.length > 0;
+    return (self.pasteboardItem.text.length > 0 || self.pasteboardItem.images.count);
 }
 
 - (void)performActivity:(OSKActivityCompletionHandler)completion {
-    [[UIPasteboard generalPasteboard] setString:self.pasteboardItem.text];
+    if (self.pasteboardItem.images.count) {
+        [[UIPasteboard generalPasteboard] setImages:self.pasteboardItem.images];
+    } else {
+        [[UIPasteboard generalPasteboard] setString:self.pasteboardItem.text];
+    }
     if (completion) {
         completion(self, YES, nil);
     }

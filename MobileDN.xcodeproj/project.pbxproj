@@ -15,6 +15,13 @@
 		2E385A6318B2A59F00A228BD /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E385A6218B2A59F00A228BD /* SignInViewController.m */; };
 		2E38D6AC187308AA0002224F /* launch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E38D6AA187308AA0002224F /* launch@2x.png */; };
 		2E38D6AE18730B2B0002224F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E38D6AD18730B2B0002224F /* QuartzCore.framework */; };
+		2E3D87D9190DB89B00B2A18E /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E3D87D8190DB89B00B2A18E /* Social.framework */; };
+		2E3D87DB190DB8DD00B2A18E /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E3D87DA190DB8DD00B2A18E /* AddressBook.framework */; };
+		2E3D87DD190DB8E800B2A18E /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E3D87DC190DB8E800B2A18E /* Accounts.framework */; };
+		2E3D87DF190DB8F400B2A18E /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E3D87DE190DB8F400B2A18E /* AVFoundation.framework */; };
+		2E3D87E1190DB8FC00B2A18E /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E3D87E0190DB8FC00B2A18E /* CoreMedia.framework */; };
+		2E3D87E3190DB90900B2A18E /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E3D87E2190DB90900B2A18E /* MediaPlayer.framework */; };
+		2E3D87E5190DB91400B2A18E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E3D87E4190DB91400B2A18E /* CoreLocation.framework */; };
 		2E4A7DC61872CE5600120796 /* ProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2E4A7DC31872CE5600120796 /* ProgressHUD.bundle */; };
 		2E4A7DC71872CE5600120796 /* ProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E4A7DC51872CE5600120796 /* ProgressHUD.m */; };
 		2E4A7DCA1872E16E00120796 /* CommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E4A7DC91872E16E00120796 /* CommentCell.m */; };
@@ -92,6 +99,28 @@
 		2E385A6218B2A59F00A228BD /* SignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInViewController.m; sourceTree = "<group>"; };
 		2E38D6AA187308AA0002224F /* launch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "launch@2x.png"; sourceTree = "<group>"; };
 		2E38D6AD18730B2B0002224F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		2E3D87BA190DB88C00B2A18E /* libPods-ADNLogin.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-ADNLogin.a"; path = "Pods/build/Debug-iphoneos/libPods-ADNLogin.a"; sourceTree = "<group>"; };
+		2E3D87BB190DB88C00B2A18E /* libPods-AFNetworking.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-AFNetworking.a"; path = "Pods/build/Debug-iphoneos/libPods-AFNetworking.a"; sourceTree = "<group>"; };
+		2E3D87BC190DB88C00B2A18E /* libPods-AMAttributedHighlightLabel.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-AMAttributedHighlightLabel.a"; path = "Pods/build/Debug-iphoneos/libPods-AMAttributedHighlightLabel.a"; sourceTree = "<group>"; };
+		2E3D87BD190DB88C00B2A18E /* libPods-CJMTwitterFollowButton.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-CJMTwitterFollowButton.a"; path = "Pods/build/Debug-iphoneos/libPods-CJMTwitterFollowButton.a"; sourceTree = "<group>"; };
+		2E3D87BE190DB88C00B2A18E /* libPods-CRToast.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-CRToast.a"; path = "Pods/build/Debug-iphoneos/libPods-CRToast.a"; sourceTree = "<group>"; };
+		2E3D87BF190DB88C00B2A18E /* libPods-MCSwipeTableViewCell.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-MCSwipeTableViewCell.a"; path = "Pods/build/Debug-iphoneos/libPods-MCSwipeTableViewCell.a"; sourceTree = "<group>"; };
+		2E3D87C0190DB88C00B2A18E /* libPods-MTBlockAlertView.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-MTBlockAlertView.a"; path = "Pods/build/Debug-iphoneos/libPods-MTBlockAlertView.a"; sourceTree = "<group>"; };
+		2E3D87C1190DB88C00B2A18E /* libPods-OvershareKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-OvershareKit.a"; path = "Pods/build/Debug-iphoneos/libPods-OvershareKit.a"; sourceTree = "<group>"; };
+		2E3D87C2190DB88C00B2A18E /* libPods-PocketAPI.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-PocketAPI.a"; path = "Pods/build/Debug-iphoneos/libPods-PocketAPI.a"; sourceTree = "<group>"; };
+		2E3D87C3190DB88C00B2A18E /* libPods-RESideMenu.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-RESideMenu.a"; path = "Pods/build/Debug-iphoneos/libPods-RESideMenu.a"; sourceTree = "<group>"; };
+		2E3D87C4190DB88C00B2A18E /* libPods-SORelativeDateTransformer.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-SORelativeDateTransformer.a"; path = "Pods/build/Debug-iphoneos/libPods-SORelativeDateTransformer.a"; sourceTree = "<group>"; };
+		2E3D87C5190DB88C00B2A18E /* libPods-SVProgressHUD.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-SVProgressHUD.a"; path = "Pods/build/Debug-iphoneos/libPods-SVProgressHUD.a"; sourceTree = "<group>"; };
+		2E3D87C6190DB88C00B2A18E /* libPods-SVPullToRefresh.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-SVPullToRefresh.a"; path = "Pods/build/Debug-iphoneos/libPods-SVPullToRefresh.a"; sourceTree = "<group>"; };
+		2E3D87C7190DB88C00B2A18E /* libPods-TTTAttributedLabel.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-TTTAttributedLabel.a"; path = "Pods/build/Debug-iphoneos/libPods-TTTAttributedLabel.a"; sourceTree = "<group>"; };
+		2E3D87C8190DB88C00B2A18E /* libPods-UITableView-NXEmptyView.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-UITableView-NXEmptyView.a"; path = "Pods/build/Debug-iphoneos/libPods-UITableView-NXEmptyView.a"; sourceTree = "<group>"; };
+		2E3D87D8190DB89B00B2A18E /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		2E3D87DA190DB8DD00B2A18E /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		2E3D87DC190DB8E800B2A18E /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		2E3D87DE190DB8F400B2A18E /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		2E3D87E0190DB8FC00B2A18E /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		2E3D87E2190DB90900B2A18E /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		2E3D87E4190DB91400B2A18E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		2E4A7DC31872CE5600120796 /* ProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ProgressHUD.bundle; sourceTree = "<group>"; };
 		2E4A7DC41872CE5600120796 /* ProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressHUD.h; sourceTree = "<group>"; };
 		2E4A7DC51872CE5600120796 /* ProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressHUD.m; sourceTree = "<group>"; };
@@ -167,6 +196,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E3D87E5190DB91400B2A18E /* CoreLocation.framework in Frameworks */,
+				2E3D87E3190DB90900B2A18E /* MediaPlayer.framework in Frameworks */,
+				2E3D87E1190DB8FC00B2A18E /* CoreMedia.framework in Frameworks */,
+				2E3D87DF190DB8F400B2A18E /* AVFoundation.framework in Frameworks */,
+				2E3D87DD190DB8E800B2A18E /* Accounts.framework in Frameworks */,
+				2E3D87DB190DB8DD00B2A18E /* AddressBook.framework in Frameworks */,
+				2E3D87D9190DB89B00B2A18E /* Social.framework in Frameworks */,
 				2E38D6AE18730B2B0002224F /* QuartzCore.framework in Frameworks */,
 				2ED1AA45187069E00085209F /* CoreGraphics.framework in Frameworks */,
 				2ED1AA47187069E00085209F /* UIKit.framework in Frameworks */,
@@ -250,6 +286,28 @@
 		2ED1AA41187069E00085209F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2E3D87E4190DB91400B2A18E /* CoreLocation.framework */,
+				2E3D87E2190DB90900B2A18E /* MediaPlayer.framework */,
+				2E3D87E0190DB8FC00B2A18E /* CoreMedia.framework */,
+				2E3D87DE190DB8F400B2A18E /* AVFoundation.framework */,
+				2E3D87DC190DB8E800B2A18E /* Accounts.framework */,
+				2E3D87DA190DB8DD00B2A18E /* AddressBook.framework */,
+				2E3D87D8190DB89B00B2A18E /* Social.framework */,
+				2E3D87BA190DB88C00B2A18E /* libPods-ADNLogin.a */,
+				2E3D87BB190DB88C00B2A18E /* libPods-AFNetworking.a */,
+				2E3D87BC190DB88C00B2A18E /* libPods-AMAttributedHighlightLabel.a */,
+				2E3D87BD190DB88C00B2A18E /* libPods-CJMTwitterFollowButton.a */,
+				2E3D87BE190DB88C00B2A18E /* libPods-CRToast.a */,
+				2E3D87BF190DB88C00B2A18E /* libPods-MCSwipeTableViewCell.a */,
+				2E3D87C0190DB88C00B2A18E /* libPods-MTBlockAlertView.a */,
+				2E3D87C1190DB88C00B2A18E /* libPods-OvershareKit.a */,
+				2E3D87C2190DB88C00B2A18E /* libPods-PocketAPI.a */,
+				2E3D87C3190DB88C00B2A18E /* libPods-RESideMenu.a */,
+				2E3D87C4190DB88C00B2A18E /* libPods-SORelativeDateTransformer.a */,
+				2E3D87C5190DB88C00B2A18E /* libPods-SVProgressHUD.a */,
+				2E3D87C6190DB88C00B2A18E /* libPods-SVPullToRefresh.a */,
+				2E3D87C7190DB88C00B2A18E /* libPods-TTTAttributedLabel.a */,
+				2E3D87C8190DB88C00B2A18E /* libPods-UITableView-NXEmptyView.a */,
 				2E2D53901875797D0099A991 /* Reveal.framework */,
 				2E38D6AD18730B2B0002224F /* QuartzCore.framework */,
 				2ED1AA42187069E00085209F /* Foundation.framework */,
@@ -679,6 +737,32 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/alasdairmonk/Cocoa/MobileDN/MobileDN,
+					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
+				);
+				OTHER_LDFLAGS = (
+					"-framework",
+					CoreGraphics,
+					"-framework",
+					CoreText,
+					"-framework",
+					Foundation,
+					"-framework",
+					GoogleOpenSource,
+					"-framework",
+					GooglePlus,
+					"-framework",
+					MobileCoreServices,
+					"-framework",
+					QuartzCore,
+					"-framework",
+					Security,
+					"-framework",
+					StoreKit,
+					"-framework",
+					SystemConfiguration,
+					"-framework",
+					UIKit,
+					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "8B09594C-6DF4-4CD9-BB99-2DE789091480";
@@ -708,6 +792,32 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/alasdairmonk/Cocoa/MobileDN/MobileDN,
+					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
+				);
+				OTHER_LDFLAGS = (
+					"-framework",
+					CoreGraphics,
+					"-framework",
+					CoreText,
+					"-framework",
+					Foundation,
+					"-framework",
+					GoogleOpenSource,
+					"-framework",
+					GooglePlus,
+					"-framework",
+					MobileCoreServices,
+					"-framework",
+					QuartzCore,
+					"-framework",
+					Security,
+					"-framework",
+					StoreKit,
+					"-framework",
+					SystemConfiguration,
+					"-framework",
+					UIKit,
+					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "888AAFF8-1D7C-4E17-B184-A158DA431751";

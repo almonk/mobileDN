@@ -11,6 +11,7 @@
 #import "OSKShareableContentItem.h"
 #import "OSKPinboardUtility.h"
 #import "OSKManagedAccount.h"
+#import "OSKManagedAccountCredential.h"
 
 @implementation OSKPinboardActivity
 
@@ -27,6 +28,10 @@
 
 + (OSKManagedAccountAuthenticationViewControllerType)authenticationViewControllerType {
     return OSKManagedAccountAuthenticationViewControllerType_DefaultUsernamePasswordViewController;
+}
+
+- (OSKUsernameNomenclature)usernameNomenclatureForSignInScreen {
+    return OSKUsernameNomenclature_Username;
 }
 
 - (void)authenticateNewAccountWithUsername:(NSString *)username password:(NSString *)password appCredential:(OSKApplicationCredential *)appCredential completion:(OSKManagedAccountAuthenticationHandler)completion {
@@ -79,12 +84,14 @@
     return NO;
 }
 
-+ (OSKPublishingViewControllerType)publishingViewControllerType {
-    return OSKPublishingViewControllerType_None;
++ (OSKPublishingMethod)publishingMethod {
+    return OSKPublishingMethod_None;
 }
 
 - (BOOL)isReadyToPerform {
-    return ([self linkBookmarkItem].url != nil);
+    return ([self linkBookmarkItem].url.absoluteString.length > 0
+            && self.activeManagedAccount.credential.accountID != nil
+            && self.activeManagedAccount.credential.token != nil);
 }
 
 - (void)performActivity:(OSKActivityCompletionHandler)completion {
@@ -103,8 +110,7 @@
 }
 
 - (OSKActivityOperation *)operationForActivityWithCompletion:(OSKActivityCompletionHandler)completion {
-    OSKActivityOperation *op = nil;
-    return op;
+    return nil;
 }
 
 #pragma mark - Convenience

@@ -148,18 +148,17 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSDictionary *story = [self.stories objectAtIndex:indexPath.row];
+    NSString *storyUrl = [story objectForKey:@"url"];
     
     self.webViewController = [[PBWebViewController alloc] init];
     self.webViewController.view.backgroundColor = [UIColor whiteColor];
-    self.webViewController.URL = [NSURL URLWithString:[story objectForKey:@"url"]];
+    self.webViewController.URL = [NSURL URLWithString:storyUrl];
     
     PBSafariActivity *activity = [[PBSafariActivity alloc] init];
     self.webViewController.applicationActivities = @[activity];
     
-    self.webViewController.hidesBottomBarWhenPushed = YES;
-    
     // Push it
-    [self.navigationController pushViewController:self.webViewController animated:YES];
+    [self presentViewController:[[UINavigationController alloc] initWithRootViewController:self.webViewController] animated:YES completion:nil];
 }
 
 @end

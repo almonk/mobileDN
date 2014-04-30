@@ -285,6 +285,7 @@
 - (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange
 {
     NSLog(@"Tap link");
+    
     self.webViewController = [[PBWebViewController alloc] init];
     self.webViewController.view.backgroundColor = [UIColor whiteColor];
     self.webViewController.URL = URL;
@@ -292,10 +293,8 @@
     PBSafariActivity *activity = [[PBSafariActivity alloc] init];
     self.webViewController.applicationActivities = @[activity];
     
-    self.webViewController.hidesBottomBarWhenPushed = YES;
-    
     // Push it
-    [self.navigationController pushViewController:self.webViewController animated:YES];
+    [self presentViewController:[[UINavigationController alloc] initWithRootViewController:self.webViewController] animated:YES completion:nil];
     
     return NO;
 }

@@ -40,11 +40,11 @@
 NSString * const OSKPresentationOption_ActivityCompletionHandler = @"OSKPresentationOption_ActivityCompletionHandler";
 NSString * const OSKPresentationOption_PresentationEndingHandler = @"OSKPresentationOption_PresentationEndingHandler";
 
-static CGFloat OSKPresentationManagerActivitySheetPresentationDuration = 0.3f;
+static CGFloat OSKPresentationManagerActivitySheetPresentationDuration = 0.33f;
 static CGFloat OSKPresentationManagerActivitySheetDismissalDuration = 0.16f;
 
-static NSInteger OSKTextViewFontSize_Phone = 16.0f;
-static NSInteger OSKTextViewFontSize_Pad = 19.0f;
+static NSInteger OSKTextViewFontSize_Phone = 18.0f;
+static NSInteger OSKTextViewFontSize_Pad = 20.0f;
 
 @interface OSKPresentationManager ()
 <
@@ -68,6 +68,8 @@ static NSInteger OSKTextViewFontSize_Pad = 19.0f;
 @property (assign, nonatomic, readonly) BOOL isPresentingViaPopover;
 
 @end
+
+#define USE_UNDOCUMENTED_ANIMATION_CURVE 0
 
 @implementation OSKPresentationManager
 
@@ -187,13 +189,41 @@ static NSInteger OSKTextViewFontSize_Pad = 19.0f;
         [sheet viewWillAppear:YES];
         [self.parentMostViewController.view addSubview:sheet.view];
         
-        [UIView animateWithDuration:OSKPresentationManagerActivitySheetPresentationDuration delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-            [sheet.view setFrame:targetFrame];
-            [self.shadowView setAlpha:1.0];
-        } completion:^(BOOL finished) {
-            [sheet viewDidAppear:YES];
-            [self setIsAnimating:NO];
-        }];
+#if USE_UNDOCUMENTED_ANIMATION_CURVE == 1
+        
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationDuration:OSKPresentationManagerActivitySheetPresentationDuration];
+        [UIView setAnimationCurve:7]; // This is the curve used by action sheets and the keyboard on iOS 7.0 and later.
+        [UIView setAnimationBeginsFromCurrentState:YES];
+        [sheet.view setFrame:targetFrame];
+        [UIView commitAnimations];
+        
+        [UIView
+         animateWithDuration:OSKPresentationManagerActivitySheetPresentationDuration
+         delay:0
+         options:UIViewAnimationOptionCurveLinear
+         animations:^{
+             [self.shadowView setAlpha:1.0];
+         } completion:^(BOOL finished) {
+             [sheet viewDidAppear:YES];
+             [self setIsAnimating:NO];
+         }];
+#else
+        [UIView
+         animateWithDuration:OSKPresentationManagerActivitySheetPresentationDuration
+         delay:0
+         options:UIViewAnimationOptionCurveEaseOut
+         animations:^{
+             [sheet.view setFrame:targetFrame];
+             [self.shadowView setAlpha:1.0];
+         } completion:^(BOOL finished) {
+             [sheet viewDidAppear:YES];
+             [self setIsAnimating:NO];
+         }];
+#endif
+        
+        
+        
     } else {
         OSKLog(@"Attempting to present a second activity sheet while the first is still visible.");
     }
@@ -602,6 +632,21 @@ willRepositionPopoverToRect:(inout CGRect *)rect
     return color;
 }
 
+- (UIColor *)color_textViewBackground {
+    UIColor *color;
+    if ([self.colorDelegate respondsToSelector:@selector(osk_color_textViewBackground)]) {
+        color = [self.colorDelegate osk_color_textViewBackground];
+    } else {
+        OSKActivitySheetViewControllerStyle style = [self sheetStyle];
+        if (style == OSKActivitySheetViewControllerStyle_Light) {
+            color = OSKDefaultColor_LightStyle_OpaqueBGColor;
+        } else {
+            color = OSKDefaultColor_DarkStyle_OpaqueBGColor;
+        }
+    }
+    return color;
+}
+
 - (UIColor *)color_pageIndicatorColor_current {
     UIColor *color;
     if ([self.colorDelegate respondsToSelector:@selector(osk_color_pageIndicatorColor_current)]) {
@@ -751,13 +796,35 @@ willRepositionPopoverToRect:(inout CGRect *)rect
     return text;
 }
 
+- (NSString *)localizedText_Add {
+    NSString *text = nil;
+    if ([self.localizationDelegate respondsToSelector:@selector(osk_localizedText_Add)]) {
+        text = [self.localizationDelegate osk_localizedText_Add];
+    }
+    if (text == nil) {
+        text = @"Add";
+    }
+    return text;
+}
+
 - (NSString *)localizedText_Username {
     NSString *text = nil;
     if ([self.localizationDelegate respondsToSelector:@selector(osk_localizedText_Username)]) {
         text = [self.localizationDelegate osk_localizedText_Username];
     }
     if (text == nil) {
-        text = @"Username";
+        text = @"username";
+    }
+    return text;
+}
+
+- (NSString *)localizedText_Email {
+    NSString *text = nil;
+    if ([self.localizationDelegate respondsToSelector:@selector(osk_localizedText_Email)]) {
+        text = [self.localizationDelegate osk_localizedText_Email];
+    }
+    if (text == nil) {
+        text = @"email";
     }
     return text;
 }
@@ -768,7 +835,7 @@ willRepositionPopoverToRect:(inout CGRect *)rect
         text = [self.localizationDelegate osk_localizedText_Password];
     }
     if (text == nil) {
-        text = @"Password";
+        text = @"password";
     }
     return text;
 }
@@ -1017,15 +1084,15 @@ willRepositionPopoverToRect:(inout CGRect *)rect
         viewController = [self.viewControllerDelegate osk_publishingViewControllerForActivity:activity];
     }
     if (viewController == nil) {
-        switch ([activity.class publishingViewControllerType]) {
-            case OSKPublishingViewControllerType_Microblogging: {
+        switch ([activity.class publishingMethod]) {
+            case OSKPublishingMethod_ViewController_Microblogging: {
                 NSString *nibName = NSStringFromClass([OSKMicroblogPublishingViewController class]);
                 viewController = [[OSKMicroblogPublishingViewController alloc] initWithNibName:nibName bundle:nil];
             } break;
-            case OSKPublishingViewControllerType_Blogging: {
+            case OSKPublishingMethod_ViewController_Blogging: {
                 // alloc/init a blogging view controller
             } break;
-            case OSKPublishingViewControllerType_System: {
+            case OSKPublishingMethod_ViewController_System: {
                 if ([activity.contentItem.itemType isEqualToString:OSKShareableContentItemType_Email]) {
                     viewController = [[OSKMailComposeViewController alloc] initWithNibName:nil bundle:nil];
                 }
@@ -1036,14 +1103,15 @@ willRepositionPopoverToRect:(inout CGRect *)rect
                     viewController = [[OSKAirDropViewController alloc] initWithAirDropItem:(OSKAirDropContentItem *)activity.contentItem];
                 }
             } break;
-            case OSKPublishingViewControllerType_Facebook: {
+            case OSKPublishingMethod_ViewController_Facebook: {
                 NSString *nibName = NSStringFromClass([OSKFacebookPublishingViewController class]);
                 viewController = [[OSKFacebookPublishingViewController alloc] initWithNibName:nibName bundle:nil];
             } break;
-            case OSKPublishingViewControllerType_Bespoke: {
+            case OSKPublishingMethod_ViewController_Bespoke: {
                 NSAssert(NO, @"OSKPresentationManager: Activities with a bespoke publishing view controller require the OSKPresentationManager's delegate to vend the appropriate publishing view controller via osk_publishingViewControllerForActivity:");
             } break;
-            case OSKPublishingViewControllerType_None: {
+            case OSKPublishingMethod_URLScheme:
+            case OSKPublishingMethod_None: {
                 NSAssert(NO, @"OSKPresentationManager: Attempting to present a publishing view controller for an activity that does not require one.");
             } break;
             default:

@@ -1,1 +1,2 @@
-PODS_OVERSHAREKIT_OTHER_LDFLAGS = -framework UIKit
+PODS_OVERSHAREKIT_FRAMEWORK_SEARCH_PATHS = "$(PODS_ROOT)/OvershareKit/Dependencies/GooglePlus-SDK" "$(PODS_ROOT)/OvershareKit/Dependencies/GooglePlus-SDK"
+PODS_OVERSHAREKIT_OTHER_LDFLAGS = -framework GoogleOpenSource -framework GooglePlus -framework UIKit

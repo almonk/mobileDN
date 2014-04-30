@@ -67,9 +67,28 @@ static NSString * OSKPinboardActivity_TokenParamValue = @"%@:%@"; // username an
 }
 
 + (void)addBookmark:(OSKLinkBookmarkContentItem *)linkItem withAccountCredential:(OSKManagedAccountCredential *)accountCredential completion:(void(^)(BOOL success, NSError *error))completion {
-    if (linkItem.title.length) {
+    BOOL hasValidURL = (linkItem.url.absoluteString.length);
+    BOOL hasValidCredentials = (accountCredential.token != nil && accountCredential.accountID != nil);
+    if (hasValidURL == NO || hasValidCredentials == NO) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (completion) {
+                NSError *error = nil;
+                if (hasValidCredentials == NO) {
+                    NSDictionary *info = @{NSLocalizedFailureReasonErrorKey:@"OSKPinboardUtility: Invalid credentials. Perhaps try signing out and back in again."};
+                    error = [[NSError alloc] initWithDomain:@"Overshare" code:400 userInfo:info];
+                }
+                else if (hasValidURL == NO) {
+                    NSDictionary *info = @{NSLocalizedFailureReasonErrorKey:@"OSKPinboardUtility: Unable to obtain a valid string from the NSURL."};
+                    error = [[NSError alloc] initWithDomain:@"Overshare" code:400 userInfo:info];
+                }
+                completion(NO, error);
+            }
+        });
+    }
+    else if (linkItem.title.length) {
         [self _addBookmarkWithExistingTitle:linkItem withAccountCredential:accountCredential completion:completion];
-    } else {
+    }
+    else {
         [self _getWebPageTitleForURL:linkItem.url.absoluteString completion:^(NSString *fetchedTitle) {
             [linkItem setTitle:fetchedTitle];
             [self _addBookmarkWithExistingTitle:linkItem withAccountCredential:accountCredential completion:completion];
@@ -145,13 +164,17 @@ static NSString * OSKPinboardActivity_TokenParamValue = @"%@:%@"; // username an
                     }];
                 }
             }
-            if (title.length == 0) {
-                NSString *appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
-                title = [NSString stringWithFormat:@"Saved with %@", appName];
-            } else {
+            
+            if (title.length) {
                 title = [title stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
                 title = [self _stripHTMLEntitiesFromString:title];
             }
+            
+            if (title.length == 0) {
+                NSString *appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
+                title = [NSString stringWithFormat:@"Saved with %@", appName];
+            }
+            
             if (completion) {
                 completion(title);
             }
@@ -160,6 +183,9 @@ static NSString * OSKPinboardActivity_TokenParamValue = @"%@:%@"; // username an
 }
 
 + (NSString *)_stripHTMLEntitiesFromString:(NSString *)sourceString {
+    if (sourceString.length == 0) {
+        return @"";
+    }
     NSMutableString *string = [NSMutableString stringWithString:sourceString];
     NSDictionary *symbolReplacementPairs = @{
                                              @"&nbsp;":@" ",
@@ -180,7 +206,15 @@ static NSString * OSKPinboardActivity_TokenParamValue = @"%@:%@"; // username an
                                              @"&lsquo;":@"‘",
                                              @"&rsquo;":@"’",
                                              @"&ldquo;":@"“",
-                                             @"&rdquo;":@"”"
+                                             @"&rdquo;":@"”",
+                                             @"&#8211;":@"–",
+                                             @"&#39;":@"'",
+                                             @"&#34;":@"\"",
+                                             @"&#38;":@"&",
+                                             @"&#8216;":@"‘",
+                                             @"&#8217;":@"’",
+                                             @"&#8220;":@"“",
+                                             @"&#8221;":@"”	",
                                              };
     for (NSString *key in symbolReplacementPairs.allKeys) {
         NSString *replacement = [symbolReplacementPairs objectForKey:key];

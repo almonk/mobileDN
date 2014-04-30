@@ -2,7 +2,7 @@
 // RECommonFunctions.h
 // RESideMenu
 //
-// Copyright (c) 2013 Roman Efimov (https://github.com/romaonthego)
+// Copyright (c) 2013-2014 Roman Efimov (https://github.com/romaonthego)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -44,4 +44,4 @@ __VA_ARGS__ \
 #define IF_IOS7_OR_GREATER(...)
 #endif
 
-BOOL RESideMenuUIKitIsFlatMode();
+BOOL RESideMenuUIKitIsFlatMode(void);

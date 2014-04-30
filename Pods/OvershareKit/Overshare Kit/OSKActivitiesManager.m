@@ -23,9 +23,12 @@
 #import "OSKAppDotNetActivity.h"
 #import "OSKChromeActivity.h"
 #import "OSKCopyToPasteboardActivity.h"
+#import "OSKDraftsActivity.h"
 #import "OSKEmailActivity.h"
 #import "OSKFacebookActivity.h"
+#import "OSKGooglePlusActivity.h"
 #import "OSKInstapaperActivity.h"
+#import "OSKReadingListActivity.h"
 #import "OSKOmnifocusActivity.h"
 #import "OSKPinboardActivity.h"
 #import "OSKPocketActivity.h"
@@ -43,6 +46,7 @@ static NSString * OSKApplicationCredential_Pocket_iPad_Dev = @"19568-04ba9f583c2
 static NSString * OSKApplicationCredential_Readability_Key = @"oversharedev";
 static NSString * OSKApplicationCredential_Readability_Secret = @"hWA7rwPqzvNEaK8ZbRBw9fc5kKBQMdRK";
 static NSString * OSKApplicationCredential_Facebook_Key = @"554155471323751";
+static NSString * OSKApplicationCredential_GooglePlus_Key = @"810720596839-qccfsg2b2ljn0cnu76rha48f5dguns3j.apps.googleusercontent.com";
 #endif
 
 NSString * const OSKActivitiesManagerDidMarkActivityTypesAsPurchasedNotification = @"OSKActivitiesManagerDidMarkActivityTypesAsPurchasedNotification";
@@ -118,8 +122,13 @@ static NSString * OSKActivitiesManagerPersistentExclusionsKey = @"OSKActivitiesM
         }
         else if ([item.itemType isEqualToString:OSKShareableContentItemType_MicroblogPost]) {
             activitiesToAdd = [self builtInActivitiesForMicroblogPostItem:(OSKMicroblogPostContentItem *)item
-                                                  excludedActivityTypes:excludedActivityTypes
-                                                      requireOperations:requireOperations];
+                                                    excludedActivityTypes:excludedActivityTypes
+                                                        requireOperations:requireOperations];
+        }
+        else if ([item.itemType isEqualToString:OSKShareableContentItemType_Facebook]) {
+            activitiesToAdd = [self builtInActivitiesForFacebookItem:(OSKFacebookContentItem *)item
+                                               excludedActivityTypes:excludedActivityTypes
+                                                   requireOperations:requireOperations];
         }
         else if ([item.itemType isEqualToString:OSKShareableContentItemType_BlogPost]) {
             activitiesToAdd = [self builtInActivitiesForBlogPostItem:(OSKBlogPostContentItem *)item
@@ -171,6 +180,11 @@ static NSString * OSKActivitiesManagerPersistentExclusionsKey = @"OSKActivitiesM
                                                    excludedActivityTypes:excludedActivityTypes
                                                        requireOperations:requireOperations];
         }
+        else if ([item.itemType isEqualToString:OSKShareableContentItemType_TextEditing]) {
+            activitiesToAdd = [self builtInActivitiesForTextEditingItem:(OSKTextEditingContentItem *)item
+                                                  excludedActivityTypes:excludedActivityTypes
+                                                      requireOperations:requireOperations];
+        }
         
         [validActivities addObjectsFromArray:activitiesToAdd];
         
@@ -209,6 +223,10 @@ static NSString * OSKActivitiesManagerPersistentExclusionsKey = @"OSKActivitiesM
     additionals = [self contentItemsOfType:OSKShareableContentItemType_Email inArray:content.additionalItems];
     [sortedItems addObjectsFromArray:additionals];
     
+    if (content.facebookItem) { [sortedItems addObject:content.facebookItem]; }
+    additionals = [self contentItemsOfType:OSKShareableContentItemType_Facebook inArray:content.additionalItems];
+    [sortedItems addObjectsFromArray:additionals];
+    
     if (content.microblogPostItem) { [sortedItems addObject:content.microblogPostItem]; }
     additionals = [self contentItemsOfType:OSKShareableContentItemType_MicroblogPost inArray:content.additionalItems];
     [sortedItems addObjectsFromArray:additionals];
@@ -236,6 +254,10 @@ static NSString * OSKActivitiesManagerPersistentExclusionsKey = @"OSKActivitiesM
     if (content.linkBookmarkItem) { [sortedItems addObject:content.linkBookmarkItem]; }
     additionals = [self contentItemsOfType:OSKShareableContentItemType_LinkBookmark inArray:content.additionalItems];
     [sortedItems addObjectsFromArray:additionals];
+    
+    if (content.textEditingItem) { [sortedItems addObject:content.textEditingItem]; }
+    additionals = [self contentItemsOfType:OSKShareableContentItemType_TextEditing inArray:content.additionalItems];
+    [sortedItems addObjectsFromArray:additionals];
 
     if (content.toDoListItem) { [sortedItems addObject:content.toDoListItem]; }
     additionals = [self contentItemsOfType:OSKShareableContentItemType_ToDoListEntry inArray:content.additionalItems];
@@ -244,6 +266,14 @@ static NSString * OSKActivitiesManagerPersistentExclusionsKey = @"OSKActivitiesM
     if (content.passwordSearchItem) { [sortedItems addObject:content.passwordSearchItem]; }
     additionals = [self contentItemsOfType:OSKShareableContentItemType_PasswordManagementAppSearch inArray:content.additionalItems];
     [sortedItems addObjectsFromArray:additionals];
+    
+    if (content.additionalItems) {
+        NSMutableSet *customContentItems = [NSMutableSet setWithArray:content.additionalItems];
+        [customContentItems minusSet:[NSSet setWithArray:sortedItems]];
+        if (customContentItems.count) {
+            [sortedItems addObjectsFromArray:customContentItems.allObjects];
+        }
+    }
 
     return sortedItems;
 }
@@ -268,19 +298,32 @@ static NSString * OSKActivitiesManagerPersistentExclusionsKey = @"OSKActivitiesM
                                                     item:item];
     if (twitter) { [activities addObject:twitter]; }
     
-    OSKFacebookActivity *facebook = [self validActivityForType:[OSKFacebookActivity activityType]
-                                                       class:[OSKFacebookActivity class]
-                                               excludedTypes:excludedActivityTypes
-                                           requireOperations:requireOperations
-                                                        item:item];
-    if (facebook) { [activities addObject:facebook]; }
-    
     OSKAppDotNetActivity *appDotNet = [self validActivityForType:[OSKAppDotNetActivity activityType]
                                                        class:[OSKAppDotNetActivity class]
                                                excludedTypes:excludedActivityTypes
                                            requireOperations:requireOperations
                                                         item:item];
     if (appDotNet) { [activities addObject:appDotNet]; }
+
+    OSKGooglePlusActivity *googlePlus = [self validActivityForType:[OSKGooglePlusActivity activityType]
+                                                             class:[OSKGooglePlusActivity class]
+                                                     excludedTypes:excludedActivityTypes
+                                                 requireOperations:requireOperations
+                                                              item:item];
+    if (googlePlus) { [activities addObject:googlePlus]; }
+    
+    return activities;
+}
+
+- (NSArray *)builtInActivitiesForFacebookItem:(OSKFacebookContentItem *)item excludedActivityTypes:(NSArray *)excludedActivityTypes requireOperations:(BOOL)requireOperations {
+    NSMutableArray *activities = [[NSMutableArray alloc] init];
+    
+    OSKFacebookActivity *facebook = [self validActivityForType:[OSKFacebookActivity activityType]
+                                                         class:[OSKFacebookActivity class]
+                                                 excludedTypes:excludedActivityTypes
+                                             requireOperations:requireOperations
+                                                          item:item];
+    if (facebook) { [activities addObject:facebook]; }
     
     return activities;
 }
@@ -368,6 +411,13 @@ static NSString * OSKActivitiesManagerPersistentExclusionsKey = @"OSKActivitiesM
 - (NSArray *)builtInActivitiesForReadLaterItem:(OSKReadLaterContentItem *)item excludedActivityTypes:(NSArray *)excludedActivityTypes requireOperations:(BOOL)requireOperations {
     NSMutableArray *activities = [[NSMutableArray alloc] init];
     
+    OSKReadingListActivity *readingList = [self validActivityForType:[OSKReadingListActivity activityType]
+                                                               class:[OSKReadingListActivity class]
+                                                       excludedTypes:excludedActivityTypes
+                                                   requireOperations:requireOperations
+                                                                item:item];
+    if (readingList) { [activities addObject:readingList]; }
+    
     OSKInstapaperActivity *instapaper = [self validActivityForType:[OSKInstapaperActivity activityType]
                                                                  class:[OSKInstapaperActivity class]
                                                          excludedTypes:excludedActivityTypes
@@ -441,6 +491,19 @@ static NSString * OSKActivitiesManagerPersistentExclusionsKey = @"OSKActivitiesM
                                                  requireOperations:requireOperations
                                                               item:item];
     if (airDrop) { [activities addObject:airDrop]; }
+    
+    return activities;
+}
+
+- (NSArray *)builtInActivitiesForTextEditingItem:(OSKTextEditingContentItem *)item excludedActivityTypes:(NSArray *)excludedActivityTypes requireOperations:(BOOL)requireOperations {
+    NSMutableArray *activities = [[NSMutableArray alloc] init];
+    
+    OSKDraftsActivity *drafts = [self validActivityForType:[OSKDraftsActivity activityType]
+                                                      class:[OSKDraftsActivity class]
+                                               excludedTypes:excludedActivityTypes
+                                           requireOperations:requireOperations
+                                                        item:item];
+    if (drafts) { [activities addObject:drafts]; }
     
     return activities;
 }
@@ -595,6 +658,12 @@ static NSString * OSKActivitiesManagerPersistentExclusionsKey = @"OSKActivitiesM
             appCredential = [[OSKApplicationCredential alloc]
                              initWithOvershareApplicationKey:OSKApplicationCredential_Readability_Key
                              applicationSecret:OSKApplicationCredential_Readability_Secret
+                             appName:@"Overshare"];
+        }
+        else if ([activityType isEqualToString:OSKActivityType_API_GooglePlus]) {
+            appCredential = [[OSKApplicationCredential alloc]
+                             initWithOvershareApplicationKey:OSKApplicationCredential_GooglePlus_Key
+                             applicationSecret:nil
                              appName:@"Overshare"];
         }
     }

@@ -8,6 +8,7 @@
 
 @import Foundation;
 
+@class OSKFacebookContentItem;
 @class OSKMicroblogPostContentItem;
 @class OSKBlogPostContentItem;
 @class OSKEmailContentItem;
@@ -20,6 +21,7 @@
 @class OSKToDoListEntryContentItem;
 @class OSKPasswordManagementAppSearchContentItem;
 @class OSKAirDropContentItem;
+@class OSKTextEditingContentItem;
 
 /**
  `OSKShareableContent` is the highest-level Overshare Kit model object for
@@ -54,6 +56,11 @@
  @see OSKShareableContentItem.h
  */
 @interface OSKShareableContent : NSObject
+
+/**
+ Content patterned after Facebook posts.
+ */
+@property (strong, nonatomic) OSKFacebookContentItem *facebookItem;
 
 /**
  Content patterned after microblog posts like Twitter or App.net updates.
@@ -114,6 +121,11 @@
  Content shareable via AirDrop.
  */
 @property (strong, nonatomic) OSKAirDropContentItem *airDropItem;
+
+/**
+ Content for text editing apps and services, like Drafts or Evernote.
+ */
+@property (strong, nonatomic) OSKTextEditingContentItem *textEditingItem;
 
 /**
 These can be custom items, or additional instances of the official items above.

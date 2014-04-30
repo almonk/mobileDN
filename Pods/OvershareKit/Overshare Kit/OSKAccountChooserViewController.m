@@ -13,6 +13,7 @@
 #import "OSKPresentationManager.h"
 #import "OSKAuthenticationViewController.h"
 #import "OSKManagedAccountStore.h"
+#import "OSKSystemAccountStore.h"
 #import "OSKNavigationController.h"
 #import "OSKActivity_ManagedAccounts.h"
 #import "OSKLogger.h"
@@ -24,6 +25,7 @@
 // SELECTING ACCOUNTS FOR ACTIVITIES
 @property (copy, nonatomic) OSKActivity <OSKActivity_ManagedAccounts> *managedAccountActivity;
 @property (strong, nonatomic) ACAccount *selectedSystemAccount;
+@property (copy, nonatomic) NSString *systemAccountTypeIdentifier;
 @property (strong, nonatomic) OSKManagedAccount *selectedManagedAccount;
 @property (weak, nonatomic) id <OSKAccountChooserViewControllerDelegate> delegate;
 
@@ -57,14 +59,18 @@
         _allowsEditing = YES;
         _allowsSelection = YES;
         _selectedManagedAccount = [[OSKManagedAccountStore sharedInstance] activeAccountForActivityType:[activityClass activityType]];
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
-                                                                                               target:self
-                                                                                               action:@selector(addAccountButtonPressed:)];
+        NSString *addTitle = [OSKPresentationManager sharedInstance].localizedText_Add;
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:addTitle
+                                                                                  style:UIBarButtonItemStyleBordered
+                                                                                 target:self
+                                                                                 action:@selector(addAccountButtonPressed:)];
     }
     return self;
 }
 
-- (instancetype)initWithManagedAccountActivity:(OSKActivity <OSKActivity_ManagedAccounts> *)activity activeAccount:(OSKManagedAccount *)account delegate:(id<OSKAccountChooserViewControllerDelegate>)delegate {
+- (instancetype)initWithManagedAccountActivity:(OSKActivity <OSKActivity_ManagedAccounts> *)activity
+                                 activeAccount:(OSKManagedAccount *)account
+                                      delegate:(id<OSKAccountChooserViewControllerDelegate>)delegate {
     self = [self initWithStyle:UITableViewStylePlain];
     if (self) {
         self.title = [[OSKPresentationManager sharedInstance] localizedText_Accounts];
@@ -75,14 +81,20 @@
         _delegate = delegate;
         _allowsEditing = YES;
         _allowsSelection = YES;
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
-                                                                                               target:self
-                                                                                               action:@selector(addAccountButtonPressed:)];
+        NSString *addTitle = [OSKPresentationManager sharedInstance].localizedText_Add;
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:addTitle
+                                                                                  style:UIBarButtonItemStyleBordered
+                                                                                 target:self
+                                                                                 action:@selector(addAccountButtonPressed:)];
     }
     return self;
 }
 
-- (instancetype)initWithSystemAccounts:(NSArray *)systemAccounts activeAccount:(ACAccount *)account delegate:(id<OSKAccountChooserViewControllerDelegate>)delegate {
+- (instancetype)initWithSystemAccounts:(NSArray *)systemAccounts
+                         activeAccount:(ACAccount *)account
+                 accountTypeIdentifier:(NSString *)accountTypeIdentifier
+                              delegate:(id<OSKAccountChooserViewControllerDelegate>)delegate {
+    
     self = [self initWithStyle:UITableViewStylePlain];
     if (self) {
         self.title = [[OSKPresentationManager sharedInstance] localizedText_Accounts];
@@ -92,6 +104,7 @@
         _delegate = delegate;
         _allowsEditing = NO;
         _allowsSelection = YES;
+        _systemAccountTypeIdentifier = [accountTypeIdentifier copy];
     }
     return self;
 }
@@ -297,12 +310,20 @@
     [sheet showInView:self.view];
 }
 
-#pragma mark - Selecting Managed Accounts 
+#pragma mark - Selected Accounts
 
 - (void)setSelectedManagedAccount:(OSKManagedAccount *)selectedManagedAccount {
     _selectedManagedAccount = selectedManagedAccount;
     if (_selectedManagedAccount) {
         [[OSKManagedAccountStore sharedInstance] setActiveAccount:_selectedManagedAccount forActivityType:_selectedManagedAccount.activityType];
+    }
+}
+
+- (void)setSelectedSystemAccount:(ACAccount *)selectedSystemAccount {
+    _selectedSystemAccount = selectedSystemAccount;
+    if (_selectedSystemAccount) {
+        [[OSKSystemAccountStore sharedInstance] setLastUsedAccountIdentifier:_selectedSystemAccount.identifier
+                                                                     forType:self.systemAccountTypeIdentifier];
     }
 }
 

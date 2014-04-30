@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0500"
+   LastUpgradeVersion = "0510"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "41AA7A1E28514F28AC7E6D57"
+               BlueprintIdentifier = "921ED56620FD4992BC8F10ED"
                BuildableName = "libPods-ADNLogin.a"
                BlueprintName = "Pods-ADNLogin"
                ReferencedContainer = "container:Pods.xcodeproj">

@@ -72,7 +72,6 @@ static UIImage * OSKActivityIconMaskImage;
 }
 
 - (NSString *)keyForActivityType:(NSString *)type displayString:(NSString *)displayString {
-    NSLog(@"Key:%@", type);
     return [NSString stringWithFormat:@"%@_%@", type, displayString];
 }
 

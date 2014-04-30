@@ -48,6 +48,13 @@
 {
     NSURLRequest *request = [NSURLRequest requestWithURL:self.URL];
     [self.webView loadRequest:request];
+    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor blackColor]};
+    self.navigationController.navigationBar.titleTextAttributes = @{NSFontAttributeName : [UIFont fontWithName:@"Avenir" size:17.0f]};
+    
+    UIBarButtonItem *leftBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Done"
+                                                                    style:UIBarButtonItemStyleDone target:self action:@selector(dismissSelf)];
+    self.navigationItem.leftBarButtonItem = leftBarButton;
+
     
     if (self.navigationController.toolbarHidden) {
         self.toolbarPreviouslyHidden = YES;
@@ -55,6 +62,11 @@
             [self.navigationController setToolbarHidden:NO animated:YES];
         }
     }
+}
+
+-(void)dismissSelf
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)clear

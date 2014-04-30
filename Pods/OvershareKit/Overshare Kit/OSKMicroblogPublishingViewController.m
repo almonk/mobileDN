@@ -18,16 +18,21 @@
 #import "OSKMicrobloggingActivity.h"
 #import "OSKShareableContentItem.h"
 #import "OSKPresentationManager.h"
-#import "OSKTextView.h"
+#import "OSKMicrobloggingTextView.h"
 #import "OSKManagedAccount.h"
 #import "OSKAccountChooserViewController.h"
 #import "UIImage+OSKUtilities.h"
 #import "OSKLinkShorteningUtility.h"
 #import "OSKTwitterText.h"
 
-@interface OSKMicroblogPublishingViewController () <OSKTextViewDelegate, OSKAccountChooserViewControllerDelegate>
+@interface OSKMicroblogPublishingViewController ()
+<
+    OSKUITextViewSubstituteDelegate,
+    OSKMicrobloggingTextViewAttachmentsDelegate,
+    OSKAccountChooserViewControllerDelegate
+>
 
-@property (weak, nonatomic) IBOutlet OSKTextView *textView;
+@property (weak, nonatomic) IBOutlet OSKMicrobloggingTextView *textView;
 
 @property (strong, nonatomic) OSKActivity <OSKMicrobloggingActivity> *activity;
 @property (strong, nonatomic) OSKMicroblogPostContentItem *contentItem;
@@ -51,14 +56,13 @@
 @property (strong, nonatomic) UIButton *linkShorteningButton;
 @property (strong, nonatomic) UIActivityIndicatorView *linkShorteningActivityIndicator;
 @property (assign, nonatomic) NSInteger activeLinkShorteningCount;
-@property (assign, nonatomic) NSUInteger reservedLengthForAttachmentURL;
 
 @end
 
 #define NUM_ROWS 1
 #define ROW_TEXT_VIEW 0
 #define ROW_ACTIVE_ACCOUNT 1
-#define TOOLBAR_FONT_SIZE 15
+#define TOOLBAR_FONT_SIZE 17
 
 #define CANCEL_ITEM_INDEX_IPAD 0
 #define ACCOUNT_ITEM_INDEX_IPAD 2
@@ -97,11 +101,13 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self.textView becomeFirstResponder];
+    [self updateDoneButton];
 }
 
 - (void)setupTextView {
-    [self.textView setTextViewDelegate:self];
-    [self.textView setSyntaxHighlighting:[self.activity syntaxHighlightingStyle]];
+    [self.textView setOskDelegate:self];
+    [self.textView setOskAttachmentsDelegate:self];
+    [self.textView setSyntaxHighlighting:[self.activity syntaxHighlighting]];
     [self.textView setText:self.contentItem.text];
     
     [self updateRemainingCharacterCountLabel];
@@ -230,16 +236,22 @@
     [self updateAccountButton];
 }
 
-#pragma mark - OSKTextView Delegate
+#pragma mark - OSKUITextViewSubstituteDelegate
 
-- (void)textViewDidChange:(OSKTextView *)textView {
+- (void)textViewDidChange:(OSKUITextViewSubstitute *)textView {
     [self.contentItem setText:textView.attributedText.string];
     [self updateRemainingCharacterCountLabel];
     [self updateDoneButton];
     [self updateLinkShorteningButton];
 }
 
-- (void)textViewDidTapRemoveAttachment:(OSKTextView *)textView {
+#pragma mark - OSKTextViewAttachmentsDelegate
+
+- (BOOL)textView:(OSKMicrobloggingTextView *)textView shouldAllowAttachmentsToBeEdited:(OSKTextViewAttachment *)attachment {
+    return YES;
+}
+
+- (void)textViewDidTapRemoveAttachment:(OSKMicrobloggingTextView *)textView {
     [textView removeAttachment];
     [self.contentItem setImages:nil];
     [self updateRemainingCharacterCountLabel];
@@ -291,7 +303,12 @@
 #pragma mark - Link Shortening Button
 
 - (void)updateLinkShorteningButton {
-    if ([OSKPresentationManager sharedInstance].allowLinkShorteningButton) {
+    BOOL presManagerAllows = [OSKPresentationManager sharedInstance].allowLinkShorteningButton;
+    BOOL activityAllows = YES;
+    if ([self.activity respondsToSelector:@selector(allowLinkShortening)]) {
+        activityAllows = [self.activity allowLinkShortening];
+    }
+    if (presManagerAllows && activityAllows) {
         NSArray *links = _textView.detectedLinks;
         BOOL shouldShow = NO;
         for (OSKTwitterTextEntity *link in links) {
@@ -462,6 +479,11 @@
         OSKManagedAccount *managedAccount = [(OSKActivity <OSKActivity_ManagedAccounts> *)self.activity activeManagedAccount];
         accountName = [managedAccount nonNilDisplayName];
     }
+    
+    if (accountName == nil) {
+        accountName = @"– – –";
+    }
+    
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         [self updateAccountButton_Phone:accountName];
     } else {
@@ -470,7 +492,7 @@
 }
 
 - (void)updateAccountButton_Phone:(NSString *)accountName {
-    [self.accountButton setTitle:[NSString stringWithFormat:@"%@", accountName] forState:UIControlStateNormal];
+    [self.accountButton setTitle:accountName forState:UIControlStateNormal];
     CGSize newSize = [self.accountButton sizeThatFits:self.keyboardToolbar.bounds.size];
     CGRect buttonFrame = self.accountButton.frame;
     buttonFrame.size.width = newSize.width;
@@ -501,21 +523,23 @@
 - (void)showSystemAccountChooser {
     OSKSystemAccountStore *store = [OSKSystemAccountStore sharedInstance];
     OSKActivity <OSKActivity_SystemAccounts> *activity = (OSKActivity <OSKActivity_SystemAccounts> *)self.activity;
-    NSArray *accounts = [store accountsForAccountTypeIdentifier:[activity.class systemAccountTypeIdentifier]];
+    NSString *systemAccountTypeIdentifier = [activity.class systemAccountTypeIdentifier];
+    NSArray *accounts = [store accountsForAccountTypeIdentifier:systemAccountTypeIdentifier];
     ACAccount *activeAccount = activity.activeSystemAccount;
-    OSKAccountChooserViewController *chooser = [[OSKAccountChooserViewController alloc] initWithSystemAccounts:accounts activeAccount:activeAccount delegate:self];
+    OSKAccountChooserViewController *chooser = [[OSKAccountChooserViewController alloc]
+                                                initWithSystemAccounts:accounts
+                                                activeAccount:activeAccount
+                                                accountTypeIdentifier:systemAccountTypeIdentifier
+                                                delegate:self];
     [self.navigationController pushViewController:chooser animated:YES];
 }
 
 #pragma mark - Character Count
 
 - (void)updateRemainingCharacterCountLabel {
-    NSInteger countAdjustingForEmoji = [self.textView.attributedText.string lengthOfBytesUsingEncoding:NSUTF32StringEncoding]/4;
-    NSInteger remaining = [self.activity maximumCharacterCount] - countAdjustingForEmoji;
-    if (self.contentItem.images.count) {
-        NSUInteger numberToBeAttached = MIN([self.activity maximumImageCount], self.contentItem.images.count);
-        remaining -= numberToBeAttached * _reservedLengthForAttachmentURL;
-    }
+    
+    NSInteger remaining = [self.activity updateRemainingCharacterCount:self.contentItem urlEntities:self.textView.detectedLinks];;
+    
     self.characterCountLabel.text = @(remaining).stringValue;
     if (_characterCount_normalColor == nil) {
         OSKPresentationManager *presManager = [OSKPresentationManager sharedInstance];
@@ -548,18 +572,6 @@
     [self setContentItem:(OSKMicroblogPostContentItem *)self.activity.contentItem];
     [self setOskPublishingDelegate:oskPublishingDelegate];
     self.title = [self.activity.class activityName];
-    
-    if ([self.activity respondsToSelector:@selector(characterCountsAreAffectedByAttachments)]) {
-        BOOL adjustForAttachments = [self.activity characterCountsAreAffectedByAttachments];
-        if (adjustForAttachments) {
-            __weak OSKMicroblogPublishingViewController *weakSelf = self;
-            [self.activity getEstimatedAttachmentURLLength:^(NSUInteger length) {
-                [weakSelf setReservedLengthForAttachmentURL:length];
-                [weakSelf updateRemainingCharacterCountLabel];
-                [weakSelf updateDoneButton];
-            }];
-        }
-    }
 }
 
 #pragma mark - Account Chooser Delegate

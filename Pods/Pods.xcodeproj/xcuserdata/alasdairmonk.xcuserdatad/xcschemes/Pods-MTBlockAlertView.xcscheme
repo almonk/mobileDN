@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0500"
+   LastUpgradeVersion = "0510"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "3EB11554B8724EF5AFC133D2"
+               BlueprintIdentifier = "0BF1424B49AD4AB7905D3274"
                BuildableName = "libPods-MTBlockAlertView.a"
                BlueprintName = "Pods-MTBlockAlertView"
                ReferencedContainer = "container:Pods.xcodeproj">

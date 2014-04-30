@@ -333,10 +333,8 @@
     PBSafariActivity *activity = [[PBSafariActivity alloc] init];
     self.webViewController.applicationActivities = @[activity];
     
-    self.webViewController.hidesBottomBarWhenPushed = YES;
-    
     // Push it
-    [self.navigationController pushViewController:self.webViewController animated:YES];
+    [self presentViewController:[[UINavigationController alloc] initWithRootViewController:self.webViewController] animated:YES completion:nil];
 }
 
 -(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath

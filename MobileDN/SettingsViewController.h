@@ -16,6 +16,7 @@
 }
 -(IBAction)showSharingSettings:(id)sender;
 -(IBAction)signOut:(id)sender;
+-(IBAction)doFeedback:(id)sender;
 
 
 @end

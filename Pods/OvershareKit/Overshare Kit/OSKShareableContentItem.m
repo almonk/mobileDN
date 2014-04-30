@@ -8,8 +8,8 @@
 
 #import "OSKShareableContentItem.h"
 
-// CONTENT ITEM TYPES
 NSString * const OSKShareableContentItemType_MicroblogPost = @"OSKShareableContentItemType_MicroblogPost";
+NSString * const OSKShareableContentItemType_Facebook = @"OSKShareableContentItemType_Facebook";
 NSString * const OSKShareableContentItemType_BlogPost = @"OSKShareableContentItemType_BlogPost";
 NSString * const OSKShareableContentItemType_Email = @"OSKShareableContentItemType_Email";
 NSString * const OSKShareableContentItemType_SMS = @"OSKShareableContentItemType_SMS";
@@ -21,8 +21,17 @@ NSString * const OSKShareableContentItemType_WebBrowser = @"OSKShareableContentI
 NSString * const OSKShareableContentItemType_PasswordManagementAppSearch = @"OSKShareableContentItemType_PasswordManagementAppSearch";
 NSString * const OSKShareableContentItemType_ToDoListEntry = @"OSKShareableContentItemType_ToDoListEntry";
 NSString * const OSKShareableContentItemType_AirDrop = @"OSKShareableContentItemType_AirDrop";
+NSString * const OSKShareableContentItemType_TextEditing = @"OSKShareableContentItemType_TextEditing";
 
 @implementation OSKShareableContentItem
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        _userInfo = [[NSMutableDictionary alloc] init];
+    }
+    return self;
+}
 
 - (NSString *)itemType {
     NSAssert(NO, @"OSKShareableContentItem subclasses must override itemType without calling super.");
@@ -35,6 +44,14 @@ NSString * const OSKShareableContentItemType_AirDrop = @"OSKShareableContentItem
 
 - (NSString *)itemType {
     return OSKShareableContentItemType_MicroblogPost;
+}
+
+@end
+
+@implementation OSKFacebookContentItem
+
+- (NSString *)itemType {
+    return OSKShareableContentItemType_Facebook;
 }
 
 @end
@@ -75,6 +92,20 @@ NSString * const OSKShareableContentItemType_AirDrop = @"OSKShareableContentItem
 
 - (NSString *)itemType {
     return OSKShareableContentItemType_CopyToPasteboard;
+}
+
+- (void)setText:(NSString *)text {
+    _text = [text copy];
+    if (_text) {
+        [self setImages:nil];
+    }
+}
+
+- (void)setImages:(NSArray *)images {
+    _images = [images copy];
+    if (_images) {
+        [self setText:nil];
+    }
 }
 
 @end
@@ -131,6 +162,14 @@ NSString * const OSKShareableContentItemType_AirDrop = @"OSKShareableContentItem
 
 - (NSString *)itemType {
     return OSKShareableContentItemType_AirDrop;
+}
+
+@end
+
+@implementation OSKTextEditingContentItem
+
+- (NSString *)itemType {
+    return OSKShareableContentItemType_TextEditing;
 }
 
 @end

@@ -11,6 +11,7 @@
 #import <MTBlockAlertView.h>
 #import "AppHelpers.h"
 #import <AFNetworking.h>
+#import <CTFeedbackViewController.h>
 
 
 @interface SettingsViewController ()
@@ -56,14 +57,19 @@
         NSString *fullName = [NSString stringWithFormat:@"%@ %@", [profile valueForKey:@"first_name"], [profile valueForKey:@"last_name"]];
         [name setText: fullName];
         
-        [jobTitle setText: [profile valueForKey:@"job"]];
+        if ([[profile valueForKey:@"job"] length] != 0) {
+            [jobTitle setText: [profile valueForKey:@"job"]];
+        }
         
         NSString *ImageURL = [profile valueForKey:@"portrait_url"];
-        NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:ImageURL]];
-        avatar.image = [UIImage imageWithData:imageData];
+        
+        if ([ImageURL length] != 0) {
+            NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:ImageURL]];
+            avatar.image = [UIImage imageWithData:imageData];
+        }
+        
         [spinner stopAnimating];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
     }];
 }
 
@@ -108,6 +114,14 @@
 -(IBAction)rateApp:(id)sender
 {
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id790720884?at=10l6dK"]];    
+}
+
+-(IBAction)doFeedback:(id)sender
+{
+    CTFeedbackViewController *feedbackViewController = [CTFeedbackViewController controllerWithTopics:CTFeedbackViewController.defaultTopics localizedTopics:CTFeedbackViewController.defaultLocalizedTopics];
+    feedbackViewController.toRecipients = @[@"alasdair.monk@gmail.com"];
+    feedbackViewController.useHTML = NO;
+    [self.navigationController pushViewController:feedbackViewController animated:YES];
 }
 
 @end

@@ -1,0 +1,51 @@
+/* Localizable.strings
+  CTFeedbackDemo
+
+  Created by Ryoichi Izumita on 2013/10/31.
+  Copyright (c) 2013 CAPH. All rights reserved. */
+
+"Question" = "Вопрос";
+
+"Request" = "Предложение";
+
+"Bug Report" = "Сообщить об ошибке";
+
+"Other" = "Другое";
+
+"Device" = "Аппарат";
+
+"iOS" = "iOS";
+
+"Name" = "Название";
+
+"Version" = "Версия";
+
+"Build" = "Билд";
+
+"Device Info" = "Информация об устройстве";
+
+"App Info" = "Информация о приложении";
+
+"Feedback" = "Обратная связь";
+
+"Topic" = "Тема";
+
+"Topics" = "Темы";
+
+"Error" = "Ошибка";
+
+"Mail" = "Отправить";
+
+"Mail no configuration"="Вы не должны действительную учетную запись электронной почты ";
+
+"Dismiss"="Dismiss";
+
+"Additional Info"="Дополнительная информация ";
+
+"Additional detail"="Выберите вложение обратной связи (изображение)";
+
+"Cancel"="Cancel";
+
+"Camera"="Camera";
+
+"PhotoLibrary"="Выберите из альбома";

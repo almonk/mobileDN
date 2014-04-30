@@ -19,9 +19,7 @@
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
     [[PocketAPI sharedAPI] setConsumerKey:@"22401-ee70c5d7ec1f0329c936961a"];
-    
 
-    
     [[UINavigationBar appearance] setTitleTextAttributes: @{
         NSFontAttributeName: [UIFont fontWithName:@"Avenir" size:18.0f],
         NSForegroundColorAttributeName: [UIColor whiteColor]

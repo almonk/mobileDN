@@ -1,44 +1,47 @@
 PODS:
   - ADNLogin (2.1.0)
-  - AFNetworking (2.0.3):
+  - AFNetworking (2.2.3):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
     - AFNetworking/UIKit
-  - AFNetworking/NSURLConnection (2.0.3):
+  - AFNetworking/NSURLConnection (2.2.3):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/NSURLSession (2.0.3):
+  - AFNetworking/NSURLSession (2.2.3):
     - AFNetworking/NSURLConnection
-  - AFNetworking/Reachability (2.0.3)
-  - AFNetworking/Security (2.0.3)
-  - AFNetworking/Serialization (2.0.3)
-  - AFNetworking/UIKit (2.0.3):
+  - AFNetworking/Reachability (2.2.3)
+  - AFNetworking/Security (2.2.3)
+  - AFNetworking/Serialization (2.2.3)
+  - AFNetworking/UIKit (2.2.3):
     - AFNetworking/NSURLConnection
+    - AFNetworking/NSURLSession
   - AMAttributedHighlightLabel (0.0.1)
   - CJMTwitterFollowButton (0.1.0)
-  - CRToast (0.0.4)
+  - CRToast (0.0.6)
+  - CTFeedback (1.0.10)
   - MCSwipeTableViewCell (2.1.0)
   - MTBlockAlertView (0.1.1)
-  - OvershareKit (1.0.6.1):
+  - OvershareKit (1.2.0):
     - ADNLogin
     - PocketAPI
   - PocketAPI (1.0.2)
-  - RESideMenu (3.4)
+  - RESideMenu (4.0.3)
   - SORelativeDateTransformer (1.1.10)
   - SVProgressHUD (1.0)
   - SVPullToRefresh (0.4.1)
-  - TTTAttributedLabel (1.8.0)
-  - UITableView-NXEmptyView (0.1.4)
+  - TTTAttributedLabel (1.9.5)
+  - UITableView-NXEmptyView (0.1.5)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.0)
   - AMAttributedHighlightLabel
   - CJMTwitterFollowButton (~> 0.1.0)
   - CRToast (~> 0.0.4)
+  - CTFeedback
   - MCSwipeTableViewCell
   - MTBlockAlertView
   - OvershareKit
@@ -51,19 +54,20 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   ADNLogin: ee20dc7e648813104930d445054cc9780599d864
-  AFNetworking: e499052cbf3d743e9bb727bb37adb9dc2547ba15
+  AFNetworking: ae513199cca79e9d7af2708ccabe2ed075550c42
   AMAttributedHighlightLabel: fe668dddfcdabb2dcc32cec46d7371bcf845897c
   CJMTwitterFollowButton: 962375d1e5a78f0ad05bb705189f6f995b551673
-  CRToast: ed256a5cbf09d5c9e31cc0c7491dea78a82defe0
+  CRToast: 7def6720179d7c861b06222a82a4ad4bdfe476f0
+  CTFeedback: 6238700e4219f2bdbb8c5c99c3a95fb70a2fc529
   MCSwipeTableViewCell: 4a26851568843d15340eeca00210c219aa9f76d5
   MTBlockAlertView: 05cf381a078c0005bcbad973cf63d9740ca67323
-  OvershareKit: 4fcfe55604da823c0cd52415a15708bdcb92ede8
+  OvershareKit: 417df773b0c18810e9e4d88435d93111e08961b1
   PocketAPI: 2ed51391e6ea7a48c707528f782f5a2cb0eab80e
-  RESideMenu: d8d6330052e0348718826045b912a1c71748357d
+  RESideMenu: 5a9c11e9e649c601b8ffe5253910bde2e3d956ee
   SORelativeDateTransformer: eba9b9bcc290eb7c9754b9955ace59b890fa59f8
   SVProgressHUD: 5e10939a296debf5fe5a5895eda9539b8b2114f1
   SVPullToRefresh: 61a0e4bd12bd6f8e3465909810b0fbeb1a28d5f2
-  TTTAttributedLabel: cc759a194a485c1fdf2446bf2ee7a55bada1f08d
-  UITableView-NXEmptyView: 034e5162ce7b8e3584d720d0d925c27ea7711220
+  TTTAttributedLabel: 6154fd2407a03fb8d71abfa36f4710fff26a168e
+  UITableView-NXEmptyView: 7d5238a79357f58b6a2b486f45a5915635824941
 
-COCOAPODS: 0.28.0
+COCOAPODS: 0.32.1
