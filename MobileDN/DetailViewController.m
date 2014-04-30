@@ -177,6 +177,13 @@
     [cell setDelegate:self];
     [cell setDefaultColor:[UIColor colorWithRed:0.765 green:0.788 blue:0.824 alpha:1.0]];
     [cell setSwipeGestureWithView:checkView color:greenColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState1 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
+        
+        AppHelpers *helper = [[AppHelpers alloc] init];
+        if ([helper getAuthToken] == NULL) {
+            [self showLogin];
+            return;
+        }
+        
         NSLog(@"Upvote %@", [self.flatIds objectAtIndex:indexPath.row]);
         [SVProgressHUD showWithStatus:@"Upvoting..."];
         
@@ -194,6 +201,11 @@
     }];
     
     [cell setSwipeGestureWithView:replyView color:yellowColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState3 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
+        AppHelpers *helper = [[AppHelpers alloc] init];
+        if ([helper getAuthToken] == NULL) {
+            [self showLogin];
+            return;
+        }
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
         CommentNavViewController *commentNavViewController = (CommentNavViewController *)[storyboard instantiateViewControllerWithIdentifier:@"CommentView"];
         commentNavViewController.parent = self;
@@ -309,8 +321,22 @@
     return relativeDate;
 }
 
+-(void)showLogin {
+    NSLog(@"No auth token");
+    UIStoryboard *authBoard = [UIStoryboard storyboardWithName:@"UserFlow" bundle:nil];
+    UIViewController *vc = [authBoard instantiateInitialViewController];
+    [self.navigationController presentViewController:vc animated:YES completion:nil];
+}
+
+
 -(IBAction)composeNewComment:(id)sender
 {
+    AppHelpers *helper = [[AppHelpers alloc] init];
+    if ([helper getAuthToken] == NULL) {
+        [self showLogin];
+        return;
+    }
+    
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
     CommentNavViewController *commentNavViewController = (CommentNavViewController *)[storyboard instantiateViewControllerWithIdentifier:@"CommentView"];
     commentNavViewController.parent = self;
@@ -389,8 +415,14 @@
     NSString *queryUrl = [NSString stringWithFormat:@"https://api-news.layervault.com/api/v1/stories/%@", self.storyId];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    if ([helper getAuthToken] == NULL) {
+    } else {
+        [manager.requestSerializer setValue:[helper getAuthToken] forHTTPHeaderField:@"Authorization"];
+    }
+    
     [manager.requestSerializer setValue:[helper getAuthToken] forHTTPHeaderField:@"Authorization"];
-    [manager GET:queryUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager GET:queryUrl parameters:@{ @"client_id": [helper clientId] } success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *story = responseObject[@"story"];
         NSMutableArray *comments = [story objectForKey:@"comments"];
         NSLog(@"STORY %@", responseObject[@"story"]);

@@ -9,13 +9,12 @@
 #import <UIKit/UIKit.h>
 
 @interface SettingsViewController : UITableViewController {
-    IBOutlet UIImageView *avatar;
-    IBOutlet UILabel *name;
-    IBOutlet UILabel *jobTitle;
-    IBOutlet UIActivityIndicatorView *spinner;
+    IBOutlet UITableViewCell *signOutCell;
+    IBOutlet UIBarButtonItem *signInButton;
 }
 -(IBAction)showSharingSettings:(id)sender;
 -(IBAction)signOut:(id)sender;
+-(IBAction)signIn:(id)sender;
 -(IBAction)doFeedback:(id)sender;
 
 

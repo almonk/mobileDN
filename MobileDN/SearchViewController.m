@@ -68,10 +68,15 @@
     
     AppHelpers *helper = [[AppHelpers alloc] init];
     
-    NSDictionary *parameters = @{@"query" : [searchBar.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]};
+    NSDictionary *parameters = @{@"query" : [searchBar.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], @"client_id": [helper clientId]};
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager.requestSerializer setValue:[helper getAuthToken] forHTTPHeaderField:@"Authorization"];
+    
+    if ([helper getAuthToken] == NULL) {
+    } else {
+        [manager.requestSerializer setValue:[helper getAuthToken] forHTTPHeaderField:@"Authorization"];
+    }
+    
     [manager GET:@"https://api-news.layervault.com/api/v1/stories/search" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"JSON: %@", responseObject);
         self.stories = responseObject;

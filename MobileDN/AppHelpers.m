@@ -37,6 +37,10 @@
     return token;
 }
 
+-(NSString*)clientId {
+    return @"18d55d3d8e6b6097b9403e8e59eaaf0fa8b89ab04f13bc50c4c1c12f19db820b";
+}
+
 -(void)removeAuthToken {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults removeObjectForKey:@"authToken"];

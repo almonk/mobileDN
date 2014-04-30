@@ -32,10 +32,10 @@
     AppHelpers *helper = [[AppHelpers alloc] init];
     if ([helper getAuthToken] == NULL) {
         // No auth token
-        NSLog(@"No auth token");
-        UIStoryboard *authBoard = [UIStoryboard storyboardWithName:@"UserFlow" bundle:nil];
-        UIViewController *vc = [authBoard instantiateInitialViewController];
-        self.window.rootViewController = vc;
+//        NSLog(@"No auth token");
+//        UIStoryboard *authBoard = [UIStoryboard storyboardWithName:@"UserFlow" bundle:nil];
+//        UIViewController *vc = [authBoard instantiateInitialViewController];
+//        self.window.rootViewController = vc;
     } else{
         // Has auth token
         NSLog(@"Has auth token");
