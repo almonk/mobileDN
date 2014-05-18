@@ -8,94 +8,231 @@
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>1</integer>
 		</dict>
 		<key>Pods-ADNLogin.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>3</integer>
 		</dict>
 		<key>Pods-AFNetworking.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>4</integer>
 		</dict>
 		<key>Pods-AMAttributedHighlightLabel.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>5</integer>
+		</dict>
+		<key>Pods-AMScrollingNavbar.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>19</integer>
 		</dict>
 		<key>Pods-CJMTwitterFollowButton.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>6</integer>
 		</dict>
 		<key>Pods-CRToast.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>7</integer>
 		</dict>
 		<key>Pods-CTFeedback.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>8</integer>
 		</dict>
 		<key>Pods-MCSwipeTableViewCell.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>9</integer>
 		</dict>
 		<key>Pods-MTBlockAlertView.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>10</integer>
 		</dict>
 		<key>Pods-OvershareKit.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>11</integer>
 		</dict>
 		<key>Pods-PocketAPI.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>12</integer>
 		</dict>
 		<key>Pods-RESideMenu.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>13</integer>
 		</dict>
 		<key>Pods-SORelativeDateTransformer.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>14</integer>
 		</dict>
 		<key>Pods-SVProgressHUD.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>15</integer>
 		</dict>
 		<key>Pods-SVPullToRefresh.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>16</integer>
 		</dict>
 		<key>Pods-TTTAttributedLabel.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>17</integer>
 		</dict>
 		<key>Pods-UITableView-NXEmptyView.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>18</integer>
 		</dict>
 		<key>Pods.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>2</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
-	<dict/>
+	<dict>
+		<key>065D33706FCA4FA6A2AA7084</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>086ADE1EC187410BA9613D4F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>3A68C7B09C414899AF95D3C9</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>53EB3B0747424C3A9AE93A24</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>6F0E6BBBAA874D30B4DBB62A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>7703F9FD3CB747C59DDB6D3C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>85A52987A56649DBAE8DEF93</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A52D75F8ADF544B1A63B2059</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A9E3F26E164940E6BE8A250F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>AD5B429816064195A55D9F33</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B4FA52C2F7384BEA818455AA</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BA9E6AC1B7204853B272C554</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C751B68975DC4A6FBD86B887</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E0937CE62EF248DF930BC0DF</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E27AD54227B34641B18F10F8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E4B153E9AC0C41EF8F9A5B0C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EE40889268594137A760FE5B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F066E8541D2D44DCB2028A6D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F6E8A5EBB71B48809F699F75</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
 </dict>
 </plist>
