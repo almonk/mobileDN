@@ -62,7 +62,7 @@
     [comments enumerateObjectsUsingBlock:^(id obj,NSUInteger idx, BOOL *stop){
         NSLog(@"Body: %@", [obj objectForKey:@"body"]);
         [_flatUsers addObject: [obj objectForKey:@"user_display_name"]];
-        [_flatComments addObject: [obj objectForKey:@"body_html"]];
+        [_flatComments addObject: [obj objectForKey:@"body"]];
         [_commentDepth addObject: [obj objectForKey:@"depth"]];
         [_flatTime addObject: [obj objectForKey:@"created_at"]];
         [_flatIds addObject: [obj objectForKey:@"id"]];
@@ -71,8 +71,8 @@
         for (NSDictionary *dict in [obj objectForKey:@"comments"]) {
             NSLog(@"Body: %@", [dict objectForKey:@"body"]);
             [_flatUsers addObject: [dict objectForKey:@"user_display_name"]];
-            [_flatComments addObject: [dict objectForKey:@"body_html"]];
-            [_commentDepth addObject: [dict objectForKey:@"depth"]];
+            [_flatComments addObject: [dict objectForKey:@"body"]];
+            [_commentDepth addObject: @"0"];
             [_flatTime addObject: [dict objectForKey:@"created_at"]];
             [_flatIds addObject: [dict objectForKey:@"id"]];
             [_flatUsers count];
@@ -80,8 +80,8 @@
             for (NSDictionary *dict2 in [dict objectForKey:@"comments"]) {
                 NSLog(@"Body: %@", [dict2 objectForKey:@"body"]);
                 [_flatUsers addObject: [dict2 objectForKey:@"user_display_name"]];
-                [_flatComments addObject: [dict2 objectForKey:@"body_html"]];
-                [_commentDepth addObject: [dict2 objectForKey:@"depth"]];
+                [_flatComments addObject: [dict2 objectForKey:@"body"]];
+                [_commentDepth addObject: @"0"];
                 [_flatTime addObject: [dict2 objectForKey:@"created_at"]];
                 [_flatIds addObject: [dict2 objectForKey:@"id"]];
                 [_flatUsers count];
@@ -89,8 +89,8 @@
                 for (NSDictionary *dict3 in [dict2 objectForKey:@"comments"]) {
                     NSLog(@"Body: %@", [dict3 objectForKey:@"body"]);
                     [_flatUsers addObject: [dict3 objectForKey:@"user_display_name"]];
-                    [_flatComments addObject: [dict3 objectForKey:@"body_html"]];
-                    [_commentDepth addObject: [dict3 objectForKey:@"depth"]];
+                    [_flatComments addObject: [dict3 objectForKey:@"body"]];
+                    [_commentDepth addObject: @"0"];
                     [_flatTime addObject: [dict3 objectForKey:@"created_at"]];
                     [_flatIds addObject: [dict3 objectForKey:@"id"]];
                     [_flatUsers count];
@@ -114,7 +114,6 @@
 {
     NSString *indentLevelRaw = [_commentDepth objectAtIndex:indexPath.row];
     NSUInteger indentLevel = [indentLevelRaw integerValue];
-    NSLog(@"Indentation level: %lu", (unsigned long)indentLevel);
     return indentLevel;
 }
 
@@ -122,36 +121,20 @@
 {
     static NSString *CellIdentifier = @"Cell";
     
-    AppHelpers *helper = [[AppHelpers alloc] init];
-    
     MCSwipeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     [cell setNeedsUpdateConstraints];
     [cell updateConstraintsIfNeeded];
     
-    NSString *indentLevelRaw = [_commentDepth objectAtIndex:indexPath.row];
-    NSUInteger indentLevel = [indentLevelRaw integerValue];
-    float indentPoints = indentLevel * 25;
-    
     UITextView *commentBody;
     commentBody = (UITextView *)[cell viewWithTag:1];
-    commentBody.userInteractionEnabled = YES;
+    commentBody.userInteractionEnabled = NO;
     commentBody.scrollEnabled = NO;
     commentBody.bounces = NO;
     commentBody.delegate = self;
+
     
-    NSString *rawHtml = [[self.flatComments objectAtIndex:indexPath.row] stringByReplacingOccurrencesOfString:@"<img[^>]*>" withString:@"" options:NSCaseInsensitiveSearch | NSRegularExpressionSearch range:NSMakeRange(0, [[self.flatComments objectAtIndex:indexPath.row] length])];
-    
-    NSString *htmlAndStyle = [NSString stringWithFormat:@"<html><head><style>img { max-width:160px; }</style></style><body>%@</body></html>", rawHtml];
-    
-    NSData *htmlData = [htmlAndStyle dataUsingEncoding:NSUTF8StringEncoding];
-    
-    // Create the HTML string
-    NSDictionary *importParams = @{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType};
-    NSError *error = nil;
-    NSAttributedString *htmlString = [[NSAttributedString alloc] initWithData:htmlData options:importParams documentAttributes:NULL error:&error];
-    
-    commentBody.attributedText = htmlString;
+    commentBody.text = [self.flatComments objectAtIndex:indexPath.row];
     commentBody.font = [UIFont fontWithName:@"Avenir" size:16.0f];
 
     //commentBody.preferredMaxLayoutWidth = 280 - indentPoints; // <<<<< ALL THE MAGIC
@@ -245,29 +228,13 @@
     NSString *indentLevelRaw = [_commentDepth objectAtIndex:indexPath.row];
     NSUInteger indentLevel = [indentLevelRaw integerValue];
     float indentPoints = indentLevel * 25;
-    
-    [cell setNeedsUpdateConstraints];
-    [cell updateConstraintsIfNeeded];
-    
+
     cell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), CGRectGetHeight(cell.bounds));
     
     UITextView *commentBody;
     commentBody = (UITextView *)[cell viewWithTag:1];
     commentBody.userInteractionEnabled = YES;
-    
-    NSString *rawHtml = [[self.flatComments objectAtIndex:indexPath.row] stringByReplacingOccurrencesOfString:@"<img[^>]*>" withString:@"" options:NSCaseInsensitiveSearch | NSRegularExpressionSearch range:NSMakeRange(0, [[self.flatComments objectAtIndex:indexPath.row] length])];
-    
-    NSString *htmlAndStyle = [NSString stringWithFormat:@"<html><head><style>img { max-width:160px; }</style></style><body>%@</body></html>", rawHtml];
-    
-    NSData *htmlData = [htmlAndStyle dataUsingEncoding:NSUTF8StringEncoding];
-    
-    // Create the HTML string
-    NSDictionary *importParams = @{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType};
-    NSError *error = nil;
-    NSAttributedString *htmlString = [[NSAttributedString alloc] initWithData:htmlData options:importParams documentAttributes:NULL error:&error];
-    
-    // Instantiate UITextView object
-    commentBody.attributedText = htmlString;
+    commentBody.text = [self.flatComments objectAtIndex:indexPath.row];
     
     commentBody.font = [UIFont fontWithName:@"Avenir" size:16.0f];
     
@@ -282,10 +249,9 @@
     [cell.contentView setNeedsLayout];
     [cell.contentView layoutIfNeeded];
     
+//    CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
     
-    //CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-    
-    return size.height + 2 * 15;
+    return size.height + 2 * 17;
 }
 
 
@@ -354,38 +320,6 @@
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         [self updateComments];
     });
-
-//    if (rowsAmount == 0) {
-//        // No rows so we have to create indexes
-//        [self.flatComments addObject:comment];
-//        [self.flatUsers addObject:username];
-//        [self.commentDepth addObject:@"0"];
-//        [self.flatTime addObject:@"Test"];
-//        [self.flatIds addObject:commentId];
-//        [self.tableView reloadData];
-//    } else {
-//        // There's data already so we just add to the end of the array
-//        
-//        [self.flatComments insertObject:comment atIndex:rowsAmount];
-//        [self.flatUsers insertObject:username atIndex:rowsAmount];
-//        [self.commentDepth insertObject:@"0" atIndex:rowsAmount];
-//        [self.flatTime insertObject:@"Test" atIndex:rowsAmount];
-//        [self.flatIds insertObject:commentId atIndex:rowsAmount];
-//        
-//        [self.tableView beginUpdates];
-//        [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationLeft];
-//        
-//        [self.tableView endUpdates];
-//
-//        [self.tableView reloadData];
-//        
-//        NSTimeInterval delayInSeconds = 0.5;
-//        
-//        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-//        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-//            [self.tableView scrollToRowAtIndexPath:newIndexPath atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
-//        });
-//    }
 }
 
 
@@ -406,11 +340,9 @@
 
 -(void)updateComments
 {
-    NSLog(@"UPDATE COMMENTS");
-
     AppHelpers *helper = [[AppHelpers alloc] init];
     
-    [SVProgressHUD showWithStatus:@"Loading..." maskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD show];
     
     NSString *queryUrl = [NSString stringWithFormat:@"https://api-news.layervault.com/api/v1/stories/%@", self.storyId];
     
@@ -430,16 +362,9 @@
         self.comments = comments;
         [self loadStory:nil];
         [self.tableView reloadData];
-        NSTimeInterval delayInSeconds = 0.5;
         
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            
-            [SVProgressHUD dismiss];
-
-            [self.refreshControl endRefreshing];
-            
-        });
+        [SVProgressHUD dismiss];
+        [self.refreshControl endRefreshing];
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [self.refreshControl endRefreshing];

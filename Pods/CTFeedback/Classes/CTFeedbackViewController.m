@@ -37,9 +37,15 @@ typedef NS_ENUM(NSInteger, CTFeedbackSection){
 @property (nonatomic, readonly) NSString *mailSubject;
 @property (nonatomic, readonly) NSString *mailBody;
 @property (nonatomic, readonly) NSData *mailAttachment;
+@property (nonatomic, assign) BOOL previousNavigationBarHiddenState;
 @end
 
 @implementation CTFeedbackViewController
+
+- (void) viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBarHidden = self.previousNavigationBarHiddenState;
+}
 
 + (CTFeedbackViewController *)controllerWithTopics:(NSArray *)topics localizedTopics:(NSArray *)localizedTopics
 {
@@ -93,9 +99,13 @@ typedef NS_ENUM(NSInteger, CTFeedbackSection){
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:CTFBLocalizedString(@"Mail") style:UIBarButtonItemStylePlain target:self action:@selector(sendButtonTapped:)];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    self.previousNavigationBarHiddenState = self.navigationController.navigationBarHidden;
+    if (self.navigationController.navigationBarHidden) {
+        self.navigationController.navigationBarHidden = NO;
+    }
 
     if (self.presentingViewController.presentedViewController) {
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonTapped:)];
@@ -157,7 +167,7 @@ typedef NS_ENUM(NSInteger, CTFeedbackSection){
 {
     NSMutableArray *result = [NSMutableArray array];
 
-    __weak typeof (self) weakSelf = self;
+    __weak CTFeedbackViewController *weakSelf = self;
 
     self.topicCellItem = [CTFeedbackTopicCellItem new];
     self.topicCellItem.topic = self.localizedTopics[self.selectedTopicIndex];
@@ -187,7 +197,7 @@ typedef NS_ENUM(NSInteger, CTFeedbackSection){
 - (NSArray *)additionCellItems{
     NSMutableArray *result = [NSMutableArray array];
 
-	__weak typeof (self) weakSelf = self;
+	__weak CTFeedbackViewController *weakSelf = self;
 
 	self.additionCellItem = [CTFeedbackAdditionInfoCellItem new];
     self.additionCellItem.value = CTFBLocalizedString(@"Additional detail");
@@ -226,20 +236,26 @@ typedef NS_ENUM(NSInteger, CTFeedbackSection){
 {
     NSMutableArray *result = [NSMutableArray array];
 
-    CTFeedbackInfoCellItem *nameItem = [CTFeedbackInfoCellItem new];
-    nameItem.title = CTFBLocalizedString(@"Name");
-    nameItem.value = self.appName;
-    [result addObject:nameItem];
+    if (!self.hidesAppNameCell) {
+        CTFeedbackInfoCellItem *nameItem = [CTFeedbackInfoCellItem new];
+        nameItem.title = CTFBLocalizedString(@"Name");
+        nameItem.value = self.appName;
+        [result addObject:nameItem];
+    }
 
-    CTFeedbackInfoCellItem *versionItem = [CTFeedbackInfoCellItem new];
-    versionItem.title = CTFBLocalizedString(@"Version");
-    versionItem.value = self.appVersion;
-    [result addObject:versionItem];
+    if (!self.hidesAppVersionCell) {
+        CTFeedbackInfoCellItem *versionItem = [CTFeedbackInfoCellItem new];
+        versionItem.title = CTFBLocalizedString(@"Version");
+        versionItem.value = self.appVersion;
+        [result addObject:versionItem];
+    }
 
-    CTFeedbackInfoCellItem *buildItem = [CTFeedbackInfoCellItem new];
-    buildItem.title = CTFBLocalizedString(@"Build");
-    buildItem.value = self.appBuild;
-    [result addObject:buildItem];
+    if (!self.hidesAppBuildCell) {
+        CTFeedbackInfoCellItem *buildItem = [CTFeedbackInfoCellItem new];
+        buildItem.title = CTFBLocalizedString(@"Build");
+        buildItem.value = self.appBuild;
+        [result addObject:buildItem];
+    }
 
     return result.copy;
 }
@@ -261,51 +277,17 @@ typedef NS_ENUM(NSInteger, CTFeedbackSection){
     return platform;
 }
 
-// http://theiphonewiki.com/wiki/Models
 - (NSString *)platformString
 {
     NSString *platform = [self platform];
-
-    if ([platform isEqualToString:@"iPhone1,1"]) return @"iPhone 1G";
-    if ([platform isEqualToString:@"iPhone1,2"]) return @"iPhone 3G";
-    if ([platform isEqualToString:@"iPhone2,1"]) return @"iPhone 3GS";
-    if ([platform isEqualToString:@"iPhone3,1"]) return @"iPhone 4";
-    if ([platform isEqualToString:@"iPhone3,3"]) return @"Verizon iPhone 4";
-    if ([platform isEqualToString:@"iPhone4,1"]) return @"iPhone 4S";
-    if ([platform isEqualToString:@"iPhone5,1"]) return @"iPhone 5 (GSM)";
-    if ([platform isEqualToString:@"iPhone5,2"]) return @"iPhone 5 (GSM+CDMA)";
-    if ([platform isEqualToString:@"iPhone5,3"]) return @"iPhone 5c (GSM)";
-    if ([platform isEqualToString:@"iPhone5,4"]) return @"iPhone 5c (Global)";
-    if ([platform isEqualToString:@"iPhone6,1"]) return @"iPhone 5s (GSM)";
-    if ([platform isEqualToString:@"iPhone6,2"]) return @"iPhone 5s (Global)";
-
-    if ([platform isEqualToString:@"iPod1,1"]) return @"iPod Touch 1G";
-    if ([platform isEqualToString:@"iPod2,1"]) return @"iPod Touch 2G";
-    if ([platform isEqualToString:@"iPod3,1"]) return @"iPod Touch 3G";
-    if ([platform isEqualToString:@"iPod4,1"]) return @"iPod Touch 4G";
-    if ([platform isEqualToString:@"iPod5,1"]) return @"iPod Touch 5G";
-
-    if ([platform isEqualToString:@"iPad1,1"]) return @"iPad";
-    if ([platform isEqualToString:@"iPad2,1"]) return @"iPad 2 (WiFi)";
-    if ([platform isEqualToString:@"iPad2,2"]) return @"iPad 2 (GSM)";
-    if ([platform isEqualToString:@"iPad2,3"]) return @"iPad 2 (CDMA)";
-    if ([platform isEqualToString:@"iPad2,4"]) return @"iPad 2";
-    if ([platform isEqualToString:@"iPad3,1"]) return @"iPad-3G (WiFi)";
-    if ([platform isEqualToString:@"iPad3,2"]) return @"iPad-3G (4G)";
-    if ([platform isEqualToString:@"iPad3,3"]) return @"iPad-3G (4G)";
-    if ([platform isEqualToString:@"iPad3,4"]) return @"iPad-4G (WiFi)";
-    if ([platform isEqualToString:@"iPad3,5"]) return @"iPad-4G (GSM)";
-    if ([platform isEqualToString:@"iPad3,6"]) return @"iPad-4G (GSM+CDMA)";
-    if ([platform isEqualToString:@"iPad4,1"]) return @"iPad Air (WiFi)";
-    if ([platform isEqualToString:@"iPad4,2"]) return @"iPad Air (Cellular)";
-    if ([platform isEqualToString:@"iPad2,5"]) return @"iPad mini-1G (WiFi)";
-    if ([platform isEqualToString:@"iPad2,6"]) return @"iPad mini-1G (GSM)";
-    if ([platform isEqualToString:@"iPad2,7"]) return @"iPad mini-1G (GSM+CDMA)";
-    if ([platform isEqualToString:@"iPad4,4"]) return @"iPad mini-2G (WiFi)";
-    if ([platform isEqualToString:@"iPad4,5"]) return @"iPad mini-2G (Cellular)";
-
-    if ([platform isEqualToString:@"i386"]) return @"Simulator";
-    if ([platform isEqualToString:@"x86_64"]) return @"Simulator";
+    
+    // Reading a file with platform names
+    // http://theiphonewiki.com/wiki/Models
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"PlatformNames.plist" ofType:@""];
+    NSDictionary *platformNamesDic = [NSDictionary dictionaryWithContentsOfFile:filePath];
+    
+    // Changing a platform name to a human readable version
+    platform = platformNamesDic[platform];
 
     return platform;
 }

@@ -11,12 +11,24 @@
 #import <OSKActivitiesManager.h>
 #import <OSKActivity.h>
 #import "PocketAPI.h"
+#import <Parse/Parse.h>
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    
+    [Parse setApplicationId:@"O0L8AoeAjo2PDVy9iJ6Q3ZhuU1rVNibnwzfQJqlD"
+                  clientKey:@"bs8swqBpZrbM2tRxZrMZys59JqWxR8fVWUU2VkxN"];
+    
+    [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+    
+    [PFUser enableAutomaticUser];
+    [[PFUser currentUser] incrementKey:@"RunCount"];
+    [[PFUser currentUser] saveInBackground];
+    
+    // End parse config
     
     [[PocketAPI sharedAPI] setConsumerKey:@"22401-ee70c5d7ec1f0329c936961a"];
 
@@ -31,11 +43,7 @@
     
     AppHelpers *helper = [[AppHelpers alloc] init];
     if ([helper getAuthToken] == NULL) {
-        // No auth token
-//        NSLog(@"No auth token");
-//        UIStoryboard *authBoard = [UIStoryboard storyboardWithName:@"UserFlow" bundle:nil];
-//        UIViewController *vc = [authBoard instantiateInitialViewController];
-//        self.window.rootViewController = vc;
+        
     } else{
         // Has auth token
         NSLog(@"Has auth token");

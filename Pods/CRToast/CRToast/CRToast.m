@@ -106,6 +106,7 @@ typedef NS_ENUM(NSInteger, CRToastState) {
 @property (nonatomic, readonly) UIView *statusBarView;
 @property (nonatomic, readonly) CGRect statusBarViewAnimationFrame1;
 @property (nonatomic, readonly) CGRect statusBarViewAnimationFrame2;
+@property (nonatomic, retain) UIDynamicAnimator *animator;
 
 //Read Only Convinence Properties Providing Default Values or Values from Options
 
@@ -140,7 +141,7 @@ typedef NS_ENUM(NSInteger, CRToastState) {
 @property (nonatomic, readonly) UIColor *subtitleTextShadowColor;
 @property (nonatomic, readonly) CGSize subtitleTextShadowOffset;
 @property (nonatomic, readonly) NSInteger subtitleTextMaxNumberOfLines;
-
+@property (nonatomic, readonly) UIStatusBarStyle statusBarStyle;
 @property (nonatomic, readonly) UIColor *backgroundColor;
 @property (nonatomic, readonly) UIImage *image;
 
@@ -154,7 +155,7 @@ typedef NS_ENUM(NSInteger, CRToastState) {
 
 - (void)swipeGestureRecognizerSwiped:(CRToastSwipeGestureRecognizer*)swipeGestureRecognizer;
 - (void)tapGestureRecognizerTapped:(CRToastTapGestureRecognizer*)tapGestureRecognizer;
-
+- (void)initiateAnimator:(UIView *)view;
 @end
 
 @interface CRToastView : UIView
@@ -196,6 +197,7 @@ NSString *const kCRToastSubtitleTextAlignmentKey            = @"kCRToastSubtitle
 NSString *const kCRToastSubtitleTextShadowColorKey          = @"kCRToastSubtitleTextShadowColorKey";
 NSString *const kCRToastSubtitleTextShadowOffsetKey         = @"kCRToastSubtitleTextShadowOffsetKey";
 NSString *const kCRToastSubtitleTextMaxNumberOfLinesKey     = @"kCRToastSubtitleTextMaxNumberOfLinesKey";
+NSString *const kCRToastStatusBarStyleKey                   = @"kCRToastStatusBarStyleKey";
 
 NSString *const kCRToastBackgroundColorKey                  = @"kCRToastBackgroundColorKey";
 NSString *const kCRToastImageKey                            = @"kCRToastImageKey";
@@ -235,6 +237,7 @@ static NSTextAlignment          	kCRSubtitleTextAlignmentDefault         = NSTex
 static UIColor  *               	kCRSubtitleTextShadowColorDefault       = nil;
 static CGSize                   	kCRSubtitleTextShadowOffsetDefault;
 static NSInteger                    kCRSubtitleTextMaxNumberOfLinesDefault  = 0;
+static UIStatusBarStyle             kCRStatusBarStyleDefault                = UIStatusBarStyleDefault;
 
 static UIColor  *                   kCRBackgroundColorDefault               = nil;
 static UIImage  *                   kCRImageDefault                         = nil;
@@ -427,6 +430,7 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
                                 kCRToastSubtitleTextShadowColorKey          : NSStringFromClass([UIColor class]),
                                 kCRToastSubtitleTextShadowOffsetKey         : NSStringFromClass([[NSValue valueWithCGSize:kCRSubtitleTextShadowOffsetDefault] class]),
                                 kCRToastSubtitleTextMaxNumberOfLinesKey     : NSStringFromClass([@(kCRSubtitleTextMaxNumberOfLinesDefault) class]),
+                                kCRToastStatusBarStyleKey                   : NSStringFromClass([@(kCRStatusBarStyleDefault) class]),
                                 kCRToastBackgroundColorKey                  : NSStringFromClass([UIColor class]),
                                 kCRToastImageKey                            : NSStringFromClass([UIImage class]),
                                 kCRToastInteractionRespondersKey            : NSStringFromClass([NSArray class])};
@@ -469,7 +473,9 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
     if (defaultOptions[kCRToastTextShadowColorKey])                 kCRTextShadowColorDefault               = defaultOptions[kCRToastTextShadowColorKey];
     if (defaultOptions[kCRToastTextShadowOffsetKey])                kCRTextShadowOffsetDefault              = [defaultOptions[kCRToastTextShadowOffsetKey] CGSizeValue];
     if (defaultOptions[kCRToastTextMaxNumberOfLinesKey])            kCRTextMaxNumberOfLinesDefault          = [defaultOptions[kCRToastTextMaxNumberOfLinesKey] integerValue];
-    
+
+    if (defaultOptions[kCRToastStatusBarStyleKey])                  kCRStatusBarStyleDefault                = [defaultOptions[kCRToastStatusBarStyleKey] integerValue];
+
     if (defaultOptions[kCRToastSubtitleTextKey])                    kCRSubtitleTextDefault                  = defaultOptions[kCRToastSubtitleTextKey];
     if (defaultOptions[kCRToastSubtitleFontKey])                    kCRSubtitleFontDefault                  = defaultOptions[kCRToastSubtitleFontKey];
     if (defaultOptions[kCRToastSubtitleTextColorKey])               kCRSubtitleTextColorDefault             = defaultOptions[kCRToastSubtitleTextColorKey];
@@ -704,6 +710,10 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
     kCRSubtitleTextMaxNumberOfLinesDefault;
 }
 
+- (UIStatusBarStyle)statusBarStyle {
+    return _options[kCRToastStatusBarStyleKey] ? [_options[kCRToastStatusBarStyleKey] integerValue] : kCRStatusBarStyleDefault;
+}
+
 BOOL CRToastAnimationDirectionIsVertical(CRToastAnimationDirection animationDirection) {
     return (animationDirection == CRToastAnimationDirectionTop || animationDirection == CRToastAnimationDirectionBottom);
 }
@@ -890,6 +900,10 @@ static CGFloat kCRCollisionTweak = 0.5;
     return YES;
 }
 
+- (void)initiateAnimator:(UIView*)view {
+    self.animator = [[UIDynamicAnimator alloc] initWithReferenceView:view];
+}
+
 @end
 
 #pragma mark - CRToastView
@@ -1009,6 +1023,31 @@ static CGFloat const CRStatusBarViewUnderStatusBarYOffsetAdjustment = -5;
 
 @end
 
+#pragma mark - CRToastViewController
+
+@interface CRToastViewController : UIViewController
+- (void)statusBarStyle:(UIStatusBarStyle)newStatusBarStyle;
+@end
+
+@implementation CRToastViewController
+
+UIStatusBarStyle statusBarStyle;
+
+- (BOOL)prefersStatusBarHidden {
+    return [UIApplication sharedApplication].statusBarHidden;
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return statusBarStyle;
+}
+
+- (void)statusBarStyle:(UIStatusBarStyle)newStatusBarStyle {
+    statusBarStyle = newStatusBarStyle;
+    [self setNeedsStatusBarAppearanceUpdate];
+}
+
+@end
+
 #pragma mark - CRToastManager
 
 @interface CRToastManager () <UICollisionBehaviorDelegate>
@@ -1018,13 +1057,12 @@ static CGFloat const CRStatusBarViewUnderStatusBarYOffsetAdjustment = -5;
 @property (nonatomic, strong) UIView *notificationView;
 @property (nonatomic, readonly) CRToast *notification;
 @property (nonatomic, strong) NSMutableArray *notifications;
-@property (nonatomic, retain) UIDynamicAnimator *animator;
 @property (nonatomic, copy) void (^gravityAnimationCompletionBlock)(BOOL finished);
 @end
 
 static NSString *const kCRToastManagerCollisionBoundryIdentifier = @"kCRToastManagerCollisionBoundryIdentifier";
 
-typedef void (^CRToastAnimationCompltionBlock)(BOOL animated);
+typedef void (^CRToastAnimationCompletionBlock)(BOOL animated);
 typedef void (^CRToastAnimationStepBlock)(void);
 
 @implementation CRToastManager
@@ -1063,21 +1101,18 @@ typedef void (^CRToastAnimationStepBlock)(void);
         notificationWindow.backgroundColor = [UIColor clearColor];
         notificationWindow.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         notificationWindow.windowLevel = UIWindowLevelStatusBar;
-        notificationWindow.rootViewController = [UIViewController new];
+        notificationWindow.rootViewController = [CRToastViewController new];
         notificationWindow.rootViewController.view.clipsToBounds = YES;
         self.notificationWindow = notificationWindow;
         
         self.notifications = [@[] mutableCopy];
-        
-        UIDynamicAnimator *animator = [[UIDynamicAnimator alloc] initWithReferenceView:notificationWindow.rootViewController.view];
-        self.animator = animator;
     }
     return self;
 }
 
 #pragma mark - Notification Management
 
-CRToastAnimationCompltionBlock CRToastOutwardAnimationsCompletionBlock(CRToastManager *weakSelf) {
+CRToastAnimationCompletionBlock CRToastOutwardAnimationsCompletionBlock(CRToastManager *weakSelf) {
     return ^void(BOOL completed){
         weakSelf.notificationWindow.rootViewController.view.gestureRecognizers = nil;
         weakSelf.notification.state = CRToastStateCompleted;
@@ -1087,6 +1122,7 @@ CRToastAnimationCompltionBlock CRToastOutwardAnimationsCompletionBlock(CRToastMa
         [weakSelf.statusBarView removeFromSuperview];
         if (weakSelf.notifications.count > 0) {
             CRToast *notification = weakSelf.notifications.firstObject;
+            weakSelf.gravityAnimationCompletionBlock = NULL;
             [weakSelf displayNotification:notification];
         } else {
             weakSelf.notificationWindow.hidden = YES;
@@ -1097,7 +1133,7 @@ CRToastAnimationCompltionBlock CRToastOutwardAnimationsCompletionBlock(CRToastMa
 CRToastAnimationStepBlock CRToastOutwardAnimationsBlock(CRToastManager *weakSelf) {
     return ^{
         weakSelf.notification.state = CRToastStateExiting;
-        [weakSelf.animator removeAllBehaviors];
+        [weakSelf.notification.animator removeAllBehaviors];
         weakSelf.notificationView.frame = weakSelf.notification.notificationViewAnimationFrame2;
         weakSelf.statusBarView.frame = weakSelf.notificationWindow.rootViewController.view.bounds;
     };
@@ -1130,7 +1166,10 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
                                  completion:CRToastOutwardAnimationsCompletionBlock(weakSelf)];
             } break;
             case CRToastAnimationTypeGravity: {
-                [weakSelf.animator removeAllBehaviors];
+                if (weakSelf.notification.animator == nil) {
+                    [weakSelf.notification initiateAnimator:weakSelf.notificationWindow.rootViewController.view];
+                }
+                [weakSelf.notification.animator removeAllBehaviors];
                 UIGravityBehavior *gravity = [[UIGravityBehavior alloc]initWithItems:@[weakSelf.notificationView, weakSelf.statusBarView]];
                 gravity.gravityDirection = notification.outGravityDirection;
                 gravity.magnitude = notification.animationGravityMagnitude;
@@ -1141,8 +1180,11 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
                 [collision addBoundaryWithIdentifier:kCRToastManagerCollisionBoundryIdentifier
                                            fromPoint:notification.outCollisionPoint1
                                              toPoint:notification.outCollisionPoint2];
-                [weakSelf.animator addBehavior:gravity];
-                [weakSelf.animator addBehavior:collision];
+                UIDynamicItemBehavior *rotationLock = [[UIDynamicItemBehavior alloc] initWithItems:collisionItems];
+                rotationLock.allowsRotation = NO;
+                [weakSelf.notification.animator addBehavior:gravity];
+                [weakSelf.notification.animator addBehavior:collision];
+                [weakSelf.notification.animator addBehavior:rotationLock];
                 weakSelf.gravityAnimationCompletionBlock = CRToastOutwardAnimationsCompletionBlock(weakSelf);
             } break;
         }
@@ -1156,7 +1198,8 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
         __weak __block typeof(self) weakSelf = self;
         CRToastOutwardAnimationsSetupBlock(weakSelf)();
     } else {
-        [[(CRToast*)_notifications.firstObject notificationView] removeFromSuperview];
+        __weak __block typeof(self) weakSelf = self;
+        CRToastOutwardAnimationsCompletionBlock(weakSelf)(YES);
     }
 }
 
@@ -1181,7 +1224,10 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
     } else if ([UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationPortraitUpsideDown) {
         containerFrame = CGRectMake(0, CGRectGetHeight([[UIScreen mainScreen] bounds])-notificationSize.height, notificationSize.width, notificationSize.height);
     }
-    
+
+    CRToastViewController *rootViewController = (CRToastViewController*)_notificationWindow.rootViewController;
+    [rootViewController statusBarStyle:notification.statusBarStyle];
+
     _notificationWindow.frame = containerFrame;
     _notificationWindow.rootViewController.view.frame = CGRectMake(0, 0, CGRectGetWidth(containerFrame), CGRectGetHeight(containerFrame));
     _notificationWindow.windowLevel = notification.displayUnderStatusBar ? UIWindowLevelNormal : UIWindowLevelStatusBar;
@@ -1212,11 +1258,12 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
     };
     
     NSString *notificationUUIDString = notification.uuid.UUIDString;
-    CRToastAnimationCompltionBlock inwardAnimationsCompletionBlock = ^void(BOOL finished) {
+    CRToastAnimationCompletionBlock inwardAnimationsCompletionBlock = ^void(BOOL finished) {
         if (notification.timeInterval != DBL_MAX && notification.state == CRToastStateEntering) {
             notification.state = CRToastStateDisplaying;
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(notification.timeInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 if (weakSelf.notification.state == CRToastStateDisplaying && [weakSelf.notification.uuid.UUIDString isEqualToString:notificationUUIDString]) {
+                    self.gravityAnimationCompletionBlock = NULL;
                     CRToastOutwardAnimationsSetupBlock(weakSelf)();
                 }
             });
@@ -1240,7 +1287,8 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
                              completion:inwardAnimationsCompletionBlock];
         } break;
         case CRToastAnimationTypeGravity: {
-            [_animator removeAllBehaviors];
+            [notification initiateAnimator:_notificationWindow.rootViewController.view];
+            [notification.animator removeAllBehaviors];
             UIGravityBehavior *gravity = [[UIGravityBehavior alloc]initWithItems:@[notificationView, statusBarView]];
             gravity.gravityDirection = notification.inGravityDirection;
             gravity.magnitude = notification.animationGravityMagnitude;
@@ -1251,8 +1299,11 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
             [collision addBoundaryWithIdentifier:kCRToastManagerCollisionBoundryIdentifier
                                        fromPoint:notification.inCollisionPoint1
                                          toPoint:notification.inCollisionPoint2];
-            [_animator addBehavior:gravity];
-            [_animator addBehavior:collision];
+            UIDynamicItemBehavior *rotationLock = [[UIDynamicItemBehavior alloc] initWithItems:collisionItems];
+            rotationLock.allowsRotation = NO;
+            [notification.animator addBehavior:gravity];
+            [notification.animator addBehavior:collision];
+            [notification.animator addBehavior:rotationLock];
             self.gravityAnimationCompletionBlock = inwardAnimationsCompletionBlock;
         } break;
     }
@@ -1275,7 +1326,6 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
    withBoundaryIdentifier:(id <NSCopying>)identifier {
     if (self.gravityAnimationCompletionBlock) {
         self.gravityAnimationCompletionBlock(YES);
-        self.gravityAnimationCompletionBlock = NULL;
     }
 }
 

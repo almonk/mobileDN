@@ -1,40 +1,45 @@
 PODS:
   - ADNLogin (2.1.0)
-  - AFNetworking (2.2.3):
+  - AFNetworking (2.4.1):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
     - AFNetworking/UIKit
-  - AFNetworking/NSURLConnection (2.2.3):
+  - AFNetworking/NSURLConnection (2.4.1):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/NSURLSession (2.2.3):
-    - AFNetworking/NSURLConnection
-  - AFNetworking/Reachability (2.2.3)
-  - AFNetworking/Security (2.2.3)
-  - AFNetworking/Serialization (2.2.3)
-  - AFNetworking/UIKit (2.2.3):
+  - AFNetworking/NSURLSession (2.4.1):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (2.4.1)
+  - AFNetworking/Security (2.4.1)
+  - AFNetworking/Serialization (2.4.1)
+  - AFNetworking/UIKit (2.4.1):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
   - AMAttributedHighlightLabel (0.0.1)
+  - Bolts (1.1.2)
   - CJMTwitterFollowButton (0.1.0)
-  - CRToast (0.0.6)
-  - CTFeedback (1.0.10)
+  - CRToast (0.0.7)
+  - CTFeedback (1.0.12)
+  - Facebook-iOS-SDK (3.18.0):
+    - Bolts
   - MCSwipeTableViewCell (2.1.0)
   - MTBlockAlertView (0.1.1)
-  - OvershareKit (1.2.0):
+  - OvershareKit (1.3.1):
     - ADNLogin
     - PocketAPI
   - PocketAPI (1.0.2)
-  - RESideMenu (4.0.3)
+  - RESideMenu (4.0.7)
   - SORelativeDateTransformer (1.1.10)
   - SVProgressHUD (1.0)
   - SVPullToRefresh (0.4.1)
-  - TTTAttributedLabel (1.9.5)
-  - UITableView-NXEmptyView (0.1.5)
+  - TTTAttributedLabel (1.10.1)
+  - UITableView-NXEmptyView (0.1.6)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.0)
@@ -42,6 +47,7 @@ DEPENDENCIES:
   - CJMTwitterFollowButton (~> 0.1.0)
   - CRToast (~> 0.0.4)
   - CTFeedback
+  - Facebook-iOS-SDK
   - MCSwipeTableViewCell
   - MTBlockAlertView
   - OvershareKit
@@ -53,21 +59,23 @@ DEPENDENCIES:
   - UITableView-NXEmptyView
 
 SPEC CHECKSUMS:
-  ADNLogin: ee20dc7e648813104930d445054cc9780599d864
-  AFNetworking: ae513199cca79e9d7af2708ccabe2ed075550c42
-  AMAttributedHighlightLabel: fe668dddfcdabb2dcc32cec46d7371bcf845897c
-  CJMTwitterFollowButton: 962375d1e5a78f0ad05bb705189f6f995b551673
-  CRToast: 7def6720179d7c861b06222a82a4ad4bdfe476f0
-  CTFeedback: 6238700e4219f2bdbb8c5c99c3a95fb70a2fc529
-  MCSwipeTableViewCell: 4a26851568843d15340eeca00210c219aa9f76d5
-  MTBlockAlertView: 05cf381a078c0005bcbad973cf63d9740ca67323
-  OvershareKit: 417df773b0c18810e9e4d88435d93111e08961b1
-  PocketAPI: 2ed51391e6ea7a48c707528f782f5a2cb0eab80e
-  RESideMenu: 5a9c11e9e649c601b8ffe5253910bde2e3d956ee
-  SORelativeDateTransformer: eba9b9bcc290eb7c9754b9955ace59b890fa59f8
-  SVProgressHUD: 5e10939a296debf5fe5a5895eda9539b8b2114f1
-  SVPullToRefresh: 61a0e4bd12bd6f8e3465909810b0fbeb1a28d5f2
-  TTTAttributedLabel: 6154fd2407a03fb8d71abfa36f4710fff26a168e
-  UITableView-NXEmptyView: 7d5238a79357f58b6a2b486f45a5915635824941
+  ADNLogin: 3828c000fa246c7340b331ed5c336fca8dfe6a1d
+  AFNetworking: 0aabc6fae66d6e5d039eeb21c315843c7aae51ab
+  AMAttributedHighlightLabel: 28df5da11af6107d5b66bc56ede801a101d8abb4
+  Bolts: 2635e8698a630774689441047f3465d78c48d485
+  CJMTwitterFollowButton: f3433315f394944a871ae03d4de2871eaf2eeac9
+  CRToast: f9f2c4b29776d68ba24c4d621cba59a83fea921b
+  CTFeedback: 7d87cffed4eaec32a4e3622470f573aa543146bf
+  Facebook-iOS-SDK: fa12c51cc57bfb6f92e47793c9d4d2c65bc92741
+  MCSwipeTableViewCell: 713086e29ce3c2171a0102fc594bf583fa7dd323
+  MTBlockAlertView: bd376f8b9f0ea945ed21e4c75aa0bb9afe3e782d
+  OvershareKit: c63af3a78b59b245095d47b4b76dbd96d2a85dbc
+  PocketAPI: 801df1a3cdd094e5477add10c80dceb533c98a66
+  RESideMenu: a9c1cd2e64e60e1d3166ddac01a83e215a0e4d30
+  SORelativeDateTransformer: de7936811c9988af8e129a097af48c828f933f5f
+  SVProgressHUD: 5034c6e22b8c2ca3e09402e48d41ed0340aa1c50
+  SVPullToRefresh: d5161ebc833a38b465364412e5e307ca80bbb190
+  TTTAttributedLabel: 94bb04f1e005616002dd2cee0262a0082e533627
+  UITableView-NXEmptyView: 4322b391d08f8272e4f1860e4a182eba300d05dd
 
 COCOAPODS: 0.32.1

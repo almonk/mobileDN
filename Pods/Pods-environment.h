@@ -15,50 +15,56 @@
 // AFNetworking
 #define COCOAPODS_POD_AVAILABLE_AFNetworking
 #define COCOAPODS_VERSION_MAJOR_AFNetworking 2
-#define COCOAPODS_VERSION_MINOR_AFNetworking 2
-#define COCOAPODS_VERSION_PATCH_AFNetworking 3
+#define COCOAPODS_VERSION_MINOR_AFNetworking 4
+#define COCOAPODS_VERSION_PATCH_AFNetworking 1
 
 // AFNetworking/NSURLConnection
 #define COCOAPODS_POD_AVAILABLE_AFNetworking_NSURLConnection
 #define COCOAPODS_VERSION_MAJOR_AFNetworking_NSURLConnection 2
-#define COCOAPODS_VERSION_MINOR_AFNetworking_NSURLConnection 2
-#define COCOAPODS_VERSION_PATCH_AFNetworking_NSURLConnection 3
+#define COCOAPODS_VERSION_MINOR_AFNetworking_NSURLConnection 4
+#define COCOAPODS_VERSION_PATCH_AFNetworking_NSURLConnection 1
 
 // AFNetworking/NSURLSession
 #define COCOAPODS_POD_AVAILABLE_AFNetworking_NSURLSession
 #define COCOAPODS_VERSION_MAJOR_AFNetworking_NSURLSession 2
-#define COCOAPODS_VERSION_MINOR_AFNetworking_NSURLSession 2
-#define COCOAPODS_VERSION_PATCH_AFNetworking_NSURLSession 3
+#define COCOAPODS_VERSION_MINOR_AFNetworking_NSURLSession 4
+#define COCOAPODS_VERSION_PATCH_AFNetworking_NSURLSession 1
 
 // AFNetworking/Reachability
 #define COCOAPODS_POD_AVAILABLE_AFNetworking_Reachability
 #define COCOAPODS_VERSION_MAJOR_AFNetworking_Reachability 2
-#define COCOAPODS_VERSION_MINOR_AFNetworking_Reachability 2
-#define COCOAPODS_VERSION_PATCH_AFNetworking_Reachability 3
+#define COCOAPODS_VERSION_MINOR_AFNetworking_Reachability 4
+#define COCOAPODS_VERSION_PATCH_AFNetworking_Reachability 1
 
 // AFNetworking/Security
 #define COCOAPODS_POD_AVAILABLE_AFNetworking_Security
 #define COCOAPODS_VERSION_MAJOR_AFNetworking_Security 2
-#define COCOAPODS_VERSION_MINOR_AFNetworking_Security 2
-#define COCOAPODS_VERSION_PATCH_AFNetworking_Security 3
+#define COCOAPODS_VERSION_MINOR_AFNetworking_Security 4
+#define COCOAPODS_VERSION_PATCH_AFNetworking_Security 1
 
 // AFNetworking/Serialization
 #define COCOAPODS_POD_AVAILABLE_AFNetworking_Serialization
 #define COCOAPODS_VERSION_MAJOR_AFNetworking_Serialization 2
-#define COCOAPODS_VERSION_MINOR_AFNetworking_Serialization 2
-#define COCOAPODS_VERSION_PATCH_AFNetworking_Serialization 3
+#define COCOAPODS_VERSION_MINOR_AFNetworking_Serialization 4
+#define COCOAPODS_VERSION_PATCH_AFNetworking_Serialization 1
 
 // AFNetworking/UIKit
 #define COCOAPODS_POD_AVAILABLE_AFNetworking_UIKit
 #define COCOAPODS_VERSION_MAJOR_AFNetworking_UIKit 2
-#define COCOAPODS_VERSION_MINOR_AFNetworking_UIKit 2
-#define COCOAPODS_VERSION_PATCH_AFNetworking_UIKit 3
+#define COCOAPODS_VERSION_MINOR_AFNetworking_UIKit 4
+#define COCOAPODS_VERSION_PATCH_AFNetworking_UIKit 1
 
 // AMAttributedHighlightLabel
 #define COCOAPODS_POD_AVAILABLE_AMAttributedHighlightLabel
 #define COCOAPODS_VERSION_MAJOR_AMAttributedHighlightLabel 0
 #define COCOAPODS_VERSION_MINOR_AMAttributedHighlightLabel 0
 #define COCOAPODS_VERSION_PATCH_AMAttributedHighlightLabel 1
+
+// Bolts
+#define COCOAPODS_POD_AVAILABLE_Bolts
+#define COCOAPODS_VERSION_MAJOR_Bolts 1
+#define COCOAPODS_VERSION_MINOR_Bolts 1
+#define COCOAPODS_VERSION_PATCH_Bolts 2
 
 // CJMTwitterFollowButton
 #define COCOAPODS_POD_AVAILABLE_CJMTwitterFollowButton
@@ -70,13 +76,19 @@
 #define COCOAPODS_POD_AVAILABLE_CRToast
 #define COCOAPODS_VERSION_MAJOR_CRToast 0
 #define COCOAPODS_VERSION_MINOR_CRToast 0
-#define COCOAPODS_VERSION_PATCH_CRToast 6
+#define COCOAPODS_VERSION_PATCH_CRToast 7
 
 // CTFeedback
 #define COCOAPODS_POD_AVAILABLE_CTFeedback
 #define COCOAPODS_VERSION_MAJOR_CTFeedback 1
 #define COCOAPODS_VERSION_MINOR_CTFeedback 0
-#define COCOAPODS_VERSION_PATCH_CTFeedback 10
+#define COCOAPODS_VERSION_PATCH_CTFeedback 12
+
+// Facebook-iOS-SDK
+#define COCOAPODS_POD_AVAILABLE_Facebook_iOS_SDK
+#define COCOAPODS_VERSION_MAJOR_Facebook_iOS_SDK 3
+#define COCOAPODS_VERSION_MINOR_Facebook_iOS_SDK 18
+#define COCOAPODS_VERSION_PATCH_Facebook_iOS_SDK 0
 
 // MCSwipeTableViewCell
 #define COCOAPODS_POD_AVAILABLE_MCSwipeTableViewCell
@@ -93,8 +105,8 @@
 // OvershareKit
 #define COCOAPODS_POD_AVAILABLE_OvershareKit
 #define COCOAPODS_VERSION_MAJOR_OvershareKit 1
-#define COCOAPODS_VERSION_MINOR_OvershareKit 2
-#define COCOAPODS_VERSION_PATCH_OvershareKit 0
+#define COCOAPODS_VERSION_MINOR_OvershareKit 3
+#define COCOAPODS_VERSION_PATCH_OvershareKit 1
 
 // PocketAPI
 #define COCOAPODS_POD_AVAILABLE_PocketAPI
@@ -106,7 +118,7 @@
 #define COCOAPODS_POD_AVAILABLE_RESideMenu
 #define COCOAPODS_VERSION_MAJOR_RESideMenu 4
 #define COCOAPODS_VERSION_MINOR_RESideMenu 0
-#define COCOAPODS_VERSION_PATCH_RESideMenu 3
+#define COCOAPODS_VERSION_PATCH_RESideMenu 7
 
 // SORelativeDateTransformer
 #define COCOAPODS_POD_AVAILABLE_SORelativeDateTransformer
@@ -129,12 +141,12 @@
 // TTTAttributedLabel
 #define COCOAPODS_POD_AVAILABLE_TTTAttributedLabel
 #define COCOAPODS_VERSION_MAJOR_TTTAttributedLabel 1
-#define COCOAPODS_VERSION_MINOR_TTTAttributedLabel 9
-#define COCOAPODS_VERSION_PATCH_TTTAttributedLabel 5
+#define COCOAPODS_VERSION_MINOR_TTTAttributedLabel 10
+#define COCOAPODS_VERSION_PATCH_TTTAttributedLabel 1
 
 // UITableView-NXEmptyView
 #define COCOAPODS_POD_AVAILABLE_UITableView_NXEmptyView
 #define COCOAPODS_VERSION_MAJOR_UITableView_NXEmptyView 0
 #define COCOAPODS_VERSION_MINOR_UITableView_NXEmptyView 1
-#define COCOAPODS_VERSION_PATCH_UITableView_NXEmptyView 5
+#define COCOAPODS_VERSION_PATCH_UITableView_NXEmptyView 6
 
