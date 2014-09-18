@@ -54,7 +54,7 @@
     UIBarButtonItem *leftBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Done"
                                                                     style:UIBarButtonItemStyleDone target:self action:@selector(dismissSelf)];
     self.navigationItem.leftBarButtonItem = leftBarButton;
-
+    [self.navigationController.navigationBar setTranslucent:NO];
     
     if (self.navigationController.toolbarHidden) {
         self.toolbarPreviouslyHidden = YES;
@@ -88,6 +88,7 @@
 {
     [super viewDidLoad];
     [self setupToolBarItems];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated

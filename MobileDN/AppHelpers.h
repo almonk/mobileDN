@@ -11,6 +11,7 @@
 @interface AppHelpers : UIViewController
 
 -(NSString*)getAuthToken;
+-(NSString*)clientId;
 -(void)removeAuthToken;
 -(void)setAuthToken:(NSString*)token;
 

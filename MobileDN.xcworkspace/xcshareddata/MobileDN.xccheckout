@@ -10,29 +10,29 @@
 	<string>MobileDN</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>6F6DB39E-BD57-41CA-8A87-2408AE257E1E</key>
+		<key>0CA8C494ABCF4E8A1B87A337956A777303E09520</key>
 		<string>ssh://github.com/almonk/mobileDN.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>MobileDN.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>6F6DB39E-BD57-41CA-8A87-2408AE257E1E</key>
+		<key>0CA8C494ABCF4E8A1B87A337956A777303E09520</key>
 		<string>..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>ssh://github.com/almonk/mobileDN.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>6F6DB39E-BD57-41CA-8A87-2408AE257E1E</string>
+	<string>0CA8C494ABCF4E8A1B87A337956A777303E09520</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>6F6DB39E-BD57-41CA-8A87-2408AE257E1E</string>
+			<string>0CA8C494ABCF4E8A1B87A337956A777303E09520</string>
 			<key>IDESourceControlWCCName</key>
 			<string>MobileDN</string>
 		</dict>

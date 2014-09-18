@@ -93,14 +93,19 @@
     }
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager.requestSerializer setValue:[helper getAuthToken] forHTTPHeaderField:@"Authorization"];
-    [manager GET:queryUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    
+    if ([helper getAuthToken] == NULL) {
+    } else {
+        [manager.requestSerializer setValue:[helper getAuthToken] forHTTPHeaderField:@"Authorization"];
+    }
+    
+    [manager GET:queryUrl parameters:@{ @"client_id": [helper clientId] } success:^(AFHTTPRequestOperation *operation, id responseObject) {
         self.stories = responseObject[@"stories"];
         [self.tableView reloadData];
         [(UIRefreshControl *)sender endRefreshing];
         [self.refreshControl endRefreshing];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [ProgressHUD showError:@"Can't connect to DN"];
+        [SVProgressHUD showErrorWithStatus:@"Can't connect to DN"];
         NSLog(@"Error: %@", error);
         [(UIRefreshControl *)sender endRefreshing];
         [self.refreshControl endRefreshing];
@@ -125,8 +130,13 @@
     NSLog(@"Querying %@", queryUrl);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager.requestSerializer setValue:[helper getAuthToken] forHTTPHeaderField:@"Authorization"];
-    [manager GET:queryUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    
+    if ([helper getAuthToken] == NULL) {
+    } else {
+        [manager.requestSerializer setValue:[helper getAuthToken] forHTTPHeaderField:@"Authorization"];
+    }
+
+    [manager GET:queryUrl parameters:@{ @"client_id": [helper clientId] } success:^(AFHTTPRequestOperation *operation, id responseObject) {
         self.stories = [[NSMutableArray alloc] initWithArray:self.stories];
         [self.stories addObjectsFromArray:responseObject[@"stories"]];
         [self.tableView reloadData];
@@ -221,6 +231,10 @@
     [cell setDelegate:self];
     [cell setDefaultColor:[UIColor colorWithRed:0.765 green:0.788 blue:0.824 alpha:1.0]];
     [cell setSwipeGestureWithView:checkView color:greenColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState1 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
+        if ([helper getAuthToken] == NULL) {
+            [self showLogin];
+            return;
+        }
         NSLog(@"Upvote: %@", [tempDictionary valueForKey:@"id"]);
         [SVProgressHUD showWithStatus:@"Upvoting..."];
         
@@ -249,6 +263,7 @@
     }];
     
     [cell setSwipeGestureWithView:threadView color:greyColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState3 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
+
         NSDictionary *story = [self.stories objectAtIndex:indexPath.row];
         NSMutableArray *comments = [story objectForKey:@"comments"];
         
@@ -264,6 +279,12 @@
     return cell;
 }
 
+-(void)showLogin {
+    NSLog(@"No auth token");
+    UIStoryboard *authBoard = [UIStoryboard storyboardWithName:@"UserFlow" bundle:nil];
+    UIViewController *vc = [authBoard instantiateInitialViewController];
+    [self.navigationController presentViewController:vc animated:YES completion:nil];
+}
 
 
 #pragma mark - MCSwipeTableViewCellDelegate

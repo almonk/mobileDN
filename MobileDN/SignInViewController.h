@@ -15,5 +15,6 @@
 }
 
 -(IBAction)doSignIn:(id)sender;
+-(IBAction)dismissSelf:(id)sender;
 
 @end

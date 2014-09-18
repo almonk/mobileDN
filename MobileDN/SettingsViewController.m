@@ -12,6 +12,7 @@
 #import "AppHelpers.h"
 #import <AFNetworking.h>
 #import <CTFeedbackViewController.h>
+#import <SVProgressHUD.h>
 
 
 @interface SettingsViewController ()
@@ -32,8 +33,22 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self loadProfileInfo];
 	// Do any additional setup after loading the view.
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    AppHelpers* helper = [[AppHelpers alloc] init];
+    
+    if ([helper getAuthToken] == NULL) {
+        signInButton.enabled = true;
+        signInButton.title = @"Sign in";
+        [signOutCell setHidden:YES];
+    } else {
+        signInButton.enabled = false;
+        signInButton.title = nil;
+        [signOutCell setHidden:NO];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -42,36 +57,6 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)loadProfileInfo
-{
-    AppHelpers *helper = [[AppHelpers alloc] init];
-    
-    NSLog(@"Loading info");
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager.requestSerializer setValue:[helper getAuthToken] forHTTPHeaderField:@"Authorization"];
-    [manager GET:@"https://api-news.layervault.com/api/v1/me" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"Got info");
-        NSDictionary *profile = responseObject[@"me"];
-        
-        NSString *fullName = [NSString stringWithFormat:@"%@ %@", [profile valueForKey:@"first_name"], [profile valueForKey:@"last_name"]];
-        [name setText: fullName];
-        
-        if ([[profile valueForKey:@"job"] length] != 0) {
-            [jobTitle setText: [profile valueForKey:@"job"]];
-        }
-        
-        NSString *ImageURL = [profile valueForKey:@"portrait_url"];
-        
-        if ([ImageURL length] != 0) {
-            NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:ImageURL]];
-            avatar.image = [UIImage imageWithData:imageData];
-        }
-        
-        [spinner stopAnimating];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    }];
-}
 
 -(IBAction)signOut:(id)sender
 {
@@ -85,14 +70,22 @@
                         if (buttonIndex == 1) {
                             AppHelpers* helper = [[AppHelpers alloc] init];
                             [helper removeAuthToken];
-                            
-                            UIStoryboard *mainBoard = [UIStoryboard storyboardWithName:@"UserFlow" bundle:nil];
-                            UIViewController *vc = [mainBoard instantiateInitialViewController];
-                            
-                            [self presentViewController:vc animated:YES completion:nil];
+                            [SVProgressHUD showSuccessWithStatus:@"Signed out"];
+                            signInButton.enabled = true;
+                            signInButton.title = @"Sign in";
+                            [signOutCell setHidden:YES];
                         }
                     }];
 }
+
+-(IBAction)signIn:(id)sender
+{
+    NSLog(@"No auth token");
+    UIStoryboard *authBoard = [UIStoryboard storyboardWithName:@"UserFlow" bundle:nil];
+    UIViewController *vc = [authBoard instantiateInitialViewController];
+    [self.navigationController presentViewController:vc animated:YES completion:nil];
+}
+
 
 -(IBAction)showSharingSettings:(id)sender
 {
