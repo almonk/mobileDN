@@ -42,6 +42,8 @@
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(updateComments) forControlEvents:UIControlEventValueChanged];
     [self updateComments];
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    self.tableView.estimatedRowHeight = 44.0;
 }
 
 - (void)didReceiveMemoryWarning
@@ -221,44 +223,7 @@
 }
 
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
-    
-    NSString *indentLevelRaw = [_commentDepth objectAtIndex:indexPath.row];
-    NSUInteger indentLevel = [indentLevelRaw integerValue];
-    float indentPoints = indentLevel * 25;
 
-    cell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), CGRectGetHeight(cell.bounds));
-    
-    UITextView *commentBody;
-    commentBody = (UITextView *)[cell viewWithTag:1];
-    commentBody.userInteractionEnabled = YES;
-    commentBody.text = [self.flatComments objectAtIndex:indexPath.row];
-    
-    commentBody.font = [UIFont fontWithName:@"Avenir" size:16.0f];
-    
-    CGFloat width = 291 - indentPoints;
-
-    CGSize size = [commentBody sizeThatFits:CGSizeMake(width, FLT_MAX)];
-    
-    [commentBody sizeToFit];
-
-    [cell setNeedsUpdateConstraints];
-    [cell updateConstraintsIfNeeded];
-    [cell.contentView setNeedsLayout];
-    [cell.contentView layoutIfNeeded];
-    
-//    CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-    
-    return size.height + 2 * 17;
-}
-
-
--(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 77;
-}
 
 - (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange
 {
