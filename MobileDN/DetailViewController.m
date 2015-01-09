@@ -65,7 +65,7 @@
         NSLog(@"Body: %@", [obj objectForKey:@"body"]);
         [_flatUsers addObject: [obj objectForKey:@"user_display_name"]];
         [_flatComments addObject: [obj objectForKey:@"body"]];
-        [_commentDepth addObject: [obj objectForKey:@"depth"]];
+        [_commentDepth addObject: @"0"];
         [_flatTime addObject: [obj objectForKey:@"created_at"]];
         [_flatIds addObject: [obj objectForKey:@"id"]];
         [_flatUsers count];
@@ -130,7 +130,7 @@
     
     UITextView *commentBody;
     commentBody = (UITextView *)[cell viewWithTag:1];
-    commentBody.userInteractionEnabled = NO;
+    commentBody.userInteractionEnabled = YES;
     commentBody.scrollEnabled = NO;
     commentBody.bounces = NO;
     commentBody.delegate = self;
@@ -138,8 +138,6 @@
     
     commentBody.text = [self.flatComments objectAtIndex:indexPath.row];
     commentBody.font = [UIFont fontWithName:@"Avenir" size:16.0f];
-
-    //commentBody.preferredMaxLayoutWidth = 280 - indentPoints; // <<<<< ALL THE MAGIC
 
     UILabel *usernameMeta;
     usernameMeta = (UILabel *)[cell viewWithTag:2];

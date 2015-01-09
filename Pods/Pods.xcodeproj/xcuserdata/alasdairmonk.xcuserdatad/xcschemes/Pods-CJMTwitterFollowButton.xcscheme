@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9B152F43C5D7492BAE7FF4AD"
+               BlueprintIdentifier = "3DB5C8C9EC3D4C16A7C4B53F"
                BuildableName = "libPods-CJMTwitterFollowButton.a"
                BlueprintName = "Pods-CJMTwitterFollowButton"
                ReferencedContainer = "container:Pods.xcodeproj">

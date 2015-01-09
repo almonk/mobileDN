@@ -6,12 +6,6 @@
 // project.
 
 
-// ADNLogin
-#define COCOAPODS_POD_AVAILABLE_ADNLogin
-#define COCOAPODS_VERSION_MAJOR_ADNLogin 2
-#define COCOAPODS_VERSION_MINOR_ADNLogin 1
-#define COCOAPODS_VERSION_PATCH_ADNLogin 0
-
 // AFNetworking
 #define COCOAPODS_POD_AVAILABLE_AFNetworking
 #define COCOAPODS_VERSION_MAJOR_AFNetworking 2
@@ -101,18 +95,6 @@
 #define COCOAPODS_VERSION_MAJOR_MTBlockAlertView 0
 #define COCOAPODS_VERSION_MINOR_MTBlockAlertView 1
 #define COCOAPODS_VERSION_PATCH_MTBlockAlertView 1
-
-// OvershareKit
-#define COCOAPODS_POD_AVAILABLE_OvershareKit
-#define COCOAPODS_VERSION_MAJOR_OvershareKit 1
-#define COCOAPODS_VERSION_MINOR_OvershareKit 3
-#define COCOAPODS_VERSION_PATCH_OvershareKit 1
-
-// PocketAPI
-#define COCOAPODS_POD_AVAILABLE_PocketAPI
-#define COCOAPODS_VERSION_MAJOR_PocketAPI 1
-#define COCOAPODS_VERSION_MINOR_PocketAPI 0
-#define COCOAPODS_VERSION_PATCH_PocketAPI 2
 
 // RESideMenu
 #define COCOAPODS_POD_AVAILABLE_RESideMenu

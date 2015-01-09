@@ -1,5 +1,4 @@
 PODS:
-  - ADNLogin (2.1.0)
   - AFNetworking (2.4.1):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
@@ -30,10 +29,6 @@ PODS:
     - Bolts
   - MCSwipeTableViewCell (2.1.0)
   - MTBlockAlertView (0.1.1)
-  - OvershareKit (1.3.1):
-    - ADNLogin
-    - PocketAPI
-  - PocketAPI (1.0.2)
   - RESideMenu (4.0.7)
   - SORelativeDateTransformer (1.1.10)
   - SVProgressHUD (1.0)
@@ -50,7 +45,6 @@ DEPENDENCIES:
   - Facebook-iOS-SDK
   - MCSwipeTableViewCell
   - MTBlockAlertView
-  - OvershareKit
   - RESideMenu
   - SORelativeDateTransformer
   - SVProgressHUD
@@ -59,7 +53,6 @@ DEPENDENCIES:
   - UITableView-NXEmptyView
 
 SPEC CHECKSUMS:
-  ADNLogin: 3828c000fa246c7340b331ed5c336fca8dfe6a1d
   AFNetworking: 0aabc6fae66d6e5d039eeb21c315843c7aae51ab
   AMAttributedHighlightLabel: 28df5da11af6107d5b66bc56ede801a101d8abb4
   Bolts: 2635e8698a630774689441047f3465d78c48d485
@@ -69,8 +62,6 @@ SPEC CHECKSUMS:
   Facebook-iOS-SDK: fa12c51cc57bfb6f92e47793c9d4d2c65bc92741
   MCSwipeTableViewCell: 713086e29ce3c2171a0102fc594bf583fa7dd323
   MTBlockAlertView: bd376f8b9f0ea945ed21e4c75aa0bb9afe3e782d
-  OvershareKit: c63af3a78b59b245095d47b4b76dbd96d2a85dbc
-  PocketAPI: 801df1a3cdd094e5477add10c80dceb533c98a66
   RESideMenu: a9c1cd2e64e60e1d3166ddac01a83e215a0e4d30
   SORelativeDateTransformer: de7936811c9988af8e129a097af48c828f933f5f
   SVProgressHUD: 5034c6e22b8c2ca3e09402e48d41ed0340aa1c50

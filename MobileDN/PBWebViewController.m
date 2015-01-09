@@ -7,11 +7,10 @@
 //
 
 #import "PBWebViewController.h"
-#import "OvershareKit.h"
 #import "ProgressHUD.h"
 #import <SVProgressHUD.h>
 
-@interface PBWebViewController () <UIPopoverControllerDelegate, OSKPresentationViewControllers, OSKPresentationStyle,OSKPresentationColor>
+@interface PBWebViewController () <UIPopoverControllerDelegate>
 
 @property (strong, nonatomic) UIWebView *webView;
 
@@ -24,7 +23,6 @@
 
 @property (assign, nonatomic) BOOL toolbarPreviouslyHidden;
 
-@property (assign, nonatomic) OSKActivitySheetViewControllerStyle sheetStyle;
 
 @end
 
@@ -37,9 +35,6 @@
     self = [super init];
     if (self) {
         _showsNavigationToolbar = YES;
-        [[OSKPresentationManager sharedInstance] setViewControllerDelegate:self];
-        [[OSKPresentationManager sharedInstance] setColorDelegate:self];
-        [[OSKPresentationManager sharedInstance] setStyleDelegate:self];
     }
     return self;
 }
@@ -230,49 +225,24 @@
 
 - (void)action:(id)sender
 {
-    OSKShareableContent *content = [OSKShareableContent contentFromURL: self.URL];
-    //[[OSKActivitiesManager sharedInstance] activityTypeIsAlwaysExcluded: [OSKActivityType_API_AppDotNet];
+    NSString *buildString = [self.URL absoluteString];
     
-    OSKActivityCompletionHandler completionHandler = [self activityCompletionHandler];
-    OSKPresentationEndingHandler dismissalHandler = [self dismissalHandler];
+    NSLog(@"build string: %@", buildString);
     
-    NSString *object1 = OSKActivityType_URLScheme_1Password_Browser;
-    NSString *object2 = OSKActivityType_API_AppDotNet;
-    NSString *object3 = OSKActivityType_URLScheme_1Password_Search;
-
-    NSArray *excludedActivities = [NSArray arrayWithObjects:object1, object2, object3, nil];
+    NSArray *items = @[self, [NSURL URLWithString: buildString]];
     
-    NSDictionary *options = @{    OSKPresentationOption_ActivityCompletionHandler : completionHandler,
-                                  OSKPresentationOption_PresentationEndingHandler : dismissalHandler,
-                                  OSKActivityOption_ExcludedTypes : excludedActivities,
-                            };
+    UIActivityViewController * activities = [[UIActivityViewController alloc]
+                                             initWithActivityItems: items
+                                             applicationActivities:nil];
     
-    // 4) Present the activity sheet via the presentation manager.
-    [[OSKPresentationManager sharedInstance] presentActivitySheetForContent:content
-                                                   presentingViewController:self
-                                                                    options:options];
+    activities.title = nil;
+    
+    [self presentViewController:activities
+                       animated:YES
+                     completion:nil];
 }
 
-- (OSKActivityCompletionHandler)activityCompletionHandler {
-    OSKActivityCompletionHandler activityCompletionHandler = ^(OSKActivity *activity, BOOL successful, NSError *error){
-        if (successful) {
-            //[ProgressHUD showSuccess:@"Shared"];
-            [SVProgressHUD showSuccessWithStatus:@"Shared"];
-            NSLog(@"Shared succesfully");
-            
-        } else {
-            [SVProgressHUD showErrorWithStatus:@"Couldn't share"];
-        }
-    };
-    return activityCompletionHandler;
-}
 
-- (OSKPresentationEndingHandler)dismissalHandler {
-    OSKPresentationEndingHandler dismissalHandler = ^(OSKPresentationEnding ending, OSKActivity *activityOrNil){
-        OSKLog(@"Sheet dismissed.");
-    };
-    return dismissalHandler;
-}
 
 #pragma mark - Web view delegate
 
@@ -300,40 +270,6 @@
 {
     self.activitiyPopoverController = nil;
 }
-
-
-- (OSKActivitySheetViewControllerStyle)osk_activitySheetStyle {
-    return self.sheetStyle;
-}
-
-- (BOOL)osk_toolbarsUseUnjustifiablyBorderlessButtons {
-    BOOL hellNo = NO;
-    return hellNo;
-}
-
-
-
-#pragma mark - OSKPresentationManager Color Delegate
-
-- (UIColor *)osk_color_action {
-    UIColor *color = nil;
-    color = [UIColor colorWithRed:0.00 green:0.48 blue:1.00 alpha:1.0];
-    return color;
-}
-
-
-
-#pragma mark - OSKPresentationManager View Controller Delegate
-
-- (void)presentationManager:(OSKPresentationManager *)manager willRepositionPopoverToRect:(inout CGRect *)rect inView:(inout UIView *__autoreleasing *)view {
-    *rect = self.view.bounds;
-}
-
-
-- (UIViewController <OSKPurchasingViewController> *)osk_purchasingViewControllerForActivity:(OSKActivity *)activity {
-    return NO;
-}
-
 
 
 @end

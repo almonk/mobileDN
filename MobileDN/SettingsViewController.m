@@ -7,7 +7,6 @@
 //
 
 #import "SettingsViewController.h"
-#import <OvershareKit.h>
 #import <MTBlockAlertView.h>
 #import "AppHelpers.h"
 #import <AFNetworking.h>
@@ -84,20 +83,6 @@
     UIStoryboard *authBoard = [UIStoryboard storyboardWithName:@"UserFlow" bundle:nil];
     UIViewController *vc = [authBoard instantiateInitialViewController];
     [self.navigationController presentViewController:vc animated:YES completion:nil];
-}
-
-
--(IBAction)showSharingSettings:(id)sender
-{
-    NSString *object1 = OSKActivityType_API_AppDotNet;
-    
-    NSArray *excludedActivities = [NSArray arrayWithObjects: object1, nil];
-    
-    OSKAccountManagementViewController *manager = [[OSKAccountManagementViewController alloc] initWithIgnoredActivityClasses:excludedActivities optionalBespokeActivityClasses:nil];
-    
-    OSKNavigationController *navController = [[OSKNavigationController alloc] initWithRootViewController:manager];
-    
-    [self presentViewController:navController animated:YES completion:nil];
 }
 
 - (IBAction)followMeOnTwitter:(id)sender {

@@ -59,7 +59,7 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <color key="sectionIndexTrackingBackgroundColor" red="0.92549026010000002" green="0.93333339689999995" blue="0.9450981021" alpha="1" colorSpace="deviceRGB"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="89" id="m0d-ak-lc9" customClass="MCSwipeTableViewCell">
@@ -90,6 +90,38 @@
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" red="0.59215688710000003" green="0.62745100259999997" blue="0.67450982329999998" alpha="1" colorSpace="deviceRGB"/>
+                                <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SponsorCell" rowHeight="89" id="hBv-44-1bY" customClass="MCSwipeTableViewCell">
+                                <rect key="frame" x="0.0" y="22" width="320" height="89"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hBv-44-1bY" id="09D-UR-aqL">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="88"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Labelsdsasddasdasdasjksadjkadsjhkjhkdsajkdsajkhdsajhkdsajhkdjskahjhkdsajkhdsajkhdsajhkdsajkhdsajhkjhkdsajhkdsjkhsdjhkads" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gLV-uC-yRT">
+                                            <rect key="frame" x="15" y="12" width="243" height="44"/>
+                                            <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="16"/>
+                                            <color key="textColor" red="0.1764705926" green="0.44705885649999999" blue="0.85098046059999999" alpha="1" colorSpace="deviceRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="avC-eB-Hwq">
+                                            <rect key="frame" x="15" y="55" width="258" height="21"/>
+                                            <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="13"/>
+                                            <color key="textColor" red="0.59215688710000003" green="0.62745100259999997" blue="0.67450982329999998" alpha="1" colorSpace="deviceRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" red="0.96862751245498657" green="0.96862751245498657" blue="0.96862751245498657" alpha="1" colorSpace="deviceRGB"/>
+                                    <color key="tintColor" red="0.59215688710000003" green="0.62745100259999997" blue="0.67450982329999998" alpha="1" colorSpace="deviceRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="trailingMargin" secondItem="gLV-uC-yRT" secondAttribute="trailing" id="Rsr-4A-JQq"/>
+                                        <constraint firstItem="gLV-uC-yRT" firstAttribute="leading" secondItem="09D-UR-aqL" secondAttribute="leadingMargin" constant="7" id="iOW-Wd-HYh"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="tintColor" red="0.59215688710000003" green="0.62745100259999997" blue="0.67450982329999998" alpha="1" colorSpace="deviceRGB"/>
+                                <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                             </tableViewCell>
                         </prototypes>
                         <sections/>
@@ -170,6 +202,7 @@
                                         <constraint firstItem="f7U-Cz-crm" firstAttribute="top" secondItem="3UD-Bo-q2U" secondAttribute="top" constant="11" id="z7J-Pa-Z4P"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -235,7 +268,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B8P-fF-7wi">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B8P-fF-7wi">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="17"/>
@@ -243,6 +276,12 @@
                             </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="B8P-fF-7wi" firstAttribute="leading" secondItem="z5s-hN-HJS" secondAttribute="leading" id="eCY-Yf-Rna"/>
+                            <constraint firstItem="pSf-Vo-3be" firstAttribute="top" secondItem="B8P-fF-7wi" secondAttribute="bottom" id="ti3-rU-b9S"/>
+                            <constraint firstItem="B8P-fF-7wi" firstAttribute="top" secondItem="z5s-hN-HJS" secondAttribute="top" id="zIa-bm-WZG"/>
+                            <constraint firstAttribute="trailing" secondItem="B8P-fF-7wi" secondAttribute="trailing" id="zeK-E2-8S3"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ra1-Sr-zIZ">
                         <barButtonItem key="leftBarButtonItem" title="Cancel" id="Rzd-ez-7fn">
@@ -393,28 +432,6 @@
                         <sections>
                             <tableViewSection id="cPW-9T-9Ds">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="wCx-nh-p3y">
-                                        <rect key="frame" x="0.0" y="35" width="320" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wCx-nh-p3y" id="GAi-oH-89X">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ld0-Ux-Tf3">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
-                                                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
-                                                    <inset key="contentEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                    <state key="normal" title="Sharing settings">
-                                                        <color key="titleColor" name="shadowColor" catalog="System" colorSpace="catalog"/>
-                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="showSharingSettings:" destination="sHD-AP-vXK" eventType="touchDown" id="Ai7-wK-ras"/>
-                                                    </connections>
-                                                </button>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="bsX-kf-Oi8">
                                         <rect key="frame" x="0.0" y="79" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>

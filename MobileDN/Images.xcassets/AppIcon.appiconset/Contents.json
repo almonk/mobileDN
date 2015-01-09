@@ -3,20 +3,26 @@
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "appIcon60@2x-2.png",
+      "filename" : "appIcon60.png",
       "scale" : "2x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "appIcon60@2x-1.png",
+      "filename" : "40.png",
       "scale" : "2x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "appIcon60@2x.png",
+      "filename" : "2x.png",
       "scale" : "2x"
+    },
+    {
+      "size" : "60x60",
+      "idiom" : "iphone",
+      "filename" : "3x.png",
+      "scale" : "3x"
     },
     {
       "idiom" : "ipad",

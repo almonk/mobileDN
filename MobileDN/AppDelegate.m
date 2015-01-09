@@ -7,10 +7,6 @@
 //
 
 #import "AppDelegate.h"
-#import "OSKADNLoginManager.h"
-#import <OSKActivitiesManager.h>
-#import <OSKActivity.h>
-#import "PocketAPI.h"
 #import <Parse/Parse.h>
 
 @implementation AppDelegate
@@ -29,8 +25,6 @@
     [[PFUser currentUser] saveInBackground];
     
     // End parse config
-    
-    [[PocketAPI sharedAPI] setConsumerKey:@"22401-ee70c5d7ec1f0329c936961a"];
 
     [[UINavigationBar appearance] setTitleTextAttributes: @{
         NSFontAttributeName: [UIFont fontWithName:@"Avenir" size:18.0f],
@@ -48,7 +42,7 @@
         // Has auth token
         NSLog(@"Has auth token");
     }
-
+    
     return YES;
 }
 
@@ -81,18 +75,6 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-}
-
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    BOOL success = NO;
-    if ([[PocketAPI sharedAPI] handleOpenURL:url]){
-        success = YES;
-    }
-    else {
-        // if you handle your own custom url-schemes, do it here
-        // success = whatever;
-    }
-    return success;
 }
 
 

@@ -16,14 +16,11 @@
 #import "UIScrollView+SVInfiniteScrolling.h"
 #import <CRToast.h>
 #import <SVProgressHUD.h>
-#import "OvershareKit.h"
 
 
-@interface MasterViewController () <MCSwipeTableViewCellDelegate, UIPopoverControllerDelegate, OSKPresentationViewControllers, OSKPresentationStyle,OSKPresentationColor, UIGestureRecognizerDelegate> {
+@interface MasterViewController () <MCSwipeTableViewCellDelegate, UIPopoverControllerDelegate, UIGestureRecognizerDelegate> {
     NSMutableArray *_objects;
 }
-
-@property (assign, nonatomic) OSKActivitySheetViewControllerStyle sheetStyle;
 @end
 
 @implementation MasterViewController
@@ -87,7 +84,8 @@
     NSString *queryUrl = @"";
     
     if ([self.navigationItem.title isEqualToString:@"Top stories"]) {
-        queryUrl = @"https://api-news.layervault.com/api/v1/stories/";
+//        queryUrl = @"https://api-news.layervault.com/api/v1/stories/";
+        queryUrl = @"http://www.mocky.io/v2/543d2d86d47742f512b5ebeb";
     } else {
         queryUrl = @"https://api-news.layervault.com/api/v1/stories/recent";
     }
@@ -169,13 +167,12 @@
     
     MCSwipeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
+    [cell setSeparatorInset:UIEdgeInsetsZero];
+    [cell setLayoutMargins:UIEdgeInsetsZero];
+    
     if (!cell) {
         cell = [[MCSwipeTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-        
-        // iOS 7 separator
-        if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
-            cell.separatorInset = UIEdgeInsetsZero;
-        }
+
         
         [cell setSelectionStyle:UITableViewCellSelectionStyleGray];
         cell.contentView.backgroundColor = [UIColor whiteColor];
@@ -360,32 +357,9 @@
 
 -(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
-    NSDictionary *story = [self.stories objectAtIndex:indexPath.row];
-    NSMutableArray *comments = [story objectForKey:@"comments"];
-    
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
-    DetailViewController *detailViewController = (DetailViewController *)[storyboard instantiateViewControllerWithIdentifier:@"DetailView"];
-    detailViewController.comments = comments;
-    detailViewController.storyId = [story valueForKey:@"id"];
-    detailViewController.hidesBottomBarWhenPushed = YES;
-    detailViewController.title = [story valueForKey:@"title"];
-    [self.navigationController pushViewController:detailViewController animated:YES];
+
 }
 
-
-- (OSKActivityCompletionHandler)activityCompletionHandler {
-    OSKActivityCompletionHandler activityCompletionHandler = ^(OSKActivity *activity, BOOL successful, NSError *error){
-        if (successful) {
-            //[ProgressHUD showSuccess:@"Shared"];
-            [SVProgressHUD showSuccessWithStatus:@"Shared"];
-            NSLog(@"Shared succesfully");
-            
-        } else {
-            [SVProgressHUD showErrorWithStatus:@"Couldn't share"];
-        }
-    };
-    return activityCompletionHandler;
-}
 
 -(void)setupLongPress
 {
@@ -405,26 +379,23 @@
         NSLog(@"long press on table view but not on a row");
     else
         NSLog(@"long press on table view at row %d", indexPath.row);
-        NSDictionary *story = [self.stories objectAtIndex:indexPath.row];
-        OSKShareableContent *content = [OSKShareableContent contentFromURL: [NSURL URLWithString:[story valueForKey:@"url"]]];
-        //[[OSKActivitiesManager sharedInstance] activityTypeIsAlwaysExcluded: [OSKActivityType_API_AppDotNet];
+        NSDictionary *story = [self.stories objectAtIndex:indexPath.row];;
+    
+        NSString *buildString = [story valueForKey:@"url"];
         
-        OSKActivityCompletionHandler completionHandler = [self activityCompletionHandler];
+        NSLog(@"build string: %@", buildString);
         
-        NSString *object1 = OSKActivityType_URLScheme_1Password_Browser;
-        NSString *object2 = OSKActivityType_API_AppDotNet;
-        NSString *object3 = OSKActivityType_URLScheme_1Password_Search;
+        NSArray *items = @[self, [NSURL URLWithString: buildString]];
         
-        NSArray *excludedActivities = [NSArray arrayWithObjects:object1, object2, object3, nil];
+        UIActivityViewController * activities = [[UIActivityViewController alloc]
+                                                 initWithActivityItems: items
+                                                 applicationActivities:nil];
         
-        NSDictionary *options = @{    OSKPresentationOption_ActivityCompletionHandler : completionHandler,
-                                      OSKActivityOption_ExcludedTypes : excludedActivities,
-                                      };
+        activities.title = nil;
         
-        // 4) Present the activity sheet via the presentation manager.
-        [[OSKPresentationManager sharedInstance] presentActivitySheetForContent:content
-                                                       presentingViewController:self
-                                                                        options:options];
+        [self presentViewController:activities
+                           animated:YES
+                         completion:nil];
 }
 
 @end
